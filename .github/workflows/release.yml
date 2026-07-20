@@ -43,7 +43,7 @@ jobs:
       - name: Validate locales
         run: node scripts/validate-locales.mjs
 
-      - uses: docker/setup-qemu-action@v3          # arm64 emulation for multi-arch
+      - uses: docker/setup-qemu-action@v4          # arm64 emulation for multi-arch
       - uses: docker/setup-buildx-action@v3
 
       - name: Log in to GHCR
