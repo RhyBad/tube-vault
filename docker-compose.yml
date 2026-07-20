@@ -1,8 +1,8 @@
 # TubeVault — example deploy (STARTER TEMPLATE — align services with the upstream image's real topology).
-# The published image tag is set by the release workflow: ghcr.io/OWNER/tubevault:<version>|latest
+# The published image tag is set by the release workflow: ghcr.io/rhybad/tubevault:<version>|latest
 services:
   api:
-    image: ghcr.io/OWNER/tubevault:latest
+    image: ghcr.io/rhybad/tubevault:latest
     env_file: .env
     depends_on: [postgres, redis]
     volumes: ["vault:/data/media", "keys:/data/keys"]
@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
 
   worker-archive:
-    image: ghcr.io/OWNER/tubevault:latest
+    image: ghcr.io/rhybad/tubevault:latest
     command: ["worker"]            # WORKER_ROLE=archive  (enumerate/download/verify/source-check)
     environment: [WORKER_ROLE=archive]
     env_file: .env
@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   worker-live:
-    image: ghcr.io/OWNER/tubevault:latest
+    image: ghcr.io/rhybad/tubevault:latest
     command: ["worker"]            # WORKER_ROLE=live  (live-scan/probe/capture)
     environment: [WORKER_ROLE=live]
     env_file: .env

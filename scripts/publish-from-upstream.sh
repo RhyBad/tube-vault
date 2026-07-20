@@ -8,7 +8,7 @@
 set -euo pipefail
 VERSION="${1:?usage: publish-from-upstream.sh vX.Y.Z [--dry-run]}"
 DRY=""; [ "${2:-}" = "--dry-run" ] && DRY="--dry-run"
-GH_REMOTE="${GH_REMOTE:-git@github.com:OWNER/tubevault.git}"
+GH_REMOTE="${GH_REMOTE:-git@github.com:RhyBad/tube-vault.git}"
 WORK="$(mktemp -d)"; git clone --depth 1 "$GH_REMOTE" "$WORK/gh"
 
 # 1) refresh canonical keys → public locales/en.json (adjust to your extraction)
