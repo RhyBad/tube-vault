@@ -1,7 +1,13 @@
 name: Release
 on:
   push:
-    tags: ["v*"]          # publish snapshot from Gitea pushes vX.Y.Z → this runs
+    tags: ["v*"]          # Gitea publish pushes vX.Y.Z → real release
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: build multi-arch but NEVER push to GHCR or create a Release"
+        type: boolean
+        default: true
 permissions:
   contents: write         # create Release
   packages: write         # push to GHCR
@@ -10,24 +16,59 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Fail-safe publish gate. Publish ONLY on a real tag push, or a manual run
+      # with dry_run explicitly false. A dry run can NEVER push or release.
+      - name: Resolve publish mode
+        id: mode
+        env:
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ inputs.dry_run }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT" = "push" ] || { [ "$EVENT" = "workflow_dispatch" ] && [ "$DRY" = "false" ]; }; then
+            PUB=true
+            TAGS=$'ghcr.io/rhybad/tubevault:latest\nghcr.io/rhybad/tubevault:'"$REF_NAME"
+            echo "Mode: PUBLISH — push to GHCR + create Release ($REF_NAME)"
+          else
+            PUB=false
+            TAGS='ghcr.io/rhybad/tubevault:dry-run'
+            echo "Mode: DRY RUN — build multi-arch only, no push, no release"
+          fi
+          {
+            echo "publish=$PUB"
+            printf 'tags<<__TAGS__\n%s\n__TAGS__\n' "$TAGS"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Validate locales
         run: node scripts/validate-locales.mjs
+
       - uses: docker/setup-qemu-action@v3          # arm64 emulation for multi-arch
       - uses: docker/setup-buildx-action@v3
+
       - name: Log in to GHCR
+        if: ${{ steps.mode.outputs.publish == 'true' }}
         uses: docker/login-action@v3
-        with: { registry: ghcr.io, username: ${{ github.actor }}, password: ${{ secrets.GITHUB_TOKEN }} }
-      - name: Build & push (amd64 + arm64)
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build (amd64 + arm64) — push only on a real release
         uses: docker/build-push-action@v6
         with:
-          context: .                     # TODO: point at the real Dockerfile/context from the mirrored code
+          context: .
+          # Real release builds the app image from the mirrored source; dry run
+          # builds a tiny synthetic fixture to prove the multi-arch path.
+          # TODO: real Dockerfile path/build-args come from the upstream Gitea snapshot.
+          file: ${{ steps.mode.outputs.publish == 'true' && 'Dockerfile' || 'test/fixtures/Dockerfile' }}
           platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/tubevault:latest
-            ghcr.io/${{ github.repository_owner }}/tubevault:${{ github.ref_name }}
+          push: ${{ steps.mode.outputs.publish == 'true' }}
+          tags: ${{ steps.mode.outputs.tags }}
       # TODO (optional): cosign sign + SBOM attest for supply-chain trust
+
       - name: Create GitHub Release
+        if: ${{ steps.mode.outputs.publish == 'true' }}
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
