@@ -1,0 +1,70 @@
+name: Community PR guard
+# Enforces the issues/translations-only policy: community PRs may only touch
+# locales/ and docs/. Anything else FAILS this check and gets a friendly comment.
+# The PR is NOT auto-closed — a maintainer closes it manually. See CONTRIBUTING.md.
+#
+# Maintainer/internal-branch PRs are exempt (so repo-infra PRs like this one pass).
+#
+# Uses pull_request_target so it can comment on fork PRs. SAFE: it never checks
+# out or executes PR code — it only reads the changed-file list via the API.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const pull_number = pr.number;
+
+            // Exempt maintainers and same-repo (internal branch) PRs.
+            const isInternal = pr.head.repo && pr.head.repo.full_name === `${owner}/${repo}`;
+            const isMaintainer = ['OWNER', 'MEMBER', 'COLLABORATOR'].includes(pr.author_association);
+            if (isInternal || isMaintainer) {
+              core.info('Maintainer/internal PR — policy check skipped.');
+              return;
+            }
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner, repo, pull_number, per_page: 100,
+            });
+            const allowed = (f) => f.startsWith('locales/') || f.startsWith('docs/');
+            const offending = files.map((f) => f.filename).filter((f) => !allowed(f));
+            if (offending.length === 0) {
+              core.info('OK — PR touches only locales/ and docs/.');
+              return;
+            }
+
+            const MARKER = '<!-- community-pr-guard -->';
+            const list = offending.slice(0, 20).map((f) => `- \`${f}\``).join('\n')
+              + (offending.length > 20 ? `\n- …and ${offending.length - 20} more` : '');
+            const body = [
+              MARKER,
+              "👋 Thanks for the interest! **TubeVault is developed upstream on a private upstream instance** and this GitHub repo is a **publish mirror** — so **source-code PRs are not merged here.**",
+              "",
+              "This PR changes files outside `locales/` and `docs/`:",
+              list,
+              "",
+              "**What works instead:**",
+              "- 🐛 💡 Open an **Issue** (bug report / feature request) — features are triaged upstream.",
+              "- 🌐 Contribute **translations** — PRs to `locales/<lang>.json` are welcome and merged.",
+              "- 📝 Small **docs** fixes under `docs/` are welcome.",
+              "",
+              "See [CONTRIBUTING.md](https://github.com/RhyBad/tube-vault/blob/main/CONTRIBUTING.md). A maintainer will follow up and close this manually. 🙏",
+            ].join('\n');
+
+            // Comment once (avoid spamming on every push), but always fail the check.
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number: pull_number, per_page: 100,
+            });
+            if (!comments.some((c) => c.body && c.body.includes(MARKER))) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pull_number, body });
+            }
+            core.setFailed(`PR touches ${offending.length} path(s) outside locales/ and docs/.`);
