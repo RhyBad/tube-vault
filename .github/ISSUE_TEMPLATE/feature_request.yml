@@ -1,0 +1,8 @@
+name: 💡 Feature request
+description: Suggest an idea (triaged upstream)
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes: { label: The idea, description: What problem does it solve? }
+    validations: { required: true }

@@ -1,0 +1,11 @@
+name: 🌐 Translation
+description: Report a translation issue or offer to translate a language
+labels: [i18n]
+body:
+  - type: input
+    id: lang
+    attributes: { label: Language (BCP-47), placeholder: "ja / de / fr …" }
+    validations: { required: true }
+  - type: textarea
+    id: detail
+    attributes: { label: Detail, description: "New language? Fixes? (PRs to locales/ welcome — see CONTRIBUTING)" }

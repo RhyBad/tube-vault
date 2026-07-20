@@ -1,0 +1,25 @@
+# Copy to .publishignore in the Gitea repo. rsync --exclude-from patterns.
+# --- AI / agent context (never publish) ---
+CLAUDE.md
+**/CLAUDE.md
+AGENTS.md
+.claude/
+.cursor/
+.cursorrules
+.aider*
+.windsurf*
+# --- internal docs / planning / product-definition layer ---
+docs/                 # internal dev docs (public docs live in the public repo, preserved separately)
+tube-vault-product/   # the private product-definition layer, if present anywhere
+**/PLAN.md
+**/*NOTES*.md
+**/*.private.*
+scratch/
+TODO*.md
+# --- env / secrets / local ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+secrets/
