@@ -15,7 +15,7 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Fail-safe publish gate. Publish ONLY on a real tag push, or a manual run
       # with dry_run explicitly false. A dry run can NEVER push or release.
