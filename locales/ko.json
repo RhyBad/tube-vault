@@ -1,0 +1,7 @@
+{
+  "app": { "name": "TubeVault" },
+  "nav": { "home": "홈", "queue": "큐", "live": "라이브", "library": "라이브러리", "channels": "채널", "storage": "스토리지", "notifications": "알림", "settings": "설정" },
+  "status": { "healthy": "정상", "downloading": "다운로드 중", "queued": "대기 중", "verifying": "검증 중", "awaitingVerify": "완결성 확인 중", "partlySaved": "부분 저장", "failed": "실패", "candidate": "후보", "rescued": "구조됨" },
+  "source": { "available": "사용 가능", "deleted": "삭제됨", "private": "비공개", "membersOnly": "멤버 전용", "ageGated": "연령 제한" },
+  "common": { "search": "보관함 검색…", "clear": "지우기", "retry": "재시도", "cancel": "취소", "loadMore": "더 보기", "allClear": "모두 확인됨" }
+}
