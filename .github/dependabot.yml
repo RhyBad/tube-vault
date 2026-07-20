@@ -1,0 +1,12 @@
+version: 2
+# This mirror currently tracks only GitHub Actions as updatable dependencies.
+# When release snapshots bring app source from upstream, add `npm` (package.json)
+# and/or `docker` (real Dockerfile) update blocks here.
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
