@@ -1,0 +1,13 @@
+TubeVault
+Copyright (C) 2026 <OWNER>
+Licensed under AGPL-3.0-or-later (see LICENSE).
+
+Component licensing:
+  - Source code ......... AGPL-3.0-or-later
+  - Translations ........ locales/ : MIT
+  - Documentation ....... docs/, README : CC-BY-4.0
+
+Third-party:
+  - yt-dlp (https://github.com/yt-dlp/yt-dlp) — The Unlicense (public domain). Invoked as a subprocess and/or
+    bundled in the image; imposes no license constraint. Thanks to the yt-dlp project.
+  - Other dependencies retain their respective licenses (see the image's package manifests).

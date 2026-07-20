@@ -1,0 +1,7 @@
+{
+  "app": { "name": "TubeVault" },
+  "nav": { "home": "Home", "queue": "Queue", "live": "Live", "library": "Library", "channels": "Channels", "storage": "Storage", "notifications": "Notifications", "settings": "Settings" },
+  "status": { "healthy": "Healthy", "downloading": "Downloading", "queued": "Queued", "verifying": "Verifying", "awaitingVerify": "Verifying completeness", "partlySaved": "Partly saved", "failed": "Failed", "candidate": "Candidate", "rescued": "Rescued" },
+  "source": { "available": "Available", "deleted": "Deleted", "private": "Private", "membersOnly": "Members only", "ageGated": "Age-restricted" },
+  "common": { "search": "Search the vault…", "clear": "Clear", "retry": "Retry", "cancel": "Cancel", "loadMore": "Load more", "allClear": "All clear" }
+}

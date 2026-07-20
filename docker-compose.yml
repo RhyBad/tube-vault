@@ -1,0 +1,40 @@
+# TubeVault — example deploy (STARTER TEMPLATE — align services with the upstream image's real topology).
+# The published image tag is set by the release workflow: ghcr.io/OWNER/tubevault:<version>|latest
+services:
+  api:
+    image: ghcr.io/OWNER/tubevault:latest
+    env_file: .env
+    depends_on: [postgres, redis]
+    volumes: ["vault:/data/media", "keys:/data/keys"]
+    ports: ["8080:8080"]           # front via nginx/TLS in real deploys
+    restart: unless-stopped
+
+  worker-archive:
+    image: ghcr.io/OWNER/tubevault:latest
+    command: ["worker"]            # WORKER_ROLE=archive  (enumerate/download/verify/source-check)
+    environment: [WORKER_ROLE=archive]
+    env_file: .env
+    depends_on: [postgres, redis]
+    volumes: ["vault:/data/media", "keys:/data/keys"]
+    restart: unless-stopped
+
+  worker-live:
+    image: ghcr.io/OWNER/tubevault:latest
+    command: ["worker"]            # WORKER_ROLE=live  (live-scan/probe/capture)
+    environment: [WORKER_ROLE=live]
+    env_file: .env
+    depends_on: [postgres, redis]
+    volumes: ["vault:/data/media", "keys:/data/keys"]
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    environment: [POSTGRES_USER=tubevault, POSTGRES_PASSWORD=change-me, POSTGRES_DB=tubevault]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+
+volumes: { vault: {}, keys: {}, pgdata: {} }
