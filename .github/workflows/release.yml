@@ -1,7 +1,7 @@
 name: Release
 on:
   push:
-    tags: ["v*"]          # upstream publish pushes vX.Y.Z → real release
+    tags: ["v*"]          # the upstream publish step pushes vX.Y.Z → real release
   workflow_dispatch:
     inputs:
       dry_run:
@@ -60,7 +60,7 @@ jobs:
           context: .
           # Real release builds the app image from the mirrored source; dry run
           # builds a tiny synthetic fixture to prove the multi-arch path.
-          # TODO: real Dockerfile path/build-args come from the upstream upstream snapshot.
+          # TODO: real Dockerfile path/build-args come from the upstream release snapshot.
           file: ${{ steps.mode.outputs.publish == 'true' && 'Dockerfile' || 'test/fixtures/Dockerfile' }}
           platforms: linux/amd64,linux/arm64
           push: ${{ steps.mode.outputs.publish == 'true' }}

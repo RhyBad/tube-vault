@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run on the upstream/dev side. Publish a clean release SNAPSHOT to the public GitHub repo.
-# - Snapshot only (NO upstream git history reaches GitHub).
+# - Snapshot only (no upstream git history reaches GitHub).
 # - Excludes internal/AI/planning files via .publishignore (source side).
 # - Preserves GitHub-native community dirs (locales/ docs/ .github/ CHANGELOG.md) — merge-publish, not force-mirror.
 # - Fail-closed guard: aborts if any forbidden file slipped into the snapshot.

@@ -5,9 +5,9 @@
 Self-hosted, single-user **YouTube archiving vault**. Preserve the channels you care about — keep a healthy
 copy even if the original disappears from YouTube.
 
-> **How this repo works:** development happens **upstream on a private upstream instance**. This GitHub
-> repository is the **public publish mirror + build/release + community surface**. GitHub Actions builds the
-> public multi-arch Docker image (GHCR, amd64+arm64) and cuts releases. See [CONTRIBUTING.md](CONTRIBUTING.md).
+> **How this repo works:** this GitHub repository is the **public home** for TubeVault's releases, Docker
+> images (GHCR, amd64+arm64), and community (issues & translations). Development happens in a **private
+> upstream repository**; clean releases are published here. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Quick start
 ```bash

@@ -47,7 +47,7 @@ jobs:
               + (offending.length > 20 ? `\n- …and ${offending.length - 20} more` : '');
             const body = [
               MARKER,
-              "👋 Thanks for the interest! **TubeVault is developed upstream on a private upstream instance** and this GitHub repo is a **publish mirror** — so **source-code PRs are not merged here.**",
+              "👋 Thanks for the interest! **Source-code PRs aren't merged in this repository** — TubeVault is developed in a private upstream repo, and this is its public release & community home.",
               "",
               "This PR changes files outside `locales/` and `docs/`:",
               list,

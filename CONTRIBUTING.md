@@ -1,12 +1,12 @@
 # Contributing to TubeVault
 
 ## How this project is developed
-TubeVault is developed **upstream on a private upstream instance**. This GitHub repository is a **publish
+TubeVault is developed in a **private upstream repository**. This GitHub repository is a **publish
 mirror**: clean release snapshots are pushed here, and GitHub Actions builds the public Docker image (GHCR)
 and creates releases. **Development does not happen on GitHub**, and code flows one-way (upstream → GitHub).
 
 ## Code contributions — not accepted
-Because code is one-directional (upstream is the source of truth) and development is fast-moving / AI-assisted,
+Because code is one-directional (the private upstream repo is the source of truth) and development is fast-moving / AI-assisted,
 **pull requests that change source code will not be merged.** Please don't spend effort on code PRs — open an
 **Issue** instead (bug report or feature request) and it will be triaged upstream.
 

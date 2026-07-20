@@ -1,4 +1,4 @@
-# Copy to .publishignore in the upstream repo. rsync --exclude-from patterns.
+# Copy to .publishignore in the private upstream repo. rsync --exclude-from patterns.
 # --- AI / agent context (never publish) ---
 CLAUDE.md
 **/CLAUDE.md
