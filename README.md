@@ -27,6 +27,10 @@ See [docs/install.md](docs/install.md) and [docs/configuration.md](docs/configur
 Report vulnerabilities privately — see [SECURITY.md](SECURITY.md). Do not open public issues for security.
 
 ## License
-**Code:** AGPL-3.0-or-later · **Translations:** MIT · **Docs:** CC-BY-4.0. See [LICENSE](LICENSE) /
-[NOTICE](NOTICE). Uses [yt-dlp](https://github.com/yt-dlp/yt-dlp) (Unlicense). See [DISCLAIMER.md](DISCLAIMER.md)
-— you are responsible for complying with YouTube's ToS and copyright.
+Licensed per directory:
+- **Code** — everything not listed below — **AGPL-3.0-or-later** ([LICENSE](LICENSE))
+- **`locales/`** (translations) — **MIT**
+- **`docs/` + README** (documentation) — **CC-BY-4.0**
+
+Component split is recorded in [NOTICE](NOTICE). Uses [yt-dlp](https://github.com/yt-dlp/yt-dlp) (Unlicense).
+See [DISCLAIMER.md](DISCLAIMER.md) — you are responsible for complying with YouTube's ToS and copyright.
