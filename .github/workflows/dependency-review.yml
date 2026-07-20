@@ -1,0 +1,14 @@
+name: Dependency review
+# Blocks PRs that introduce vulnerable or license-incompatible dependencies.
+# No-op until a manifest (package.json / lockfile) arrives via a release snapshot.
+on: pull_request
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
