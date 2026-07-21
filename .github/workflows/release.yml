@@ -11,15 +11,24 @@ on:
 permissions:
   contents: write         # create Release
   packages: write         # push to GHCR
+
 jobs:
-  build-and-release:
+  # Validate locales + resolve publish mode / version once; shared with later jobs.
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.mode.outputs.publish }}
+      ver: ${{ steps.mode.outputs.ver }}
+      built_at: ${{ steps.mode.outputs.built_at }}
     steps:
       - uses: actions/checkout@v4
-
-      # Fail-safe publish gate. Publish ONLY on a real tag push, or a manual run
-      # with dry_run explicitly false. A dry run can NEVER push or release.
-      - name: Resolve publish mode
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Validate locales
+        run: node scripts/validate-locales.mjs
+      # Fail-safe gate: publish ONLY on a real v* tag push, or a manual run with
+      # dry_run explicitly false. A dry run can NEVER push or release.
+      - name: Resolve publish mode & version
         id: mode
         env:
           EVENT: ${{ github.event_name }}
@@ -28,48 +37,73 @@ jobs:
         run: |
           if [ "$EVENT" = "push" ] || { [ "$EVENT" = "workflow_dispatch" ] && [ "$DRY" = "false" ]; }; then
             PUB=true
-            TAGS=$'ghcr.io/rhybad/tubevault:latest\nghcr.io/rhybad/tubevault:'"$REF_NAME"
-            echo "Mode: PUBLISH — push to GHCR + create Release ($REF_NAME)"
+            VER="${REF_NAME#v}"          # v0.1.0 -> 0.1.0
+            echo "Mode: PUBLISH — build 3 images, push to GHCR + create Release ($REF_NAME)"
           else
             PUB=false
-            TAGS='ghcr.io/rhybad/tubevault:dry-run'
-            echo "Mode: DRY RUN — build multi-arch only, no push, no release"
+            VER="dry-run"
+            echo "Mode: DRY RUN — build multi-arch/multi-target only, no push, no release"
           fi
           {
             echo "publish=$PUB"
-            printf 'tags<<__TAGS__\n%s\n__TAGS__\n' "$TAGS"
+            echo "ver=$VER"
+            echo "built_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Validate locales
-        run: node scripts/validate-locales.mjs
-
+  # Build the three targets (api/worker/web), multi-arch. Push only on a real release.
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: api,    image: ghcr.io/rhybad/tubevault-api }
+          - { target: worker, image: ghcr.io/rhybad/tubevault-worker }
+          - { target: web,    image: ghcr.io/rhybad/tubevault-web }
+    steps:
+      - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3          # arm64 emulation for multi-arch
       - uses: docker/setup-buildx-action@v3
-
       - name: Log in to GHCR
-        if: ${{ steps.mode.outputs.publish == 'true' }}
+        if: ${{ needs.prepare.outputs.publish == 'true' }}
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build (amd64 + arm64) — push only on a real release
+      - name: Build ${{ matrix.target }} (amd64 + arm64) — push only on a real release
         uses: docker/build-push-action@v6
         with:
+          # Real release builds ./Dockerfile (arrives via the upstream release snapshot);
+          # dry runs build the synthetic multi-target fixture so nothing real is required.
           context: .
-          # Real release builds the app image from the mirrored source; dry run
-          # builds a tiny synthetic fixture to prove the multi-arch path.
-          # TODO: real Dockerfile path/build-args come from the upstream release snapshot.
-          file: ${{ steps.mode.outputs.publish == 'true' && 'Dockerfile' || 'test/fixtures/Dockerfile' }}
+          file: ${{ needs.prepare.outputs.publish == 'true' && 'Dockerfile' || 'test/fixtures/Dockerfile' }}
+          target: ${{ matrix.target }}
           platforms: linux/amd64,linux/arm64
-          push: ${{ steps.mode.outputs.publish == 'true' }}
-          tags: ${{ steps.mode.outputs.tags }}
+          push: ${{ needs.prepare.outputs.publish == 'true' }}
+          tags: |
+            ${{ matrix.image }}:${{ needs.prepare.outputs.ver }}
+            ${{ matrix.image }}:latest
+          # Provenance metadata only — NO secret build-args.
+          build-args: |
+            APP_VERSION=${{ needs.prepare.outputs.ver }}
+            GIT_SHA=${{ github.sha }}
+            BUILT_AT=${{ needs.prepare.outputs.built_at }}
       # TODO (optional): cosign sign + SBOM attest for supply-chain trust
 
+  # One GitHub Release per real tag (skipped on dry runs).
+  release:
+    needs: [prepare, build]
+    if: ${{ needs.prepare.outputs.publish == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Create GitHub Release
-        if: ${{ steps.mode.outputs.publish == 'true' }}
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name }}
           generate_release_notes: true
-          files: docker-compose.yml
+          files: |
+            docker-compose.yml
+            .env.example
