@@ -1,40 +1,120 @@
-# TubeVault — example deploy (STARTER TEMPLATE — align services with the upstream image's real topology).
-# The published image tag is set by the release workflow: ghcr.io/rhybad/tubevault:<version>|latest
+# TubeVault — user-facing deploy. PULLS the published GHCR images (does NOT build).
+# Same shape as the upstream compose; only defaults differ (relative ./data paths,
+# GHCR images, change-me placeholders). Pin a release with TUBEVAULT_TAG (default: latest).
+# .env auto-loads for ${...} interpolation (see .env.example). Only the web port is published.
+
+x-app-env: &app-env
+  NODE_ENV: production
+  DATABASE_URL: "postgresql://${POSTGRES_USER:-tubevault}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-tubevault}?schema=public"
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
+  TUBEVAULT_DATA_DIR: /data
+  # TUBEVAULT_CREDENTIAL_KEY_FILE: /run/secrets/tubevault.key   # opt-in credential feature (off by default)
+  # yt-dlp passthrough levers (each empty default; tune via .env):
+  TUBEVAULT_YTDLP_PLAYER_CLIENT: "${TUBEVAULT_YTDLP_PLAYER_CLIENT:-}"
+  TUBEVAULT_YTDLP_POT_PROVIDER_URL: "${TUBEVAULT_YTDLP_POT_PROVIDER_URL:-}"
+  TUBEVAULT_YTDLP_PROXY: "${TUBEVAULT_YTDLP_PROXY:-}"
+  TUBEVAULT_YTDLP_SLEEP_REQUESTS: "${TUBEVAULT_YTDLP_SLEEP_REQUESTS:-}"
+  TUBEVAULT_YTDLP_SLEEP_INTERVAL: "${TUBEVAULT_YTDLP_SLEEP_INTERVAL:-}"
+  TUBEVAULT_YTDLP_MAX_SLEEP_INTERVAL: "${TUBEVAULT_YTDLP_MAX_SLEEP_INTERVAL:-}"
+  TUBEVAULT_YTDLP_LIMIT_RATE: "${TUBEVAULT_YTDLP_LIMIT_RATE:-}"
+  TUBEVAULT_YTDLP_CONCURRENT_FRAGMENTS: "${TUBEVAULT_YTDLP_CONCURRENT_FRAGMENTS:-}"
+  TUBEVAULT_YTDLP_RETRIES: "${TUBEVAULT_YTDLP_RETRIES:-}"
+  TUBEVAULT_YTDLP_FRAGMENT_RETRIES: "${TUBEVAULT_YTDLP_FRAGMENT_RETRIES:-}"
+
+x-app-volumes: &app-volumes
+  - ${TUBEVAULT_MEDIA_DIR:-./data/media}:/data                  # TUBEVAULT_DATA_DIR=/data (media nests at /data/media)
+  # - ./secrets/tubevault.key:/run/secrets/tubevault.key:ro     # opt-in credential key (read-only)
+
 services:
   api:
-    image: ghcr.io/rhybad/tubevault:latest
-    env_file: .env
-    depends_on: [postgres, redis]
-    volumes: ["vault:/data/media", "keys:/data/keys"]
-    ports: ["8080:8080"]           # front via nginx/TLS in real deploys
+    image: ghcr.io/rhybad/tubevault-api:${TUBEVAULT_TAG:-latest}
+    init: true
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      <<: *app-env
+      API_PORT: "3000"
+      TUBEVAULT_ACCESS_SECRET_HASH: "${TUBEVAULT_ACCESS_SECRET_HASH:?set TUBEVAULT_ACCESS_SECRET_HASH}"
+      TUBEVAULT_SESSION_KEY: "${TUBEVAULT_SESSION_KEY:?set TUBEVAULT_SESSION_KEY}"
+      TUBEVAULT_INSECURE_COOKIES: "${TUBEVAULT_INSECURE_COOKIES:-}"
+      TUBEVAULT_SYNC_EXTRACT_TIMEOUT_MS: "${TUBEVAULT_SYNC_EXTRACT_TIMEOUT_MS:-}"
+    volumes: *app-volumes
+    healthcheck:
+      test: ['CMD', 'node', '-e', "require('fs').accessSync('/data',2);fetch('http://127.0.0.1:3000/api/health').then((r)=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    # api listens on :3000 internally (web/nginx proxies /api* -> api:3000); NOT published (debug 127.0.0.1:8090 dropped).
+
+  web:
+    image: ghcr.io/rhybad/tubevault-web:${TUBEVAULT_TAG:-latest}
+    init: true
+    depends_on:
+      api: { condition: service_healthy }
+    ports: ["${TUBEVAULT_WEB_PORT:-8080}:8080"]                 # nginx-unprivileged on :8080 — the ONLY published port
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '--spider', 'http://127.0.0.1:8080/']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     restart: unless-stopped
 
   worker-archive:
-    image: ghcr.io/rhybad/tubevault:latest
-    command: ["worker"]            # WORKER_ROLE=archive  (enumerate/download/verify/source-check)
-    environment: [WORKER_ROLE=archive]
-    env_file: .env
-    depends_on: [postgres, redis]
-    volumes: ["vault:/data/media", "keys:/data/keys"]
+    image: ghcr.io/rhybad/tubevault-worker:${TUBEVAULT_TAG:-latest}
+    init: true
+    stop_grace_period: 30s
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      api: { condition: service_healthy }
+    environment:
+      <<: *app-env
+      WORKER_ROLE: archive     # enumerate/download/verify/source-check
+    volumes: *app-volumes
     restart: unless-stopped
 
   worker-live:
-    image: ghcr.io/rhybad/tubevault:latest
-    command: ["worker"]            # WORKER_ROLE=live  (live-scan/probe/capture)
-    environment: [WORKER_ROLE=live]
-    env_file: .env
-    depends_on: [postgres, redis]
-    volumes: ["vault:/data/media", "keys:/data/keys"]
+    image: ghcr.io/rhybad/tubevault-worker:${TUBEVAULT_TAG:-latest}
+    init: true
+    stop_grace_period: 30s
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      api: { condition: service_healthy }
+    environment:
+      <<: *app-env
+      WORKER_ROLE: live        # live-scan/probe/capture
+    volumes: *app-volumes
     restart: unless-stopped
 
-  postgres:
-    image: postgres:16
-    environment: [POSTGRES_USER=tubevault, POSTGRES_PASSWORD=change-me, POSTGRES_DB=tubevault]
-    volumes: ["pgdata:/var/lib/postgresql/data"]
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-tubevault}
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}"
+      POSTGRES_DB: ${POSTGRES_DB:-tubevault}
+    volumes:
+      - ${TUBEVAULT_DB_DIR:-./data/db}:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tubevault} -d ${POSTGRES_DB:-tubevault}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
+    command: [redis-server, --appendonly, "yes"]      # AOF persistence
+    volumes:
+      - ${TUBEVAULT_REDIS_DIR:-./data/redis}:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
-
-volumes: { vault: {}, keys: {}, pgdata: {} }
