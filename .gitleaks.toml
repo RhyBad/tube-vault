@@ -1,0 +1,29 @@
+# gitleaks config for the public TubeVault mirror (RhyBad/tube-vault).
+#
+# Extends the default gitleaks ruleset and allowlists SYNTHETIC constants that
+# live in TEST sources — e.g. the 32-byte AES / session-token keys in
+# apps/api/src/auth/*.test.ts. Those are fixtures, not real credentials, and the
+# tests are published on purpose (owner decision: ship test source so the public
+# build stays transform-free; Gitea's check.yml remains the quality gate).
+#
+# The PRIMARY secret gate is scripts/lib/secret-guard.mjs, which scans the full
+# publish snapshot (tests included) with high-confidence rules before every push.
+# This file only quiets gitleaks' generic-api-key false positives on the public
+# mirror's secret-scan workflow.
+#
+# Scoped by PATH, not by fingerprint, on purpose: gitleaks fingerprints embed the
+# commit sha, so they change on every release and would silently stop matching —
+# a path scope keeps working and also covers new test constants added later.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Synthetic constants in test sources are fixtures, not real secrets"
+paths = [
+  '''.*\.test\.(ts|tsx|js|jsx|mjs|cjs)$''',
+  '''.*\.spec\.(ts|tsx|js|jsx|mjs|cjs)$''',
+  '''(^|/)__tests__/''',
+  '''(^|/)test/''',
+  '''(^|/)test-utils\.[^/]*$''',
+]

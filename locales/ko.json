@@ -1,7 +1,1262 @@
 {
-  "app": { "name": "TubeVault" },
-  "nav": { "home": "홈", "queue": "큐", "live": "라이브", "library": "라이브러리", "channels": "채널", "storage": "스토리지", "notifications": "알림", "settings": "설정" },
-  "status": { "healthy": "정상", "downloading": "다운로드 중", "queued": "대기 중", "verifying": "검증 중", "awaitingVerify": "완결성 확인 중", "partlySaved": "부분 저장", "failed": "실패", "candidate": "후보", "rescued": "구조됨" },
-  "source": { "available": "사용 가능", "deleted": "삭제됨", "private": "비공개", "membersOnly": "멤버 전용", "ageGated": "연령 제한" },
-  "common": { "search": "보관함 검색…", "clear": "지우기", "retry": "재시도", "cancel": "취소", "loadMore": "더 보기", "allClear": "모두 확인됨" }
+  "app": {
+    "name": "TubeVault"
+  },
+  "nav": {
+    "home": "홈",
+    "queue": "대기열",
+    "live": "라이브",
+    "library": "라이브러리",
+    "channels": "채널",
+    "storage": "저장소",
+    "notifications": "알림",
+    "settings": "설정",
+    "more": "더보기"
+  },
+  "theme": {
+    "label": "테마",
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템"
+  },
+  "sse": {
+    "connected": "연결됨",
+    "reconnecting": "재연결 중…",
+    "disconnected": "연결 끊김",
+    "label": "실시간 업데이트"
+  },
+  "action": {
+    "retry": "다시 시도",
+    "cancel": "취소",
+    "confirm": "확인",
+    "close": "닫기",
+    "dismiss": "지우기",
+    "clearFilters": "필터 지우기",
+    "loadMore": "더 불러오기",
+    "seeAll": "전체 보기"
+  },
+  "common": {
+    "comingSoon": "준비 중",
+    "comingSoonBody": "이 화면은 준비 중입니다. 다음 업데이트에서 제공될 예정입니다.",
+    "notFound": "페이지를 찾을 수 없습니다",
+    "notFoundBody": "해당 페이지가 존재하지 않습니다.",
+    "endOfList": "목록의 끝",
+    "loading": "불러오는 중…"
+  },
+  "status": {
+    "copy": {
+      "CANDIDATE": "후보",
+      "QUEUED": "대기 중",
+      "DOWNLOADING": "다운로드 중",
+      "VERIFYING": "검증 중",
+      "AWAITING_VERIFY": "완결성 확인 중",
+      "HEALTHY": "정상",
+      "FAILED": "실패",
+      "PARTIAL_KEPT": "부분 저장됨"
+    },
+    "source": {
+      "AVAILABLE": "사용 가능",
+      "GEO_BLOCKED": "지역 차단",
+      "PRIVATE": "비공개",
+      "MEMBERS_ONLY": "멤버 전용",
+      "AGE_GATED": "연령 제한",
+      "DELETED": "삭제됨",
+      "TRANSIENT_ERROR": "일시적 오류",
+      "RATE_LIMITED": "요청 제한",
+      "UNKNOWN": "알 수 없음"
+    },
+    "job": {
+      "QUEUED": "대기 중",
+      "RUNNING": "다운로드 중",
+      "PAUSED": "일시정지",
+      "COMPLETED": "완료",
+      "FAILED": "실패",
+      "CANCELED": "취소됨"
+    },
+    "rescued": "구조됨",
+    "srcEyebrow": "src"
+  },
+  "progress": {
+    "of": "전체 {{total}} 중 {{done}}",
+    "etaLeft": "~{{time}} 남음",
+    "received": "{{bytes}} 받음",
+    "elapsed": "{{time}} 경과",
+    "live": "녹화 중 (라이브)"
+  },
+  "storage": {
+    "free": "남음",
+    "usedOfTotal": "전체 {{total}} 중 {{used}} 사용",
+    "nearlyFull": "거의 가득 참",
+    "criticallyFull": "용량 임박",
+    "videos_other": "동영상 {{count}}개",
+    "eyebrow": "스토리지",
+    "title": "스토리지",
+    "readOnly": "읽기 전용",
+    "subtitle": "보관함 용량과 채널별 사용량입니다.",
+    "refresh": "새로고침",
+    "refreshHint": "요청 시 다시 불러오기 · 다운로드 완료 시 자동 새로고침",
+    "freeUpSpace": "공간 확보",
+    "loading": "스토리지 사용량 불러오는 중…",
+    "hero": {
+      "eyebrow": "보관함 용량"
+    },
+    "kpi": {
+      "videos": "보관한 영상",
+      "channels": "채널",
+      "largest": "가장 큰 채널"
+    },
+    "usage": {
+      "section": "채널별 사용량",
+      "sortedBySize": "용량순 정렬",
+      "count_one": "채널 {{count}}개",
+      "count_other": "채널 {{count}}개",
+      "videos_one": "영상 {{count}}개",
+      "videos_other": "영상 {{count}}개",
+      "noDownloads": "다운로드 없음",
+      "openChannel": "{{title}} 열기 — 채널 상세"
+    },
+    "notice": {
+      "nearTitle": "남은 공간이 얼마 없어요",
+      "critTitle": "남은 공간이 매우 부족해요",
+      "body": "다운로드는 계속 진행됩니다 — 공간이 부족해도 자동으로 멈추거나 삭제하지 않습니다."
+    },
+    "empty": {
+      "title": "아직 사용량이 없어요",
+      "body": "보관함에 저장된 영상이 아직 없습니다. 다운로드한 영상이 채널별로 여기에 표시됩니다.",
+      "cta": "채널로 이동"
+    },
+    "error": {
+      "title": "스토리지를 불러오지 못했어요",
+      "body": "서버에 연결하지 못했습니다. 서버가 실행 중인지 확인한 뒤 다시 시도해 주세요.",
+      "retry": "다시 시도"
+    },
+    "cleanup": {
+      "title": "공간 확보",
+      "subtitle": "삭제할 보관 영상을 선택해 디스크 공간을 되찾으세요. 용량 화면은 읽기 전용이며, 실제 작업은 여기서 합니다.",
+      "back": "스토리지",
+      "freeNow": "현재 남음",
+      "searchPlaceholder": "제목 또는 채널 검색…",
+      "reviewDelete_one": "{{count}}개 검토 후 삭제",
+      "reviewDelete_other": "{{count}}개 검토 후 삭제",
+      "reason": {
+        "noMedia": "삭제할 미디어가 없습니다",
+        "inProgress": "진행 중 — 작업을 완료하거나 취소한 뒤 삭제하세요"
+      },
+      "empty": {
+        "title": "되찾을 공간이 없어요",
+        "body": "아직 공간을 차지하는 다운로드 영상이 없습니다. 영상을 보관하면 여기에 표시됩니다."
+      },
+      "confirm": {
+        "title_one": "영상 {{count}}개를 삭제할까요?",
+        "title_other": "영상 {{count}}개를 삭제할까요?",
+        "subtitle": "재다운로드 가능 여부에 따라 자동으로 분류합니다. 삭제 전에 확인하세요.",
+        "reclaimTitle_one": "재확보: {{count}}개",
+        "reclaimTitle_other": "재확보: {{count}}개",
+        "reclaimDesc": "미디어를 삭제합니다 — 원본이 있으면 언제든 다시 받을 수 있어요.",
+        "irreplaceableTitle_one": "대체 불가: {{count}}개",
+        "irreplaceableTitle_other": "대체 불가: {{count}}개",
+        "irreplaceableDesc": "구조됨 — 유일하게 남은 사본입니다. 삭제하면 영구적입니다.",
+        "frees": "{{size}} 확보",
+        "showTitles_one": "제목 {{count}}개 보기",
+        "showTitles_other": "제목 {{count}}개 보기",
+        "hideTitles": "제목 숨기기",
+        "totalFreed": "총 확보량",
+        "typePromptPre": "대체 불가 사본을 영구 삭제하려면 ",
+        "typeWord": "삭제",
+        "typePromptPost": " 을(를) 입력하세요.",
+        "cancel": "취소",
+        "deleteBtn_one": "{{count}}개 삭제",
+        "deleteBtn_other": "{{count}}개 삭제"
+      },
+      "result": {
+        "freedTitle": "공간을 되찾았어요",
+        "freedBody": "{{size}} 확보 — 용량이 갱신되었습니다.",
+        "deletedNoSpace": "{{count}}개 삭제됨.",
+        "partialTitle": "일부 완료",
+        "failedTitle": "삭제하지 못했어요",
+        "failedBody_one": "영상 {{count}}개는 삭제하지 못했습니다 ({{reasons}}).",
+        "failedBody_other": "영상 {{count}}개는 삭제하지 못했습니다 ({{reasons}})."
+      },
+      "reason_active_job": "작업을 먼저 취소하세요",
+      "reason_fs_error": "파일 오류",
+      "reason_not_found": "없음",
+      "reason_not_eligible": "대상 아님"
+    }
+  },
+  "data": {
+    "range": "{{total}}개 중 {{from}}–{{to}}",
+    "prevPage": "이전 페이지",
+    "nextPage": "다음 페이지",
+    "selectAll": "전체 선택"
+  },
+  "toolbar": {
+    "search": "검색…",
+    "moreFilters": "필터 더보기",
+    "filters": "필터",
+    "clearAll": "모두 지우기",
+    "done": "완료",
+    "sortBy": "정렬 기준"
+  },
+  "player": {
+    "download": "원본 다운로드"
+  },
+  "forms": {
+    "stepper": {
+      "decrement": "감소",
+      "increment": "증가"
+    },
+    "secret": {
+      "placeholderEnter": "비밀 값 입력",
+      "placeholderUnchanged": "•••••••••••• (변경 없음)",
+      "keepHint": "비워 두면 기존 비밀 값이 유지됩니다.",
+      "deleteHint": "지움 — 저장하면 저장된 비밀 값이 삭제됩니다.",
+      "setHint": "저장하면 비밀 값이 교체됩니다.",
+      "emptyHint": "저장된 비밀 값이 없습니다.",
+      "reveal": "비밀 값 표시",
+      "hide": "비밀 값 숨기기",
+      "clear": "저장된 비밀 값 지우기"
+    }
+  },
+  "feedback": {
+    "error": {
+      "title": "문제가 발생했습니다",
+      "body": "불러오지 못했습니다. 다시 시도할 수 있습니다."
+    },
+    "confirm": {
+      "typePrompt": "확인하려면 {{text}} 을(를) 입력하세요"
+    },
+    "notification": {
+      "unread": "읽지 않음"
+    }
+  },
+  "cards": {
+    "channel": {
+      "watchingLive": "라이브 감시 중",
+      "collectionStopped": "수집 중지됨",
+      "total": "전체",
+      "healthy": "정상",
+      "candidates": "후보"
+    },
+    "video": {
+      "live": "라이브",
+      "members": "멤버"
+    },
+    "live": {
+      "heartbeatLive": "실시간",
+      "heartbeatStale": "신호 확인 중",
+      "state": {
+        "DETECTED": "감지됨",
+        "CAPTURING": "녹화 중",
+        "ENDED_NORMAL": "종료됨",
+        "ENDED_INTERRUPTED": "조기 종료",
+        "FAILED": "실패",
+        "ENDED_PENDING": "마무리 중"
+      }
+    }
+  },
+  "shell": {
+    "nav": {
+      "primary": "주 메뉴"
+    },
+    "search": {
+      "trigger": "보관함 검색…",
+      "placeholder": "보관함 검색…",
+      "hint": "제목 또는 채널 검색",
+      "channels": "채널",
+      "videos": "동영상",
+      "searching": "검색 중…",
+      "noMatchTitle": "“{{query}}” 검색 결과가 없습니다",
+      "noMatchBody": "다른 제목이나 채널 이름으로 검색해 보세요.",
+      "seeAll": "라이브러리에서 전체 결과 보기",
+      "keyHint": "↑↓ 이동 · Enter 열기 · Esc 닫기",
+      "close": "검색 닫기"
+    },
+    "bell": {
+      "open": "알림",
+      "title": "알림",
+      "unread": "안 읽음 {{count}}개",
+      "markAllRead": "모두 읽음 표시",
+      "seeAll": "알림에서 모두 보기",
+      "emptyTitle": "모두 확인됨",
+      "emptyBody": "지금은 처리할 항목이 없습니다.",
+      "errorTitle": "알림을 불러오지 못했습니다",
+      "errorBody": "연결 상태를 확인한 뒤 다시 시도해 주세요.",
+      "retryLoad": "다시 시도",
+      "viewVideo": "동영상 보기",
+      "retry": "지금 다시 시도",
+      "refreshCredential": "자격 증명 갱신",
+      "watchLive": "라이브 보기",
+      "manageStorage": "저장소 관리",
+      "close": "알림 닫기"
+    },
+    "bulk": {
+      "selected": "{{count}}개 선택됨",
+      "clear": "선택 해제"
+    }
+  },
+  "queue": {
+    "title": "작업 큐",
+    "subtitle": "진행 중·대기 중이거나 최근 종료된 다운로드.",
+    "loading": "큐 불러오는 중…",
+    "tabs": {
+      "active": "활성",
+      "failed": "실패",
+      "completed": "완료",
+      "canceled": "취소"
+    },
+    "filter": {
+      "channel": "채널",
+      "allChannels": "모든 채널"
+    },
+    "col": {
+      "video": "영상",
+      "status": "상태",
+      "progress": "진행",
+      "order": "순서",
+      "try": "시도",
+      "actions": "작업"
+    },
+    "row": {
+      "order": "순서 {{priority}}",
+      "orderUnknown": "순서 —",
+      "position": "#{{position}}",
+      "orderTip": "우선순위 {{priority}}",
+      "orderTipUnknown": "우선순위 없음 (레거시 작업)",
+      "orderRunning": "지금 다운로드 중",
+      "attempt_other": "{{count}}회차",
+      "unknownTotal": "크기 미상",
+      "waitingSlot": "슬롯 대기 중",
+      "waitingRetry": "재시도 대기 중",
+      "timeQueued": "{{time}} 큐잉됨",
+      "timeStarted": "{{time}} 시작됨",
+      "timePaused": "{{time}} 일시정지됨",
+      "timeFinished": "{{time}} 종료됨",
+      "openLog": "이벤트 로그 보기",
+      "hideLog": "이벤트 로그 숨기기",
+      "dragHandle": "드래그하여 순서 변경",
+      "more": "추가 작업"
+    },
+    "sheet": {
+      "label": "{{title}} 추가 작업",
+      "selectForBulk": "일괄 선택"
+    },
+    "pending": {
+      "canceling": "취소 중…",
+      "pausing": "정지 중…",
+      "resuming": "재개 중…",
+      "moving": "이동 중…"
+    },
+    "actions": {
+      "cancel": "취소",
+      "pause": "일시정지",
+      "resume": "재개",
+      "moveTop": "맨 위로",
+      "moveBottom": "맨 아래로",
+      "requeue": "재큐",
+      "select": "선택",
+      "selectDone": "완료",
+      "selectAll": "전체 선택"
+    },
+    "reorder": {
+      "runningLocked": "다운로드 중인 작업은 순서를 변경할 수 없습니다"
+    },
+    "newJobs_other": "새 작업 {{count}}건 — 새로고침",
+    "bulk": {
+      "cancel": "취소",
+      "pause": "일시정지",
+      "resume": "재개"
+    },
+    "empty": {
+      "active": {
+        "title": "큐가 비어 있습니다",
+        "body": "대기 중이거나 진행 중인 다운로드가 없습니다.",
+        "cta": "라이브러리에서 큐잉"
+      },
+      "failed": {
+        "title": "실패한 작업 없음",
+        "body": "다운로드 실패한 작업이 여기에 표시됩니다."
+      },
+      "completed": {
+        "title": "완료된 작업 없음",
+        "body": "완료된 다운로드가 여기에 표시됩니다."
+      },
+      "canceled": {
+        "title": "취소한 작업 없음",
+        "body": "취소한 작업이 여기에 표시됩니다."
+      },
+      "filtered": {
+        "title": "이 채널에 해당하는 작업 없음",
+        "body": "선택한 채널의 대기 중이거나 최근 다운로드가 없습니다.",
+        "clear": "채널 필터 지우기"
+      }
+    },
+    "error": {
+      "title": "큐를 불러오지 못했습니다",
+      "body": "큐를 가져오는 중 문제가 발생했습니다.",
+      "retry": "다시 시도"
+    },
+    "confirm": {
+      "cancelTitle": "이 다운로드를 취소할까요?",
+      "cancelBody": "작업이 중단되고 부분 다운로드는 삭제됩니다. 나중에 다시 큐잉할 수 있습니다.",
+      "cancelConfirm": "다운로드 취소",
+      "cancelDismiss": "유지",
+      "bulkCancelTitle": "{{count}}개 다운로드를 취소할까요?",
+      "bulkCancelBody": "각 작업이 중단되고 부분 다운로드는 삭제됩니다.",
+      "bulkCancelDismiss": "모두 유지"
+    },
+    "toast": {
+      "full": "큐가 가득 찼습니다 — 잠시 후 다시 시도하세요.",
+      "controlUnavailable": "제어 채널을 사용할 수 없습니다 — 다시 시도하세요.",
+      "resumeFailed": "재개하지 못했습니다 — 여전히 일시정지 상태입니다. 다시 시도하세요.",
+      "resumeLegacy": "이 작업은 재개할 수 없습니다 — 취소 후 다시 큐잉하세요.",
+      "bulkDone_other": "{{count}}개 작업 완료.",
+      "bulkPartial": "{{ok}}개 완료, {{failed}}개 실패.",
+      "requeued_other": "{{count}}개 영상 큐잉됨.",
+      "requeuePartial": "{{enqueued}}개 큐잉, {{skipped}}개 제외.",
+      "requeueNone": "큐잉할 항목 없음 — 이미 큐잉되었거나 대상이 아닙니다."
+    },
+    "log": {
+      "title": "이벤트 로그",
+      "job": "작업 {{id}}",
+      "refresh": "새로고침",
+      "loading": "이벤트 불러오는 중…",
+      "empty": "이 작업에 기록된 이벤트가 없습니다.",
+      "error": "이벤트 로그를 불러오지 못했습니다.",
+      "close": "이벤트 로그 닫기",
+      "snapshot_other": "스냅샷 · 이벤트 {{count}}개"
+    }
+  },
+  "home": {
+    "eyebrow": "홈",
+    "title": "개요",
+    "subtitle": "한눈에 보는 보관함 — 지금 무엇이 돌아가고, 무엇이 저장돼 있으며, 방금 무엇이 보존됐는지.",
+    "w1": {
+      "title": "진행 현황",
+      "loading": "진행 중인 작업 불러오는 중…",
+      "summary": {
+        "downloads_other": "다운로드 {{count}}건",
+        "live_other": "라이브 녹화 {{count}}건",
+        "idle": "진행 중인 작업 없음"
+      },
+      "link": {
+        "queue": "큐",
+        "live": "라이브"
+      },
+      "liveDivider": "라이브 녹화",
+      "viewQueue": "큐 전체 보기",
+      "waiting_other": "큐에서 {{count}}건 더 보기",
+      "waitingCapped": "큐에서 나머지 보기",
+      "empty": {
+        "title": "진행 중인 작업 없음",
+        "body": "새 다운로드와 라이브 녹화가 여기에 표시됩니다.",
+        "cta": "라이브러리 둘러보기"
+      },
+      "error": "진행 상황을 불러오지 못했습니다."
+    },
+    "w2": {
+      "title": "용량 현황",
+      "subtitle": "보관함 용량 · 상위 채널",
+      "loading": "용량 정보 불러오는 중…",
+      "link": "스토리지",
+      "more": "스토리지 상세",
+      "empty": {
+        "title": "아직 보관물 없음",
+        "body": "영상을 보존하면 보관함 사용량이 여기에 표시됩니다.",
+        "cta": "채널 추가"
+      },
+      "error": "용량 정보를 불러오지 못했습니다."
+    },
+    "w3": {
+      "title": "최근 보존",
+      "subtitle": "보관함에 가장 최근 들어온 사본",
+      "loading": "최근 활동 불러오는 중…",
+      "link": "라이브러리",
+      "more": "라이브러리 열기",
+      "empty": {
+        "title": "아직 보존된 영상 없음",
+        "body": "채널을 추가해 영상 보관을 시작하세요.",
+        "cta": "채널 추가"
+      },
+      "error": "최근 활동을 불러오지 못했습니다."
+    },
+    "w4": {
+      "title": "채널",
+      "subtitle": "새 영상·라이브 감시 중",
+      "loading": "채널 불러오는 중…",
+      "link": "전체 채널",
+      "more": "채널 전체 보기",
+      "empty": {
+        "title": "아직 채널 없음",
+        "body": "채널을 추가해 보관을 시작하세요.",
+        "cta": "채널 추가"
+      },
+      "error": "채널을 불러오지 못했습니다."
+    }
+  },
+  "live": {
+    "error": {
+      "title": "이 영역을 불러오지 못했어요",
+      "desc": "연결이 끊겼어요. 놓친 건 없으니 다시 시도해 주세요."
+    },
+    "captures": {
+      "eyebrow": "라이브 · 지금 시청 중",
+      "title": "진행 중인 캡처",
+      "sub": "지금 보관함에 녹화되고 있는 방송입니다.",
+      "loading": "진행 중인 캡처 불러오는 중…",
+      "detected": "방송을 감지했어요 — 곧 녹화가 시작됩니다.",
+      "empty": {
+        "title": "진행 중인 방송 없음",
+        "desc": "감시 중인 채널이 방송을 시작하면 여기에서 실시간으로 볼 수 있어요 — 놓친 건 없어요.",
+        "cta": "채널 라이브 감시하기"
+      }
+    },
+    "channels": {
+      "eyebrow": "수집 대상",
+      "title": "감시 중인 채널",
+      "sub": "TubeVault가 라이브 방송을 확인하는 채널입니다.",
+      "loading": "감시 중인 채널 불러오는 중…",
+      "toggle": "라이브 감시",
+      "paused": "감시 일시중지",
+      "undo": "되돌리기",
+      "pausedToast": "감시 일시중지 — 진행 중인 캡처는 계속돼요.",
+      "watchingToast": "라이브 감시 · 켜짐.",
+      "toggleError": "라이브 감시 변경에 실패했어요 — 다시 시도해 주세요.",
+      "cred": {
+        "title": "멤버 전용 라이브를 캡처하려면 유효한 YouTube 인증이 필요해요 — 없으면 일부는 건너뛸 수 있어요.",
+        "action": "설정에서 확인"
+      },
+      "empty": {
+        "title": "감시 중인 채널 없음",
+        "desc": "채널의 라이브 감시를 켜면 방송을 자동으로 저장해요.",
+        "cta": "채널 추가"
+      }
+    },
+    "recent": {
+      "eyebrow": "녹화본",
+      "title": "최근 종료된 방송",
+      "sub": "종료되어 보관된 라이브 방송입니다.",
+      "loading": "최근 종료된 방송 불러오는 중…",
+      "reassure": "방금 끝난 라이브는 확인에 시간이 걸릴 수 있어요 — 별도 조치 불필요.",
+      "empty": {
+        "title": "최근 종료된 방송 없음",
+        "desc": "라이브 방송이 끝나면 여기에 표시돼요."
+      }
+    }
+  },
+  "login": {
+    "lead": "계속하려면 접속 시크릿을 입력하세요.",
+    "secretLabel": "접속 시크릿",
+    "placeholder": "접속 시크릿 입력",
+    "reveal": "시크릿 표시",
+    "hide": "시크릿 숨기기",
+    "submit": "로그인",
+    "busy": "로그인 중…",
+    "capsHint": "Caps Lock이 켜져 있습니다",
+    "error": {
+      "invalid": "인증 정보가 올바르지 않습니다.",
+      "malformed": "요청에 문제가 있습니다.",
+      "rate": "시도가 너무 많습니다. 잠시 후 다시 시도하세요.",
+      "generic": "문제가 발생했습니다. 다시 시도하세요."
+    },
+    "cooldown": "{{time}} 후 다시 시도",
+    "success": {
+      "title": "잠금 해제됨",
+      "sub": "보관소로 이동하는 중…"
+    },
+    "footer": "단일 사용자 보관소 · 세션 12시간 유지",
+    "theme": {
+      "toDark": "다크 테마로 전환",
+      "toLight": "라이트 테마로 전환"
+    },
+    "lang": {
+      "group": "언어",
+      "en": "EN",
+      "ko": "한국어"
+    }
+  },
+  "notifications": {
+    "eyebrow": "활동 기록",
+    "title": "알림",
+    "subtitle": "보관소가 지금까지 한 모든 일 — 실패·만료·구조 — 을 모아, 잘 돌아가고 있는지 확인합니다.",
+    "view": {
+      "all": "전체",
+      "unread": "안 읽음",
+      "helperUnread": "처리 대기함 · 확인이 필요한 항목",
+      "helperAll": "전체 기록 · 최신순"
+    },
+    "poll": {
+      "line": "30초마다 갱신",
+      "refresh": "새로고침"
+    },
+    "newActivity_one": "새 알림 {{count}}건 — 새로고침하면 표시됩니다",
+    "newActivity_other": "새 알림 {{count}}건 — 새로고침하면 표시됩니다",
+    "filter": {
+      "typeAll": "모든 유형",
+      "typeFailures": "실패",
+      "typeRescues": "구조",
+      "typeLive": "라이브",
+      "typeSourceGone": "원본 삭제",
+      "sevAll": "모든 심각도",
+      "sevWarning": "주의 이상",
+      "sevCritical": "심각만",
+      "dateAny": "전체 기간",
+      "date1": "최근 24시간",
+      "date7": "최근 7일",
+      "date30": "최근 30일",
+      "typeLabel": "유형으로 필터",
+      "sevLabel": "심각도로 필터",
+      "dateLabel": "기간으로 필터",
+      "clear": "필터 지우기",
+      "loadedNote": "불러온 항목에만 적용 — 서버 측 필터 준비 중."
+    },
+    "markAllRead": "모두 읽음",
+    "markAllConfirm": {
+      "title": "전부 읽음 처리할까요?",
+      "body": "현재 필터에 맞는 항목만이 아니라 모든 알림이 읽음으로 처리됩니다. 필터는 초기화됩니다.",
+      "confirm": "필터 지우고 모두 읽음"
+    },
+    "empty": {
+      "allTitle": "활동 없음",
+      "allBody": "아직 기록된 활동이 없습니다. 다운로드·원본 변경·구조 소식이 여기에 표시됩니다.",
+      "clearTitle": "모두 정상",
+      "clearBody": "지금 확인할 항목이 없습니다. 지금까지의 활동은 ‘전체’에 있습니다.",
+      "viewAll": "전체 활동 보기",
+      "filterTitle": "조건에 맞는 활동이 없습니다",
+      "filterBody": "필터를 넓혀 보세요. 지금까지 불러온 항목에만 적용됩니다."
+    },
+    "error": {
+      "title": "활동 기록을 불러오지 못했습니다",
+      "body": "불러오지 못했습니다. 보관 작업은 백그라운드에서 계속됩니다 — 다시 시도하세요."
+    },
+    "endOfLog": "기록 끝",
+    "toast": {
+      "dismissed": "읽음으로 표시함",
+      "undo": "실행 취소",
+      "badCursorTitle": "처음부터 다시 불러옴",
+      "badCursorBody": "목록 커서가 만료되어 최신 활동을 다시 불러왔습니다."
+    }
+  },
+  "videos": {
+    "searchChannel": "이 채널에서 검색…",
+    "searchLibrary": "제목 또는 채널 검색…",
+    "filter": {
+      "rescuedOnly": "구조됨만",
+      "type": "유형",
+      "copyState": "보존 상태",
+      "sourceState": "원본",
+      "published": "게시일",
+      "from": "시작",
+      "to": "끝",
+      "allTypes": "모든 유형",
+      "allCopy": "모든 보존 상태",
+      "allSource": "모든 원본",
+      "allChannels": "모든 채널"
+    },
+    "view": {
+      "label": "보기",
+      "grid": "격자",
+      "list": "목록"
+    },
+    "list": {
+      "colThumb": "썸네일",
+      "colTitle": "제목",
+      "colChannel": "채널",
+      "colPublished": "게시일",
+      "colSize": "용량",
+      "colStatus": "상태"
+    },
+    "sort": {
+      "publishedAt_desc": "최신 게시순",
+      "publishedAt_asc": "오래된 게시순",
+      "addedAt_desc": "최근 추가순",
+      "title_asc": "제목순",
+      "sizeBytes_desc": "큰 용량순",
+      "sizeBytes_asc": "작은 용량순"
+    },
+    "type": {
+      "REGULAR": "영상",
+      "SHORTS": "쇼츠",
+      "PREMIERE": "프리미어",
+      "LIVE": "라이브",
+      "MEMBERS_ONLY": "멤버 전용"
+    },
+    "results": {
+      "total_one": "영상 {{count}}개",
+      "total_other": "영상 {{count}}개",
+      "selectAll": "모두 선택"
+    },
+    "clearFilters": "필터 지우기",
+    "select": {
+      "selected_one": "{{count}}개 선택됨",
+      "selected_other": "{{count}}개 선택됨",
+      "download_one": "{{count}}개 내려받기",
+      "download_other": "{{count}}개 내려받기",
+      "clear": "선택 해제",
+      "reasonSaved": "이미 저장됨",
+      "reasonInProgress": "진행 중"
+    },
+    "pager": {
+      "range": "{{total}}개 중 {{start}}–{{end}}",
+      "page": "{{page}} / {{pages}} 페이지",
+      "prev": "이전 페이지",
+      "next": "다음 페이지"
+    },
+    "empty": {
+      "channelTitle": "아직 보관된 영상이 없습니다",
+      "channelBody": "이 채널은 아직 목록을 수집하지 않았습니다. 새 업로드가 캡처되면 여기에 표시됩니다.",
+      "libraryTitle": "아직 보관된 영상이 없습니다",
+      "libraryBody": "채널을 등록하면 보관이 시작됩니다. 새 업로드가 캡처되면 여기에 표시됩니다.",
+      "filteredTitle": "조건에 맞는 영상이 없습니다",
+      "filteredBody": "검색어를 넓히거나 필터를 지우면 전체 보관본을 볼 수 있습니다."
+    },
+    "error": {
+      "title": "영상을 불러오지 못했습니다",
+      "body": "보관함에 연결하는 중 문제가 생겼습니다. 보관본은 안전합니다 — 화면만 다시 불러오면 됩니다.",
+      "retry": "다시 시도"
+    }
+  },
+  "video": {
+    "back": "뒤로",
+    "contentType": {
+      "REGULAR": "일반",
+      "SHORTS": "쇼츠",
+      "PREMIERE": "프리미어",
+      "LIVE": "라이브",
+      "MEMBERS_ONLY": "멤버 전용"
+    },
+    "publishedLine": "{{date}} 게시 · {{rel}}",
+    "publishedUnknown": "게시일 알 수 없음",
+    "statusTitle": "상태",
+    "headline": {
+      "rescued": "구조됨 — 원본이 유튜브에서 사라지기 전에 이 사본을 지켜냈습니다.",
+      "HEALTHY": "정상 — 사본이 검증되었고, 원본도 아직 온라인에 있습니다.",
+      "VERIFYING": "검증 중 — 지금 이 사본을 원본과 대조하고 있습니다.",
+      "AWAITING_VERIFY": "완결성 검증 중 — 방금 끝난 라이브는 검증에 시간이 걸릴 수 있습니다. 별도 조치는 필요 없습니다.",
+      "DOWNLOADING": "다운로드 중 — 지금 보존 사본을 만들고 있습니다.",
+      "QUEUED": "대기 중 — 다운로드 슬롯을 기다리고 있습니다.",
+      "FAILED": "다운로드 실패 — 마지막 시도가 끝까지 가지 못했습니다. 다시 시도할 수 있습니다.",
+      "PARTIAL_KEPT": "부분 보존 — 녹화가 중간에 끊겼지만, 부분 사본을 보관하고 있습니다.",
+      "CANDIDATE": "아직 보존 안 됨 — 보관함의 후보 영상입니다."
+    },
+    "integrity": {
+      "verified": "검증됨 · sha256",
+      "partial": "미검증 · 부분 사본 보관",
+      "failed": "체크섬 없음 · 마지막 다운로드 실패",
+      "pending": "아직 미검증"
+    },
+    "facts": {
+      "title": "세부 정보",
+      "type": "유형",
+      "resolution": "해상도",
+      "size": "크기",
+      "duration": "길이",
+      "added": "추가일",
+      "videoId": "영상 ID",
+      "checksum": "SHA-256 체크섬"
+    },
+    "description": {
+      "title": "설명"
+    },
+    "download": "원본 다운로드",
+    "absent": {
+      "DOWNLOADING": {
+        "title": "사본을 만드는 중",
+        "body": "지금 원본을 다운로드하고 있습니다. 검증이 끝나는 순간 보존 파일과 체크섬이 여기에 나타납니다."
+      },
+      "QUEUED": {
+        "title": "다운로드 대기 중",
+        "body": "빈 슬롯을 기다리는 중입니다. 자동으로 시작되며, 진행 상황을 여기서 볼 수 있습니다."
+      },
+      "FAILED": {
+        "title": "다운로드가 끝나지 않음",
+        "body": "마지막 시도가 사본을 저장하기 전에 멈췄습니다. 손상된 것은 없으니, 다시 시도해 보존하세요."
+      },
+      "CANDIDATE": {
+        "title": "아직 보존 안 됨",
+        "body": "이 영상은 후보입니다 — 채널에서 발견됐지만 아직 저장되지 않았습니다. 원본에 무슨 일이 생기기 전에 다운로드해 검증된 사본을 보관하세요."
+      }
+    },
+    "playerError": {
+      "e404": {
+        "title": "이 사본의 파일을 읽을 수 없음",
+        "body": "보관 기록상 이 사본은 정상이지만 미디어 파일이 응답하지 않았습니다 — 디스크에서 옮겨졌을 수 있습니다. 아래의 상태·체크섬·기록은 여전히 정확합니다."
+      },
+      "reload": "플레이어 새로고침"
+    },
+    "actions": {
+      "title": "작업",
+      "retry": {
+        "FAILED": {
+          "title": "다운로드 다시 시도",
+          "hint": "유튜브의 봇 차단이 다운로드를 끊을 수 있습니다. 다시 시도하면 큐에 다시 넣습니다.",
+          "button": "다운로드 다시 시도"
+        },
+        "PARTIAL_KEPT": {
+          "title": "이 녹화본",
+          "hint": "지난 라이브는 전체 재다운로드를 제공하지 않습니다 — 이 부분 사본이 우리가 보관하는 사본입니다.",
+          "button": "재다운로드"
+        },
+        "CANDIDATE": {
+          "title": "이 영상 보존하기",
+          "hint": "채널에서 발견됐지만 아직 저장되지 않았습니다. 다운로드해 검증된 사본을 보관하세요.",
+          "button": "지금 다운로드"
+        }
+      },
+      "liveFailed": {
+        "title": "캡처가 완료되지 않았어요",
+        "hint": "이 라이브 캡처는 실패했고 다시 받을 수 없어요 — 지난 라이브 스트림은 다시 가져올 수 없습니다."
+      },
+      "controlTitle": "다운로드 진행 중",
+      "hint": {
+        "RUNNING": "약 {{eta}} 남음 · {{speed}}.",
+        "QUEUED": "다운로드 슬롯을 기다리는 중 — 곧 자동으로 시작됩니다.",
+        "PAUSED": "일시정지됨 — 부분 파일은 보관됩니다. 준비되면 재개하세요."
+      },
+      "preserved": {
+        "rescued": {
+          "title": "구조되어 안전함",
+          "body": "원본은 유튜브에서 사라졌습니다 — 검증된 사본만이 남았고, 상태는 정상입니다."
+        },
+        "ok": {
+          "title": "보존·검증 완료",
+          "body": "검증된 사본이 보관함에 안전하게 있습니다. 따로 하실 일은 없습니다."
+        }
+      }
+    },
+    "control": {
+      "pause": "일시정지",
+      "resume": "재개",
+      "cancel": "취소",
+      "pending": {
+        "pausing": "일시정지하는 중…",
+        "resuming": "재개하는 중…",
+        "canceling": "취소하는 중…"
+      }
+    },
+    "trail": {
+      "title": "기록",
+      "intro": "모든 상태 변화를 오래된 순으로 — 이 사본이 여기까지 온 과정입니다.",
+      "empty": "아직 기록이 없습니다.",
+      "copyAxis": "사본",
+      "sourceAxis": "원본",
+      "rescued": "제때 지켜냈습니다"
+    },
+    "menu": {
+      "label": "더 보기",
+      "copyId": "영상 ID 복사",
+      "viewQueue": "큐에서 보기",
+      "copied": "영상 ID를 복사했습니다",
+      "copyFailed": "영상 ID를 복사하지 못했습니다"
+    },
+    "loading": "영상 불러오는 중…",
+    "notFound": {
+      "title": "영상을 찾을 수 없음",
+      "body": "이 영상은 보관함에 없습니다. 제거되었을 수 있습니다.",
+      "cta": "보관함으로 돌아가기"
+    },
+    "error": {
+      "title": "이 영상을 불러오지 못함",
+      "body": "세부 정보를 가져오는 중 문제가 발생했습니다. 다시 시도하세요.",
+      "retry": "다시 시도"
+    },
+    "toast": {
+      "queued": "다운로드 큐에 넣음",
+      "queuedBody": "여기 또는 큐에서 진행 상황을 확인하세요.",
+      "nothing": "큐에 넣을 것 없음",
+      "nothingBody": "이 영상은 지금 다운로드할 수 있는 상태가 아닙니다.",
+      "liveRefused": "라이브 스트림은 재다운로드할 수 없음",
+      "liveRefusedBody": "지난 라이브 녹화는 최종본입니다 — 부분 사본이 우리가 보관하는 사본입니다. 전체 제어는 큐에서 할 수 있습니다.",
+      "full": "다운로드 큐가 가득 참",
+      "fullBody": "지금은 우선순위 공간이 소진됐습니다. 잠시 후 다시 시도하세요.",
+      "failed": "문제가 발생했습니다",
+      "controlUnavailable": "컨트롤을 잠시 사용할 수 없습니다 — 다시 시도하세요.",
+      "retry": "다시 시도"
+    }
+  },
+  "channel": {
+    "breadcrumb": "채널",
+    "breadcrumbNav": "탐색 경로",
+    "counts": {
+      "total": "전체",
+      "healthy": "정상",
+      "candidates": "후보"
+    },
+    "watchLive": "라이브 감시",
+    "collectionStopped": "수집 중지됨",
+    "reRegister": "다시 등록",
+    "notFoundTitle": "채널을 찾을 수 없습니다",
+    "notFoundBody": "등록되지 않은 채널입니다. 삭제되었을 수 있습니다.",
+    "acquire": {
+      "candReady_one": "백업할 후보 {{count}}개",
+      "candReady_other": "백업할 후보 {{count}}개",
+      "candWhy": "후보는 백업하기 전까지 저장되지 않습니다.",
+      "backupAll": "전부 백업",
+      "failedLead_one": "실패한 다운로드 {{count}}개",
+      "failedLead_other": "실패한 다운로드 {{count}}개",
+      "failedWhy": "다시 대기열에 넣으려면 재시도하세요.",
+      "retryFailed": "실패 {{count}}개 재시도"
+    },
+    "manage": {
+      "open": "채널 관리",
+      "title": "채널 관리",
+      "note": "채널별 재정의 — “전역 설정 상속”으로 두면 설정 화면 값을 따릅니다.",
+      "qualityCap": "화질 상한",
+      "subtitles": "자막"
+    },
+    "quality": {
+      "inherit": "전역 설정 상속",
+      "UNLIMITED": "무제한 (최고 화질)",
+      "P2160": "2160p (4K)",
+      "P1440": "1440p",
+      "P1080": "1080p",
+      "P720": "720p"
+    },
+    "subtitle": {
+      "inherit": "전역 설정 상속",
+      "NONE": "끄기",
+      "MANUAL": "수동 자막만",
+      "AUTO": "자동 생성",
+      "BOTH": "수동 + 자동"
+    },
+    "soon": {
+      "heading": "출시 예정",
+      "tag": "예정",
+      "curation": "큐레이션 모드",
+      "quota": "채널 용량 한도",
+      "contentPolicy": "콘텐츠 유형 포함·제외"
+    },
+    "danger": {
+      "zone": "위험 구역",
+      "unregister": "채널 등록 해제",
+      "unregisterDesc": "새 영상과 라이브 수집을 멈춥니다. 보관본은 그대로 유지되고 계속 검색할 수 있습니다 — 언제든 되돌릴 수 있습니다.",
+      "purge": "삭제 + 미디어 영구 삭제",
+      "purgeDesc": "이 채널과 보존된 모든 파일을 디스크에서 영구 삭제합니다. 되돌릴 수 없습니다.",
+      "confirmUnregTitle": "이 채널의 등록을 해제할까요?",
+      "confirmUnregBody": "수집이 즉시 중단됩니다. 보관본은 디스크에 남고 계속 검색할 수 있습니다 — 언제든 다시 등록해 재개하세요.",
+      "confirmUnregBtn": "등록 해제",
+      "confirmPurgeTitle": "채널을 삭제하고 미디어를 영구 삭제할까요?",
+      "confirmPurgeBody": "채널과 보존된 모든 파일을 디스크에서 영구 삭제합니다. 되돌릴 수 없습니다. 확인하려면 DELETE를 입력하세요.",
+      "confirmPurgeBtn": "삭제 + 영구 삭제",
+      "purgePhrase": "DELETE"
+    },
+    "toast": {
+      "watchLiveFailed": "라이브 감시를 변경하지 못했습니다",
+      "policySaved": "채널 설정을 저장했습니다",
+      "policyFailed": "채널 설정을 저장하지 못했습니다",
+      "queuedTitle_one": "{{count}}개 대기열에 추가됨",
+      "queuedTitle_other": "{{count}}개 대기열에 추가됨",
+      "queuedBody": "진행 상황은 대기열이나 홈에서 확인하세요.",
+      "skippedTitle_one": "{{count}}개 건너뜀",
+      "skippedTitle_other": "{{count}}개 건너뜀",
+      "skippedBody": "이미 저장되었거나 진행 중 — 해당 사본은 안전합니다.",
+      "nothingTitle": "백업할 항목이 없음",
+      "nothingBody": "모든 대상이 이미 저장되었거나 대기열에 있습니다.",
+      "full": "지금은 대기열에 넣지 못했습니다",
+      "fullBody": "다운로드 대기열이 혼잡합니다. 잠시 후 다시 시도하세요.",
+      "badRequest": "대기열에 넣지 못했습니다",
+      "badRequestBody": "요청에 문제가 있었습니다.",
+      "unregistered": "채널 등록 해제됨",
+      "unregisteredBody": "수집을 중지했습니다. 보관본은 유지되며 계속 검색할 수 있습니다.",
+      "reRegistered": "채널 다시 등록됨",
+      "reRegisteredBody": "수집을 재개했습니다. 새 업로드와 라이브를 다시 캡처합니다.",
+      "purged": "미디어 영구 삭제됨",
+      "purgedBody": "채널과 보존된 파일이 영구적으로 삭제되었습니다.",
+      "actionFailed": "작업을 완료하지 못했습니다 — 다시 시도하세요."
+    },
+    "retry": "다시 시도"
+  },
+  "channels": {
+    "page": {
+      "title": "채널",
+      "subtitle": "아카이빙 중인 채널입니다. URL로 새 채널을 등록하면, YouTube에서 원본이 사라져도 사본은 보존됩니다.",
+      "count_one": "채널 {{count}}개 · 수집 중 {{active}}개",
+      "count_other": "채널 {{count}}개 · 수집 중 {{active}}개"
+    },
+    "register": {
+      "title": "채널 등록",
+      "hint": "채널 URL을 붙여넣으세요. TubeVault가 채널을 확인한 뒤 백그라운드에서 영상을 열거합니다 — 여기서 기다릴 필요는 없어요.",
+      "placeholder": "https://www.youtube.com/@handle",
+      "fieldLabel": "채널 URL",
+      "submit": "등록",
+      "submitBusy": "등록 중…",
+      "dismiss": "닫기",
+      "viewQueue": "대기열에서 보기",
+      "viewHome": "홈으로",
+      "retry": "다시 시도"
+    },
+    "notice": {
+      "successTitle": "“{{name}}” 추가됨",
+      "successMsg": "백그라운드에서 영상을 열거하는 중입니다 — 몇 분 걸릴 수 있어요. 대기열에서 진행 상황을 확인하세요.",
+      "alreadyTitle": "“{{name}}” 은 이미 등록됨",
+      "alreadyMsg": "새 영상이 있는지 다시 확인하는 중입니다. 대기열에서 확인하세요.",
+      "notFoundTitle": "채널을 찾지 못했습니다",
+      "notFoundMsg": "이 URL을 YouTube 채널로 인식하지 못했습니다. 링크를 확인하세요 — 채널 페이지나 @핸들 URL이 가장 잘 됩니다.",
+      "notFoundField": "채널 URL이 아님",
+      "timeoutTitle": "시간이 걸리고 있습니다",
+      "timeoutMsg": "채널을 확인하기 전에 조회가 시간 초과됐습니다. 일시적일 가능성이 높으니 다시 시도하세요.",
+      "engineTitle": "아카이브 엔진 오류",
+      "engineMsg": "TubeVault가 YouTube에 연결해 채널을 확인하지 못했습니다. 잠시 후 다시 시도하세요.",
+      "genericTitle": "채널을 등록하지 못했습니다",
+      "genericMsg": "URL을 확인하는 중 문제가 발생했습니다. 잠시 후 다시 시도하세요."
+    },
+    "row": {
+      "lastChecked": "마지막 확인",
+      "neverChecked": "아직 확인 안 됨",
+      "enumerating": "열거 중…",
+      "stoppedNote": "수집 중단됨 · 아카이브 보존",
+      "watchLiveLabel": "라이브 감시",
+      "watchOn": "라이브 감시: 켬 — {{name}}",
+      "watchOff": "라이브 감시: 끔 — {{name}}",
+      "moreActions": "추가 작업 — {{name}}",
+      "resume": "수집 재개"
+    },
+    "menu": {
+      "stop": "수집 중단",
+      "stopHint": "아카이브 보존 · 되돌릴 수 있음",
+      "reactivate": "수집 재개",
+      "reactivateHint": "다시 열거하고 감시",
+      "delete": "채널·파일 삭제…",
+      "deleteHint": "영구 삭제 · 미디어 제거"
+    },
+    "confirm": {
+      "unregTitle": "“{{name}}” 수집을 중단할까요?",
+      "unregDesc": "새 다운로드와 라이브 감시가 중단됩니다. 이미 아카이빙된 영상은 그대로 보존되고 계속 열람할 수 있어요. 언제든 다시 등록해 재개할 수 있습니다.",
+      "unregConfirm": "수집 중단",
+      "purgeTitle": "“{{name}}” 과(와) 파일을 삭제할까요?",
+      "purgeDesc": "채널과 디스크에 저장된 아카이브 영상 파일 {{n}}개가 영구 삭제됩니다. 되돌릴 수 없습니다. 사본을 유지하려면 “수집 중단”을 사용하세요.",
+      "purgeConfirm": "영구 삭제"
+    },
+    "toast": {
+      "liveOnTitle": "라이브 감시 켜짐",
+      "liveOnMsg": "“{{name}}” 의 라이브 스트림을 감시합니다.",
+      "liveOffTitle": "라이브 감시 꺼짐",
+      "liveOffMsg": "“{{name}}” 의 라이브 감시를 중단했습니다.",
+      "unregTitle": "수집 중단됨",
+      "unregMsg": "“{{name}}” 아카이브는 보존 — 수집만 중단했습니다.",
+      "purgeTitle": "채널 삭제됨",
+      "purgeMsg": "“{{name}}” 과(와) 파일이 영구 삭제되었습니다.",
+      "reactTitle": "수집 재개됨",
+      "reactMsg": "“{{name}}” 을(를) 다시 열거하는 중입니다.",
+      "enumDoneTitle": "열거 완료",
+      "enumDoneMsg": "“{{name}}” 의 영상 수를 업데이트했습니다.",
+      "actionError": "문제가 발생했습니다 — 다시 시도하세요."
+    },
+    "empty": {
+      "title": "아직 채널이 없습니다",
+      "desc": "위에서 URL로 첫 채널을 등록해 아카이빙을 시작하세요. 원본이 나중에 삭제돼도 사본은 보존됩니다."
+    },
+    "error": {
+      "title": "채널을 불러오지 못했습니다",
+      "desc": "채널 목록을 불러오지 못했습니다. 이미 아카이빙된 항목에는 영향이 없습니다."
+    },
+    "loading": "채널 불러오는 중…",
+    "registered": "등록됨"
+  },
+  "settings": {
+    "page": {
+      "kicker": "설정",
+      "title": "설정",
+      "subtitle": "전역 다운로드 기본값, 알림 채널, YouTube 자격 증명 — 각각 따로 저장됩니다.",
+      "indepNote": "세 개의 독립된 서비스. 하나가 실패해도 다른 것을 막지 않습니다."
+    },
+    "common": {
+      "secErrTitle": "이 섹션을 불러오지 못했습니다",
+      "secErrDesc": "페이지의 나머지는 정상 작동합니다 — 이 섹션만 다시 시도합니다.",
+      "save": "변경 사항 저장",
+      "saving": "저장 중…",
+      "saved": "저장됨",
+      "unsaved": "저장되지 않은 변경"
+    },
+    "defaults": {
+      "eyebrow": "전역 기본값",
+      "title": "다운로드 기본값",
+      "desc": "모든 새 다운로드에 적용됩니다. 변경은 설정 싱글턴에 저장됩니다.",
+      "ep": "GET · PATCH /api/settings",
+      "concurrency": {
+        "label": "동시 다운로드 수",
+        "hint": "1은 순차 처리 — YouTube에 정중한 기본값입니다. 최대 4개 동시."
+      },
+      "quality": {
+        "label": "화질 상한"
+      },
+      "subtitles": {
+        "label": "자막"
+      },
+      "clamp": "동시 수는 1–4로 제한됩니다 — {{to}}(으)로 저장되었습니다.",
+      "quality_opts": {
+        "UNLIMITED": "무제한",
+        "P2160": "2160p (4K)",
+        "P1440": "1440p",
+        "P1080": "1080p",
+        "P720": "720p"
+      },
+      "subtitle_opts": {
+        "NONE": "없음",
+        "MANUAL": "수동",
+        "AUTO": "자동",
+        "BOTH": "모두"
+      }
+    },
+    "channels": {
+      "eyebrow": "알림",
+      "title": "알림 채널",
+      "desc": "TubeVault가 알림을 보내는 곳. 비밀 값은 쓰기 전용 — 마스킹되어 저장되며 다시 읽지 않습니다.",
+      "ep": "/api/notification-channels",
+      "add": "채널 추가",
+      "addPick": "채널 추가",
+      "typeImmutable": "유형을 선택하세요 — 채널 생성 후에는 바꿀 수 없습니다.",
+      "addAllEventsNote": "새 채널은 기본적으로 모든 이벤트를 Info로 구독합니다 — 추가 후 조정하세요.",
+      "create": "채널 추가",
+      "empty": {
+        "title": "아직 채널이 없습니다",
+        "desc": "이미 보고 있는 곳으로 다운로드·라이브·복원 알림을 받으려면 추가하세요."
+      },
+      "row": {
+        "enabled": "사용",
+        "active": "활성",
+        "inactive": "비활성",
+        "test": "테스트",
+        "sending": "전송 중…",
+        "edit": "편집",
+        "editing": "편집 중…",
+        "delete": "삭제"
+      },
+      "form": {
+        "name": "이름",
+        "namePlaceholder": "예: 홈 NAS 알림",
+        "save": "저장",
+        "cancel": "취소",
+        "mergeHint": "비밀 값을 비워 두면 유지 · 지우면 삭제 · 입력하면 교체.",
+        "events": "이벤트",
+        "allEvents": "모든 이벤트",
+        "eventsCount": "{{total}}개 중 {{count}}개",
+        "eventLabels": {
+          "downloadFailed": "다운로드 실패",
+          "storageNearFull": "저장공간 거의 참",
+          "storagePaused": "다운로드 일시정지(저장공간)",
+          "sourceGone": "원본 삭제됨",
+          "videoRescued": "영상 구조됨",
+          "liveStart": "라이브 시작",
+          "liveStop": "라이브 종료",
+          "sessionExpired": "세션 만료",
+          "systemTest": "테스트 알림",
+          "workerStalled": "워커 정지",
+          "youtubeBotWall": "유튜브 봇 차단"
+        },
+        "minSeverity": "최소 심각도",
+        "optionalTag": "선택",
+        "checkFields": "표시된 항목을 확인하세요.",
+        "required": "필수 항목입니다."
+      },
+      "fields": {
+        "botToken": "봇 토큰",
+        "chatId": "채팅 ID",
+        "webhookUrl": "웹훅 URL",
+        "serverUrl": "서버 URL",
+        "appToken": "앱 토큰",
+        "topic": "주제",
+        "accessToken": "액세스 토큰",
+        "url": "URL"
+      },
+      "sev": {
+        "INFO": "정보",
+        "WARNING": "경고",
+        "CRITICAL": "심각"
+      },
+      "test": {
+        "delivered": "전송됨",
+        "notDelivered": "전송 안 됨",
+        "realNote": "실제 메시지가 전송되었고 알림에 테스트 항목이 추가되었습니다."
+      },
+      "del": {
+        "title": "이 채널을 삭제할까요?",
+        "desc": "TubeVault가 “{{name}}”(으)로 알림 전송을 중단합니다. 되돌릴 수 없습니다.",
+        "confirm": "채널 삭제"
+      },
+      "toast": {
+        "created": "채널이 추가됨",
+        "createdMsg": "이제 이곳으로 알림을 보냅니다.",
+        "updated": "채널이 업데이트됨",
+        "deleted": "채널이 삭제됨",
+        "notFoundTitle": "채널을 찾을 수 없음",
+        "notFoundDesc": "다른 탭에서 삭제되었을 수 있습니다. 목록을 새로고침했습니다.",
+        "actionError": "채널을 업데이트하지 못했습니다 — 다시 시도해 주세요."
+      }
+    },
+    "cred": {
+      "eyebrow": "YouTube 자격 증명",
+      "title": "YouTube 소유자 쿠키",
+      "desc": "TubeVault가 사용자로서 회원 전용·연령 제한 영상을 보관할 수 있게 합니다.",
+      "ep": "GET · PUT · DELETE /api/session",
+      "status": {
+        "VERIFIED": "확인됨",
+        "UNVERIFIED": "미확인",
+        "EXPIRED": "만료됨",
+        "disabled": "비활성화"
+      },
+      "health": {
+        "lastVerified": "마지막 확인",
+        "failureStreak": "연속 실패",
+        "lastError": "마지막 오류",
+        "none": "—"
+      },
+      "willVerify": "가져왔습니다 — 백그라운드 작업자가 곧 확인합니다.",
+      "import": {
+        "label": "Netscape 쿠키 파일을 붙여넣으세요",
+        "hint": "저장 후 다시 읽지 않습니다. 최대 1 MiB. 가져오면 상태가 미확인으로 재설정됩니다.",
+        "placeholder": "# 내보낸 Netscape 형식 쿠키를 여기에 붙여넣으세요…",
+        "chooseFile": "파일 선택",
+        "button": "쿠키 가져오기",
+        "importing": "가져오는 중…",
+        "reveal": "표시",
+        "hide": "숨김",
+        "budget": "{{kb}} KB / 1 MiB"
+      },
+      "delete": "자격 증명 삭제",
+      "disabled": {
+        "title": "자격 증명 저장이 비활성화됨",
+        "desc": "쿠키를 가져오려면 운영자가 서버에 자격 증명 키(TUBEVAULT_CREDENTIAL_KEY_FILE)를 설정해야 합니다. 그 전까지 가져오기·삭제는 503을 반환합니다."
+      },
+      "expired": {
+        "warn": "이 자격 증명이 만료되었습니다. 새 쿠키를 가져올 때까지 회원 전용 라이브는 캡처되지 않습니다.",
+        "goLive": "라이브로 이동"
+      },
+      "del": {
+        "title": "저장된 쿠키를 삭제할까요?",
+        "desc": "새로 가져올 때까지 회원 전용·연령 제한 영상에 접근할 수 없습니다.",
+        "confirm": "자격 증명 삭제"
+      },
+      "toast": {
+        "imported": "쿠키를 가져옴",
+        "deleted": "자격 증명이 삭제됨"
+      }
+    },
+    "session": {
+      "title": "세션",
+      "desc": "접속 시크릿은 이 브라우저의 서명된 세션 쿠키를 발급합니다.",
+      "expiresAt": "로그인됨 · {{time}}경 만료",
+      "ttlNote": "세션은 약 12시간 후 만료되며, 다시 로그인해야 합니다.",
+      "signOut": "로그아웃",
+      "version": "버전 {{version}}"
+    }
+  },
+  "library": {
+    "eyebrow": "전체 채널",
+    "title": "라이브러리",
+    "subtitle": "모든 채널에 걸쳐 보관된 영상 전체입니다.",
+    "channelFilter": "채널",
+    "toast": {
+      "queuedTitle_one": "{{count}}개 대기열에 추가됨",
+      "queuedTitle_other": "{{count}}개 대기열에 추가됨",
+      "queuedBody": "진행 상황은 대기열이나 홈에서 확인하세요.",
+      "nothingTitle": "다운로드할 항목이 없음",
+      "skippedBody": "이미 저장되었거나 진행 중 — 해당 사본은 안전합니다.",
+      "nothingBody": "선택한 영상이 모두 이미 저장되었거나 대기열에 있습니다.",
+      "full": "지금은 대기열에 넣지 못했습니다",
+      "fullBody": "다운로드 대기열이 혼잡합니다. 잠시 후 다시 시도하세요.",
+      "retry": "다시 시도",
+      "badRequest": "대기열에 넣지 못했습니다",
+      "badRequestBody": "요청에 문제가 있었습니다."
+    }
+  }
 }
