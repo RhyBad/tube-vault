@@ -1,0 +1,333 @@
+// TubeVault schema (Prisma 6 + PostgreSQL 17). Core-first scope per PLAN.md.
+//
+// NOTE: two PARTIAL unique indexes exist only as raw SQL in
+// migrations/0_init/migration.sql (Prisma cannot express partial indexes):
+//   ux_job_active_download  — ON "Job"("videoId")
+//       WHERE "type" = 'DOWNLOAD' AND "status" IN ('QUEUED','RUNNING','PAUSED')
+//   ux_live_session_active  — ON "LiveSession"("videoId")
+//       WHERE "state" IN ('DETECTED','CAPTURING')
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum CopyState {
+  CANDIDATE
+  QUEUED
+  DOWNLOADING
+  VERIFYING
+  HEALTHY
+  FAILED
+  PARTIAL_KEPT
+  AWAITING_VERIFY // CR-20: live capture done, awaiting completeness re-check
+}
+
+enum SourceState {
+  AVAILABLE
+  GEO_BLOCKED
+  PRIVATE
+  MEMBERS_ONLY
+  AGE_GATED
+  DELETED
+  TRANSIENT_ERROR
+  RATE_LIMITED
+  UNKNOWN
+}
+
+enum ContentType {
+  REGULAR
+  SHORTS
+  PREMIERE
+  LIVE
+  MEMBERS_ONLY
+}
+
+enum StatusAxis {
+  COPY
+  SOURCE
+}
+
+enum JobType {
+  DOWNLOAD
+  VERIFY
+  ENUMERATE
+  LIVE_PROBE
+  LIVE_CAPTURE
+  SOURCE_CHECK // CR-09: periodic original-availability re-check of held copies
+}
+
+enum JobStatus {
+  QUEUED
+  RUNNING
+  PAUSED
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum ErrorKind {
+  BOT_WALL
+  RATE_LIMITED
+  AUTH
+  GEO_BLOCKED
+  SOURCE_GONE
+  TRANSIENT
+  UNKNOWN
+}
+
+enum QualityCap {
+  UNLIMITED
+  P2160
+  P1440
+  P1080
+  P720
+}
+
+enum SubtitleMode {
+  NONE
+  MANUAL
+  AUTO
+  BOTH
+}
+
+enum LiveSessionState {
+  DETECTED
+  CAPTURING
+  ENDED_NORMAL
+  ENDED_INTERRUPTED
+  FAILED
+  ENDED_PENDING // CR-20: capture ended, completeness re-check pending (OUT of the active set)
+}
+
+enum SessionStatus {
+  UNVERIFIED
+  VERIFIED
+  EXPIRED
+}
+
+enum NotificationChannelType {
+  TELEGRAM
+  DISCORD
+  GOTIFY
+  NTFY
+  WEBHOOK
+}
+
+enum Severity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum LogLevel {
+  DEBUG
+  INFO
+  WARN
+  ERROR
+}
+
+// ---------------------------------------------------------------------------
+// Models
+// ---------------------------------------------------------------------------
+
+model Channel {
+  id               String        @id // YouTube channel id (UC…)
+  url              String
+  title            String
+  handle           String?
+  thumbnailUrl     String?
+  watchLive        Boolean       @default(false)
+  qualityCap       QualityCap? // null = inherit global Settings
+  subtitleMode     SubtitleMode? // null = inherit global Settings
+  // CR-06: soft "unregister" (preservation-first channel delete). null = active
+  // (registered); a timestamp = unregistered — the archive (Channel + Video rows
+  // + disk media) is KEPT and served, but collection stops: the JOB-07
+  // re-enumeration scan and the live-scan due-query both exclude unregistered
+  // channels. Re-registering (POST /api/channels) clears it back to null.
+  unregisteredAt   DateTime?
+  lastEnumeratedAt DateTime?
+  lastLivePollAt   DateTime?
+  nextLivePollAt   DateTime?
+  lastLiveSeenAt   DateTime?
+  videos           Video[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([nextLivePollAt])
+}
+
+model Video {
+  id                    String             @id // YouTube video id
+  channelId             String
+  channel               Channel            @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  title                 String
+  // CR-14: long-form video description, captured at full-metadata acquisition
+  // (add-url). null = never captured (flat channel enumeration carries none).
+  // Detail-only — deliberately absent from the lean VideoDto list projection.
+  description           String?
+  contentType           ContentType        @default(REGULAR)
+  copyState             CopyState          @default(CANDIDATE)
+  sourceState           SourceState        @default(UNKNOWN)
+  publishedAt           DateTime?
+  addedAt               DateTime           @default(now())
+  updatedAt             DateTime           @updatedAt
+  mediaExt              String?
+  sizeBytes             BigInt?
+  checksumSha256        String?
+  width                 Int?
+  height                Int?
+  sourceDurationSeconds Float?
+  // CR-09 source re-check cadence + false-positive gate. `nextSourceCheckAt`
+  // (null = never checked = due now) is the scheduler's due-cursor; `sourceGoneStreak`
+  // counts consecutive definite-gone observations so an ambiguous/flaky probe
+  // can't confirm DELETED/PRIVATE (→ Rescued) on its own.
+  lastSourceCheckAt     DateTime?
+  nextSourceCheckAt     DateTime?
+  sourceGoneStreak      Int                @default(0)
+  // CR-20 completeness re-check: a live capture parked in AWAITING_VERIFY
+  // (completeness not measurable yet) is re-probed by the archive-role sweep.
+  // `nextCompletenessCheckAt` is the due-cursor; `completenessDeadlineAt` is the
+  // ~24h give-up point (then conservative PARTIAL_KEPT). Both null off the park.
+  nextCompletenessCheckAt DateTime?
+  completenessDeadlineAt  DateTime?
+  statusEvents          VideoStatusEvent[]
+  jobs                  Job[]
+  liveSessions          LiveSession[]
+
+  @@index([channelId, copyState])
+  @@index([copyState])
+  @@index([title])
+  @@index([nextSourceCheckAt])
+  @@index([nextCompletenessCheckAt])
+}
+
+model VideoStatusEvent {
+  id       String     @id @default(cuid())
+  videoId  String
+  video    Video      @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  axis     StatusAxis
+  oldState String
+  newState String
+  note     String     @default("")
+  at       DateTime   @default(now())
+
+  @@index([videoId, at])
+}
+
+model Job {
+  id              String     @id @default(cuid())
+  type            JobType
+  status          JobStatus  @default(QUEUED)
+  videoId         String?
+  video           Video?     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  channelId       String?
+  bullJobId       String? // current BullMQ execution (one DB row, many executions)
+  priority        Int? // DOWNLOAD display-order mirror (gap-based)
+  payload         Json?
+  attempt         Int        @default(0)
+  progressPct     Float      @default(0)
+  downloadedBytes BigInt     @default(0)
+  totalBytes      BigInt?
+  speedBps        Float?
+  etaSeconds      Int?
+  currentFile     String?
+  stagingDir      String? // pause keeps staging; cancel wipes it
+  error           String?
+  errorKind       ErrorKind?
+  summary         String?
+  events          JobEvent[]
+  enqueuedAt      DateTime   @default(now())
+  startedAt       DateTime?
+  pausedAt        DateTime?
+  finishedAt      DateTime?
+
+  @@index([type, status])
+  @@index([status, priority])
+  @@index([videoId, type, status])
+}
+
+model JobEvent {
+  id        String   @id @default(cuid())
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  level     LogLevel @default(INFO)
+  message   String
+  context   Json?
+  createdAt DateTime @default(now())
+
+  @@index([jobId, createdAt])
+}
+
+model Settings {
+  id                  String       @id @default("singleton")
+  downloadConcurrency Int          @default(1)
+  qualityCap          QualityCap   @default(UNLIMITED)
+  subtitleMode        SubtitleMode @default(BOTH)
+  updatedAt           DateTime     @updatedAt
+}
+
+model Credential {
+  id             String        @id @default("youtube")
+  encryptedBlob  Bytes // AES-256-GCM nonce||ciphertext||tag
+  status         SessionStatus @default(UNVERIFIED)
+  failureStreak  Int           @default(0) // 2-strike → EXPIRED + alert
+  lastVerifiedAt DateTime?
+  lastError      String?
+  importedAt     DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model LiveSession {
+  id              String           @id @default(cuid())
+  videoId         String
+  video           Video            @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  channelId       String
+  state           LiveSessionState @default(DETECTED)
+  captureJobId    String?
+  outputDir       String?
+  isPartial       Boolean          @default(false)
+  startedAt       DateTime         @default(now())
+  endedAt         DateTime?
+  lastHeartbeatAt DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([channelId, state])
+}
+
+model NotificationChannel {
+  id          String                  @id @default(cuid())
+  type        NotificationChannelType
+  name        String
+  config      Json
+  events      String[]                @default([])
+  minSeverity Severity                @default(INFO)
+  enabled     Boolean                 @default(true)
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  type        String // dotted taxonomy, e.g. "download.failed", "youtube.bot_wall"
+  severity    Severity
+  title       String
+  body        String
+  channelId   String?
+  videoId     String?
+  dedupeKey   String?
+  createdAt   DateTime  @default(now())
+  dismissedAt DateTime?
+
+  @@index([createdAt])
+  @@index([dedupeKey, createdAt])
+}

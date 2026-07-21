@@ -1,0 +1,60 @@
+/* ProgressBar — a quiet dial. Track is a sunken well; the fill/band carry the
+   intent color. Indeterminate leans on a sliding band, with a static barber-pole
+   baseline so reduced-motion still reads as "active but unmeasured". */
+
+.tv-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+  min-width: 120px;
+}
+
+.tv-progress__track {
+  position: relative;
+  overflow: hidden;
+  height: 8px;
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  border-radius: var(--tv-radius-full);
+}
+.tv-progress--sm .tv-progress__track {
+  height: 6px;
+}
+
+.tv-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width var(--tv-duration-normal) var(--tv-ease-standard);
+}
+
+/* Indeterminate: a static barber-pole baseline (always visible), plus a sliding
+   band layered on when motion is allowed. */
+.tv-progress__track[data-indeterminate] {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 6px,
+    var(--tv-progress-bg) 6px,
+    var(--tv-progress-bg) 12px
+  );
+}
+
+.tv-progress__band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30%;
+  width: 40%;
+  border-radius: inherit;
+  opacity: 0.9;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tv-progress__band {
+    animation: tv-prog-slide var(--tv-duration-live) var(--tv-ease-in-out) infinite;
+  }
+}
+
+.tv-progress__readout {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}

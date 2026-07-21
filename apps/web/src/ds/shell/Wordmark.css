@@ -1,0 +1,18 @@
+/* Wordmark — display face, brand teal, snug tracking. */
+.tv-wordmark {
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-bold);
+  letter-spacing: var(--tv-tracking-wide);
+  color: var(--tv-brand);
+  white-space: nowrap;
+  user-select: none;
+}
+.tv-wordmark--sm {
+  font-size: var(--tv-text-md);
+}
+.tv-wordmark--md {
+  font-size: var(--tv-text-xl);
+}
+.tv-wordmark--lg {
+  font-size: var(--tv-text-3xl);
+}

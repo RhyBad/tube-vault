@@ -1,0 +1,16 @@
+{
+  "name": "@tubevault/engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "yt-dlp + ffprobe SUBPROCESS adapter: pure argv builders (throttle-by-default), zod progress parsing, detached spawn + process-group kill, dir-scan result resolution, 0600 cookie tmpfiles + secret redaction. Fake yt-dlp fixture + dual-run contract suite (real yt-dlp behind TUBEVAULT_SMOKE=1).",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@tubevault/core": "workspace:*",
+    "zod": "^3.24.1"
+  }
+}

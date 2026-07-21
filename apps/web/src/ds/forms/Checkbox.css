@@ -1,0 +1,25 @@
+/* Checkbox — native control tinted with the brand accent (themes automatically,
+   keeps the native check + indeterminate dash). */
+.tv-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+.tv-checkbox__input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--tv-brand-solid);
+  cursor: pointer;
+  flex: none;
+}
+.tv-checkbox__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.tv-checkbox__label {
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text);
+  cursor: pointer;
+  user-select: none;
+}

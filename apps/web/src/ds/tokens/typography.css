@@ -1,0 +1,48 @@
+/* TubeVault — Typography tokens
+   Type is PROVISIONAL (see tokens/fonts.css). Scale is tuned for a dense-but-
+   calm operational tool: 13px is the comfortable UI body, tables sit at 13px,
+   micro-labels/badges at 11–12px. Display + KPI numbers get Space Grotesk;
+   everything textual is Hanken Grotesk; technical readouts are JetBrains Mono. */
+
+:root {
+  /* ---- Families ---- */
+  --tv-font-display: 'Space Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
+  --tv-font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --tv-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  /* ---- Size scale (px, rem-relative to 16px root) ---- */
+  --tv-text-3xs: 0.6875rem; /* 11px — badge text, micro-labels, dot legends */
+  --tv-text-2xs: 0.75rem; /* 12px — captions, table meta, chip text */
+  --tv-text-xs: 0.8125rem; /* 13px — UI body / table cells (default density) */
+  --tv-text-sm: 0.875rem; /* 14px — comfortable body, form inputs */
+  --tv-text-md: 0.9375rem; /* 15px — emphasized body */
+  --tv-text-lg: 1.0625rem; /* 17px — card titles, section leads */
+  --tv-text-xl: 1.25rem; /* 20px — subsection headings */
+  --tv-text-2xl: 1.5rem; /* 24px — page headings */
+  --tv-text-3xl: 1.875rem; /* 30px — hero headings */
+  --tv-text-4xl: 2.375rem; /* 38px — big KPI numbers (home dashboard) */
+  --tv-text-5xl: 3rem; /* 48px — wordmark / display */
+
+  /* ---- Weights ---- */
+  --tv-weight-regular: 400;
+  --tv-weight-medium: 500;
+  --tv-weight-semibold: 600;
+  --tv-weight-bold: 700;
+
+  /* ---- Line heights ---- */
+  --tv-leading-none: 1;
+  --tv-leading-tight: 1.2; /* display, headings */
+  --tv-leading-snug: 1.35; /* card titles, KPI labels */
+  --tv-leading-normal: 1.5; /* body */
+  --tv-leading-relaxed: 1.65; /* long-form (descriptions) */
+
+  /* ---- Letter spacing ---- */
+  --tv-tracking-tight: -0.02em; /* large display */
+  --tv-tracking-snug: -0.01em; /* headings */
+  --tv-tracking-normal: 0;
+  --tv-tracking-wide: 0.02em; /* wordmark */
+  --tv-tracking-caps: 0.06em; /* small uppercase eyebrows / column heads */
+
+  /* ---- Composite roles (font shorthand-ish, apply family+size+weight+leading) ---- */
+  --tv-numeric: tabular-nums; /* @kind other */
+}

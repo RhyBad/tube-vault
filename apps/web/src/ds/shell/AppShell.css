@@ -1,0 +1,273 @@
+/* AppShell — desktop: fixed sidebar + top bar + scrolling content. Mobile
+   (<900px): sidebar hides, bottom-nav shows; (<640px) the top-bar search
+   collapses to an icon. The bottom-nav + More sheet are always in the DOM
+   (CSS-toggled) so nav lives in ONE place. */
+.tv-appshell {
+  min-height: 100%;
+  display: flex;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────── */
+.tv-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  width: var(--tv-sidebar-w);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: var(--tv-surface);
+  border-right: var(--tv-border-width) solid var(--tv-border);
+}
+.tv-sidebar__brand {
+  display: flex;
+  align-items: center;
+  height: var(--tv-topbar-h);
+  padding: 0 var(--tv-space-4);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-sidebar__nav {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-0-5);
+  padding: var(--tv-space-2);
+}
+.tv-navlink {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2-5);
+  padding: var(--tv-space-2) var(--tv-space-3);
+  border-radius: var(--tv-radius-md);
+  color: var(--tv-text-secondary);
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-navlink:hover {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+.tv-navlink.active {
+  background: var(--tv-brand-subtle-bg);
+  color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-navlink__icon {
+  flex: none;
+}
+.tv-sidebar__foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-3);
+  border-top: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+
+/* ── Main column ─────────────────────────────────────────────────────── */
+.tv-appshell__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.tv-topbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--tv-z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  height: var(--tv-topbar-h);
+  padding: 0 var(--tv-page-pad-x);
+  background: var(--tv-surface);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+}
+.tv-topbar__brand {
+  display: none;
+}
+.tv-topbar__search {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  flex: 1;
+  max-width: 460px;
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-3);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  background: var(--tv-surface-sunken);
+  color: var(--tv-text-muted);
+  font-size: var(--tv-text-xs);
+  cursor: text;
+}
+.tv-topbar__search:hover {
+  border-color: var(--tv-border-strong);
+}
+.tv-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  margin-left: auto;
+}
+/* Desktop shows the SSE dial in the sidebar foot; the top-bar copy is redundant
+   there, so hide it — and reveal it on mobile (sidebar hidden) below. */
+.tv-topbar__sse {
+  display: none;
+}
+.tv-belltrigger {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--tv-control-h-md);
+  height: var(--tv-control-h-md);
+  border: none;
+  border-radius: var(--tv-radius-md);
+  background: transparent;
+  color: var(--tv-text-secondary);
+  cursor: pointer;
+}
+.tv-belltrigger:hover {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+.tv-belltrigger__badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 var(--tv-space-1);
+  display: grid;
+  place-items: center;
+  border-radius: var(--tv-radius-full);
+  border: 2px solid var(--tv-surface);
+  background: var(--tv-brand-solid);
+  color: var(--tv-text-on-brand);
+  font-family: var(--tv-font-mono);
+  font-size: 9px;
+  font-weight: var(--tv-weight-semibold);
+  line-height: 1;
+}
+.tv-content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--tv-content-max);
+  margin: 0 auto;
+  padding: var(--tv-page-pad-y) var(--tv-page-pad-x);
+}
+
+/* ── Controls (theme + language) ─────────────────────────────────────── */
+.tv-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-2);
+}
+.tv-controls__group {
+  display: inline-flex;
+  gap: var(--tv-space-0-5);
+}
+.tv-langbtn {
+  padding: var(--tv-space-0-5) var(--tv-space-1-5);
+  border: none;
+  border-radius: var(--tv-radius-sm);
+  background: transparent;
+  color: var(--tv-text-muted);
+  font-size: var(--tv-text-3xs);
+  cursor: pointer;
+}
+.tv-langbtn--active {
+  color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+}
+
+/* ── Bottom nav + More sheet (mobile) ────────────────────────────────── */
+.tv-bottomnav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--tv-z-sticky);
+  background: var(--tv-surface);
+  border-top: var(--tv-border-width) solid var(--tv-border);
+  padding: var(--tv-space-1) var(--tv-space-1);
+}
+.tv-bottomnav__link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tv-space-0-5);
+  padding: var(--tv-space-1);
+  border: none;
+  background: transparent;
+  color: var(--tv-text-muted);
+  font-size: var(--tv-text-3xs);
+  cursor: pointer;
+}
+.tv-bottomnav__link.active {
+  color: var(--tv-brand);
+}
+.tv-moresheet {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tv-z-drawer);
+  display: flex;
+  align-items: flex-end;
+}
+.tv-moresheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--tv-overlay);
+}
+.tv-moresheet__panel {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+  padding: var(--tv-space-3);
+  padding-bottom: var(--tv-space-6);
+  background: var(--tv-surface-raised);
+  border-top-left-radius: var(--tv-radius-xl);
+  border-top-right-radius: var(--tv-radius-xl);
+  box-shadow: var(--tv-shadow-3);
+}
+.tv-moresheet__link {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-3);
+  border-radius: var(--tv-radius-md);
+  color: var(--tv-text);
+  font-size: var(--tv-text-sm);
+}
+.tv-moresheet__link.active {
+  color: var(--tv-brand);
+}
+.tv-moresheet__controls {
+  padding: var(--tv-space-3);
+  border-top: var(--tv-border-width) solid var(--tv-border-subtle);
+  margin-top: var(--tv-space-1);
+}
+
+@media (max-width: 900px) {
+  .tv-sidebar {
+    display: none;
+  }
+  .tv-bottomnav {
+    display: flex;
+  }
+  .tv-topbar__brand {
+    display: flex;
+  }
+  .tv-topbar__sse {
+    display: inline-flex;
+  }
+  .tv-content {
+    padding-bottom: calc(var(--tv-space-16) + var(--tv-space-6));
+  }
+}

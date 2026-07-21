@@ -1,0 +1,93 @@
+/* DataTable — fixed layout, sticky header, tabular figures. The SIZE column
+   (noClip) is never truncated; other cells ellipsis. */
+.tv-datatable {
+  display: flex;
+  flex-direction: column;
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  overflow: hidden;
+  background: var(--tv-surface);
+}
+.tv-datatable__scroll {
+  overflow-x: auto;
+}
+.tv-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.tv-th {
+  position: sticky;
+  top: 0;
+  z-index: var(--tv-z-sticky);
+  padding: var(--tv-space-2) var(--tv-space-3);
+  text-align: left;
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tv-tracking-caps);
+  background: var(--tv-surface-sunken);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+  white-space: nowrap;
+}
+.tv-th--select,
+.tv-td--select {
+  width: 42px;
+  text-align: center;
+}
+.tv-td {
+  padding: var(--tv-space-2) var(--tv-space-3);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-td--noclip {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: nowrap;
+  font-variant-numeric: var(--tv-numeric);
+}
+.tv-td--empty {
+  text-align: center;
+  color: var(--tv-text-muted);
+  padding: var(--tv-space-8);
+}
+.tv-table[data-density='compact'] .tv-th,
+.tv-table[data-density='compact'] .tv-td {
+  padding: var(--tv-space-1-5) var(--tv-space-2-5);
+}
+.tv-tr--clickable {
+  cursor: pointer;
+}
+.tv-tr:hover:not(.tv-tr--selected) .tv-td {
+  background: var(--tv-surface-hover);
+}
+.tv-tr--selected .tv-td {
+  background: var(--tv-brand-subtle-bg);
+}
+
+.tv-datatable__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-2) var(--tv-space-3);
+  border-top: var(--tv-border-width) solid var(--tv-border);
+  background: var(--tv-surface);
+}
+.tv-datatable__count {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-datatable__pager {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}

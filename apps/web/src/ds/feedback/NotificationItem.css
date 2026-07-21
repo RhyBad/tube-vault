@@ -1,0 +1,100 @@
+/* NotificationItem — severity icon tile + title/body/time + remedy link + dismiss. */
+.tv-notif {
+  display: flex;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-3);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-notif[data-unread='true'] {
+  background: var(--tv-brand-subtle-bg);
+}
+/* Rescued tone (a celebratory moment, e.g. video.rescued) — a violet left accent,
+   colocated with the Rescued signature's own violet token ramp. */
+.tv-notif[data-tone='rescue'] {
+  border-left: 3px solid var(--tv-signature-solid);
+}
+
+.tv-notif__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--tv-radius-md);
+}
+.tv-notif__icon--neutral {
+  color: var(--tv-neutral-fg);
+  background: var(--tv-neutral-bg);
+  border: var(--tv-border-width) solid var(--tv-neutral-border);
+}
+.tv-notif__icon--warning {
+  color: var(--tv-warning-fg);
+  background: var(--tv-warning-bg);
+  border: var(--tv-border-width) solid var(--tv-warning-border);
+}
+.tv-notif__icon--danger {
+  color: var(--tv-danger-fg);
+  background: var(--tv-danger-bg);
+  border: var(--tv-border-width) solid var(--tv-danger-border);
+}
+.tv-notif__icon--signature {
+  color: var(--tv-signature-fg);
+  background: var(--tv-signature-bg);
+  border: var(--tv-border-width) solid var(--tv-signature-border);
+}
+
+.tv-notif__content {
+  flex: 1;
+  min-width: 0;
+}
+.tv-notif__titlerow {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+}
+.tv-notif__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-brand);
+}
+.tv-notif__title {
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-medium);
+  color: var(--tv-text);
+}
+.tv-notif__title--unread {
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-notif__body {
+  margin: var(--tv-space-0-5) 0 0;
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+}
+.tv-notif__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  margin-top: var(--tv-space-1-5);
+}
+.tv-notif__time {
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}
+.tv-notif__target {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  cursor: pointer;
+}
+.tv-notif__target:hover {
+  color: var(--tv-brand-hover);
+}
+.tv-notif__dismiss {
+  flex: none;
+}

@@ -1,0 +1,130 @@
+/* ManagePanel — a calm settings card, deliberately distinct from the find flow. */
+.tv-manage {
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+  padding: clamp(var(--tv-space-4), 2vw, var(--tv-space-5));
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-5);
+  animation: tv-fade-up var(--tv-duration-normal) var(--tv-ease-out);
+}
+@keyframes tv-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tv-manage {
+    animation: none;
+  }
+}
+
+.tv-manage__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-manage__title {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-md);
+  color: var(--tv-text);
+}
+.tv-manage__note {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+
+.tv-manage__policy {
+  display: flex;
+  gap: var(--tv-space-4);
+  flex-wrap: wrap;
+}
+.tv-manage__policy > * {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Coming-soon chips — dashed, muted, inert. */
+.tv-manage__soon {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-manage__soon-head {
+  font-family: var(--tv-font-mono);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-3xs);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-manage__soon-chips {
+  display: flex;
+  gap: var(--tv-space-2);
+  flex-wrap: wrap;
+}
+.tv-manage__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-1-5) var(--tv-space-2-5);
+  border-radius: var(--tv-radius-md);
+  border: var(--tv-border-width) dashed var(--tv-border-strong);
+  background: var(--tv-surface-sunken);
+  color: var(--tv-text-muted);
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-manage__soon-tag {
+  font-size: 9px;
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  padding: 1px var(--tv-space-1-5);
+  border-radius: var(--tv-radius-xs);
+  background: var(--tv-neutral-bg);
+  border: var(--tv-border-width) solid var(--tv-neutral-border);
+  color: var(--tv-neutral-fg);
+}
+
+/* Danger zone. */
+.tv-manage__danger {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding: var(--tv-space-3-5);
+  border: var(--tv-border-width) solid var(--tv-danger-border);
+  background: var(--tv-danger-bg);
+  border-radius: var(--tv-radius-md);
+}
+.tv-manage__danger-title {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-danger-fg);
+}
+.tv-manage__danger-grid {
+  display: flex;
+  gap: var(--tv-space-4);
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.tv-manage__danger-col {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  align-items: flex-start;
+}
+.tv-manage__danger-desc {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-relaxed);
+}

@@ -1,0 +1,42 @@
+/* ErrorState — quiet danger; full (centered) vs compact (inline). */
+.tv-errorstate {
+  display: flex;
+  gap: var(--tv-space-3);
+  color: var(--tv-text);
+}
+.tv-errorstate:not(.tv-errorstate--compact) {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--tv-space-10) var(--tv-space-6);
+}
+.tv-errorstate--compact {
+  align-items: flex-start;
+  padding: var(--tv-space-3);
+  background: var(--tv-danger-bg);
+  border: var(--tv-border-width) solid var(--tv-danger-border);
+  border-radius: var(--tv-radius-md);
+}
+.tv-errorstate__icon {
+  flex: none;
+  color: var(--tv-danger-fg);
+}
+.tv-errorstate__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  align-items: inherit;
+}
+.tv-errorstate__title {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-sm);
+}
+.tv-errorstate__desc {
+  margin: 0;
+  max-width: 44ch;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+}
+.tv-errorstate__retry {
+  margin-top: var(--tv-space-1);
+}

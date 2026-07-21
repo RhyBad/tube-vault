@@ -1,0 +1,189 @@
+/**
+ * S0 Login styling. A single centered card on the raw canvas (no app shell),
+ * with a fixed theme/language cluster top-right and a reassurance footer below
+ * the card. Tokens only — mirrors S0-Login.dc.html.
+ */
+
+.tv-login {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 76px 16px 96px;
+  background: var(--tv-canvas);
+  position: relative;
+}
+
+.tv-login__controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tv-login__seg {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  box-shadow: var(--tv-shadow-1);
+}
+
+.tv-login__segbtn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: var(--tv-radius-sm);
+  background: transparent;
+  color: var(--tv-text-muted);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-2xs);
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 130ms,
+    background 130ms;
+}
+
+.tv-login__segbtn:hover {
+  color: var(--tv-text);
+}
+
+.tv-login__segbtn.is-active {
+  background: var(--tv-surface-raised);
+  color: var(--tv-text);
+  box-shadow: var(--tv-shadow-1);
+}
+
+.tv-login__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.tv-login__card {
+  width: min(384px, calc(100vw - 32px));
+  box-sizing: border-box;
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-2);
+  padding: 30px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tv-login__card {
+    animation: tv-login-card-in 0.32s var(--tv-ease-standard) both;
+  }
+  @keyframes tv-login-card-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+.tv-login__brand {
+  display: flex;
+  justify-content: center;
+}
+
+.tv-login__lead {
+  margin: 0;
+  text-align: center;
+  color: var(--tv-text-secondary);
+  font-size: var(--tv-text-sm);
+  line-height: 1.5;
+}
+
+.tv-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tv-login__caps {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tv-warning-fg);
+  font-size: var(--tv-text-2xs);
+  line-height: 1.4;
+}
+
+.tv-login__rate {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--tv-radius-md);
+  background: var(--tv-warning-bg);
+  border: 1px solid var(--tv-warning-border);
+  color: var(--tv-warning-fg);
+  font-size: var(--tv-text-2xs);
+  line-height: 1.45;
+}
+
+.tv-login__rate svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.tv-login__cooldown {
+  font-variant-numeric: tabular-nums;
+}
+
+.tv-login__busy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tv-login__spin {
+    animation: tv-login-spin 0.7s linear infinite;
+  }
+  @keyframes tv-login-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.tv-login__footer {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tv-text-muted);
+  font-size: var(--tv-text-3xs);
+}
+
+.tv-login__footer svg {
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .tv-login {
+    padding: 64px 12px 72px;
+  }
+  .tv-login__card {
+    padding: 24px 20px 22px;
+  }
+}

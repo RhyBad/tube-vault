@@ -1,0 +1,39 @@
+/* LoadMoreList — keyset. A centered "Load more" button; a quiet end label; never
+   a total (that's DataTable's job). */
+.tv-loadmore {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+}
+.tv-loadmore__foot {
+  display: flex;
+  justify-content: center;
+}
+.tv-loadmore__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-5);
+  border: var(--tv-border-width) solid var(--tv-border-strong);
+  border-radius: var(--tv-radius-md);
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-medium);
+  cursor: pointer;
+}
+.tv-loadmore__btn:hover:not(:disabled) {
+  border-color: var(--tv-brand);
+  color: var(--tv-brand);
+}
+.tv-loadmore__btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+.tv-loadmore__end {
+  text-align: center;
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}

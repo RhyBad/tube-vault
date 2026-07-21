@@ -1,0 +1,156 @@
+/* QueuePage — S6 layout. Sticky toolbar + bulk bar so controls stay reachable
+   while scrolling a long keyset list (handoff §3b). */
+.tv-queue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+  max-width: var(--tv-content-max);
+  /* §S6-L1: the shared 8-column template — the desktop table header and every
+     table row read this so their columns stay aligned. */
+  --tv-qrow-cols: 1.75rem 1.25rem minmax(0, 1.6fr) minmax(5.5rem, max-content) minmax(0, 1.4fr) 3rem
+    2.75rem max-content;
+}
+
+.tv-queue__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+}
+.tv-queue__title {
+  margin: 0;
+  font-size: var(--tv-text-2xl);
+  font-weight: var(--tv-weight-bold);
+  color: var(--tv-text);
+}
+.tv-queue__subtitle {
+  margin: var(--tv-space-1) 0 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+}
+
+.tv-queue__toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  flex-wrap: wrap;
+  padding: var(--tv-space-2) 0;
+  background: var(--tv-canvas);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-queue__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+/* Inline the labeled channel filter so it reads as one compact control. */
+.tv-queue__channelfilter {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+}
+.tv-queue__channelfilter .tv-field__label {
+  margin: 0;
+  white-space: nowrap;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+}
+
+.tv-queue__selectall {
+  padding: var(--tv-space-1) var(--tv-space-2);
+}
+
+.tv-queue__bulkbar {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 4;
+}
+
+/* Always in the DOM so AT reliably announces the badge's insertion (WCAG 4.1.3). */
+.tv-queue__newjobs-region:empty {
+  display: none;
+}
+.tv-queue__newjobs {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  padding: var(--tv-space-1-5) var(--tv-space-3);
+  border: var(--tv-border-width) solid var(--tv-brand-subtle-border);
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-brand-subtle-bg);
+  color: var(--tv-brand);
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-medium);
+  cursor: pointer;
+}
+.tv-queue__newjobs:hover {
+  background: var(--tv-surface-hover);
+}
+
+.tv-queue__body {
+  min-height: 8rem;
+}
+
+/* §S6-L1: the dense columnar table — a single bordered surface with an aligned
+   grid header over borderless rows. On mobile (no role=table) it's a plain
+   wrapper around stacked cards. */
+.tv-queue__list[role='table'] {
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  overflow: hidden;
+  background: var(--tv-surface);
+}
+.tv-queue__list[role='table'] .tv-loadmore__items > .tv-loadmore__item:last-child .tv-qrow--table {
+  border-bottom: none;
+}
+.tv-queue__thead {
+  display: grid;
+  grid-template-columns: var(--tv-qrow-cols);
+  gap: var(--tv-space-3);
+  align-items: center;
+  padding: var(--tv-space-2) var(--tv-space-4);
+  background: var(--tv-surface-sunken);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-queue__skeletons-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+
+.tv-queue__toasts {
+  position: fixed;
+  right: var(--tv-space-4);
+  bottom: var(--tv-space-4);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  max-width: min(24rem, calc(100vw - var(--tv-space-8)));
+}
+
+@media (max-width: 640px) {
+  .tv-queue__toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--tv-space-2);
+  }
+  .tv-queue__filters {
+    justify-content: space-between;
+  }
+  .tv-queue__toasts {
+    left: var(--tv-space-3);
+    right: var(--tv-space-3);
+    max-width: none;
+  }
+}

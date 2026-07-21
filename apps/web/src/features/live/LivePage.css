@@ -1,0 +1,465 @@
+/* LivePage — S7. Three stacked areas (in-progress captures · watched channels ·
+   recently ended). Cards reflow via auto-fill grids; the recent list is a single
+   column of horizontal rows. Everything is token-driven so light/dark follow the
+   theme. Card visuals mirror the design's .dc reference. */
+.tv-live {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-8);
+  max-width: var(--tv-content-max);
+}
+
+.tv-live__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+}
+
+/* auto-dismissing toast stack (toggle outcome), pinned bottom-right. */
+.tv-live__toasts {
+  position: fixed;
+  right: var(--tv-space-4);
+  bottom: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  align-items: flex-end;
+}
+
+/* ---- section header ---- */
+.tv-live__shead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-live__eyebrow {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-live__titlerow {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2-5);
+}
+.tv-live__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  letter-spacing: var(--tv-tracking-snug);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+}
+.tv-live__count {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text-secondary);
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  border-radius: var(--tv-radius-sm);
+  padding: 2px 7px;
+}
+.tv-live__sub {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}
+
+/* ---- grids / lists ---- */
+.tv-live__grid {
+  display: grid;
+  /* min(320px, 100%): a lone column shrinks below 320px on ≤360px phones instead
+     of overflowing the (fixed-padding) content box; multi-column reflow is kept. */
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: var(--tv-space-4);
+}
+.tv-live__reclist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+}
+
+/* ---- credential hint (members-only lives need a valid sign-in) ---- */
+.tv-live__cred {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-2-5);
+  padding: var(--tv-space-3) var(--tv-space-3-5);
+  background: var(--tv-warning-bg);
+  border: var(--tv-border-width) solid var(--tv-warning-border);
+  border-radius: var(--tv-radius-md);
+}
+.tv-live__cred-icon {
+  flex: none;
+  margin-top: 1px;
+  color: var(--tv-warning-fg);
+}
+.tv-live__cred-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-0-5);
+  min-width: 0;
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-warning-fg);
+}
+.tv-live__cred-link {
+  width: fit-content;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-brand);
+}
+.tv-live__cred-link:hover {
+  text-decoration: underline;
+}
+
+/* ---- skeletons ---- */
+.tv-live__cardskel,
+.tv-live__chskel,
+.tv-live__recskel {
+  display: flex;
+  padding: var(--tv-card-pad);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-live__cardskel {
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+}
+.tv-live__chskel {
+  gap: var(--tv-space-3);
+}
+.tv-live__chskel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-live__recskel {
+  gap: var(--tv-space-3-5);
+  padding: var(--tv-space-2-5);
+}
+.tv-live__recskel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding: var(--tv-space-1) 0;
+}
+
+/* =========================================================================
+   WatchedChannelCard — avatar · identity · counts · watchLive switch + undo
+   ========================================================================= */
+.tv-wcard {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: flex-start;
+  padding: var(--tv-card-pad);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+}
+.tv-wcard__avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-lg);
+  color: var(--tv-text-muted);
+}
+.tv-wcard__body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+}
+.tv-wcard__titlerow {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  flex-wrap: wrap;
+}
+.tv-wcard__title {
+  margin: 0;
+  font-size: var(--tv-text-md);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.tv-wcard__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  padding: 2px var(--tv-space-2);
+  border-radius: var(--tv-radius-sm);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  white-space: nowrap;
+}
+.tv-wcard__chip--live {
+  color: var(--tv-progress-fg);
+  background: var(--tv-progress-bg);
+  border: var(--tv-border-width) solid var(--tv-progress-border);
+}
+.tv-wcard__chip--paused {
+  color: var(--tv-neutral-fg);
+  background: var(--tv-neutral-bg);
+  border: var(--tv-border-width) solid var(--tv-neutral-border);
+}
+.tv-wcard__handle {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}
+.tv-wcard__counts {
+  display: flex;
+  gap: var(--tv-space-4);
+  flex-wrap: wrap;
+  margin-top: var(--tv-space-0-5);
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}
+.tv-wcard__counts b {
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-wcard__n--healthy {
+  color: var(--tv-success-fg) !important;
+}
+/* §S7-5: candidates = still-to-download, a quieter count than total/healthy. */
+.tv-wcard__n--candidates {
+  color: var(--tv-text-secondary) !important;
+}
+.tv-wcard__controls {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--tv-space-1-5);
+}
+.tv-wcard__switch {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+.tv-wcard__switch:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.tv-wcard__track {
+  display: block;
+  position: relative;
+  width: 40px;
+  height: 24px;
+  border-radius: var(--tv-radius-full);
+  border: var(--tv-border-width) solid var(--tv-border-strong);
+  background: var(--tv-surface-sunken);
+  transition: background var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-wcard__track[data-on='true'] {
+  background: var(--tv-brand-solid);
+  border-color: var(--tv-brand-solid);
+}
+.tv-wcard__switch:focus-visible .tv-wcard__track {
+  box-shadow: var(--tv-shadow-focus);
+}
+.tv-wcard__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-surface-raised);
+  box-shadow: var(--tv-shadow-1);
+  transition: left var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-wcard__track[data-on='true'] .tv-wcard__knob {
+  left: 18px;
+  background: #fff;
+}
+.tv-wcard__undo {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-brand);
+}
+.tv-wcard__undo:hover {
+  text-decoration: underline;
+}
+.tv-wcard__undo:disabled {
+  color: var(--tv-text-muted);
+  cursor: default;
+  text-decoration: none;
+}
+
+/* =========================================================================
+   RecentLiveCard — horizontal recording row (thumb · title · badge · meta)
+   ========================================================================= */
+.tv-reccard {
+  display: flex;
+  gap: var(--tv-space-3-5);
+  padding: var(--tv-space-2-5);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--tv-duration-fast) var(--tv-ease-standard),
+    box-shadow var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-reccard:hover {
+  border-color: var(--tv-brand);
+  box-shadow: var(--tv-shadow-2);
+}
+.tv-reccard:focus-visible {
+  border-color: var(--tv-brand);
+  box-shadow: var(--tv-shadow-focus);
+}
+.tv-reccard__thumb {
+  position: relative;
+  flex: none;
+  width: 184px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--tv-radius-md);
+  overflow: hidden;
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-reccard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tv-reccard__img--placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--tv-text-muted);
+}
+.tv-reccard__tag {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  padding: 1px var(--tv-space-1-5);
+  border-radius: var(--tv-radius-xs);
+  font-size: 10px;
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--tv-danger-solid);
+  color: #fff;
+}
+.tv-reccard__tagdot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--tv-radius-full);
+  background: #fff;
+}
+.tv-reccard__duration {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 1px 5px;
+  border-radius: var(--tv-radius-xs);
+  background: rgba(8, 10, 14, 0.82);
+  color: #fff;
+  font-family: var(--tv-font-mono);
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+.tv-reccard__body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+  padding: 3px 6px 3px 0;
+}
+.tv-reccard__title {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-semibold);
+  line-height: var(--tv-leading-snug);
+  color: var(--tv-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tv-reccard__channel {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-reccard__badge {
+  display: flex;
+}
+.tv-reccard__reassure {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-2xs);
+  line-height: var(--tv-leading-normal);
+  color: var(--tv-text-secondary);
+  max-width: 64ch;
+}
+.tv-reccard__reassure svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--tv-progress-fg);
+}
+.tv-reccard__meta {
+  margin-top: auto;
+  padding-top: var(--tv-space-1);
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}
+
+/* ---- phone: tighter recent thumbnail (design ≤560px) ---- */
+@media (max-width: 560px) {
+  .tv-live {
+    gap: var(--tv-space-6);
+  }
+  .tv-reccard__thumb {
+    width: 120px;
+  }
+}

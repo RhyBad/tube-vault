@@ -1,0 +1,83 @@
+/** Videos KO strings — partial; missing keys fall back to EN at runtime. */
+export default {
+  videos: {
+    searchChannel: '이 채널에서 검색…',
+    searchLibrary: '제목 또는 채널 검색…',
+    filter: {
+      rescuedOnly: '구조됨만',
+      type: '유형',
+      copyState: '보존 상태',
+      sourceState: '원본',
+      published: '게시일',
+      from: '시작',
+      to: '끝',
+      allTypes: '모든 유형',
+      allCopy: '모든 보존 상태',
+      allSource: '모든 원본',
+      allChannels: '모든 채널',
+    },
+    view: {
+      label: '보기',
+      grid: '격자',
+      list: '목록',
+    },
+    list: {
+      colThumb: '썸네일',
+      colTitle: '제목',
+      colChannel: '채널',
+      colPublished: '게시일',
+      colSize: '용량',
+      colStatus: '상태',
+    },
+    sort: {
+      publishedAt_desc: '최신 게시순',
+      publishedAt_asc: '오래된 게시순',
+      addedAt_desc: '최근 추가순',
+      title_asc: '제목순',
+      sizeBytes_desc: '큰 용량순',
+      sizeBytes_asc: '작은 용량순',
+    },
+    type: {
+      REGULAR: '영상',
+      SHORTS: '쇼츠',
+      PREMIERE: '프리미어',
+      LIVE: '라이브',
+      MEMBERS_ONLY: '멤버 전용',
+    },
+    results: {
+      total_one: '영상 {{count}}개',
+      total_other: '영상 {{count}}개',
+      selectAll: '모두 선택',
+    },
+    clearFilters: '필터 지우기',
+    select: {
+      selected_one: '{{count}}개 선택됨',
+      selected_other: '{{count}}개 선택됨',
+      download_one: '{{count}}개 내려받기',
+      download_other: '{{count}}개 내려받기',
+      clear: '선택 해제',
+      reasonSaved: '이미 저장됨',
+      reasonInProgress: '진행 중',
+    },
+    pager: {
+      range: '{{total}}개 중 {{start}}–{{end}}',
+      page: '{{page}} / {{pages}} 페이지',
+      prev: '이전 페이지',
+      next: '다음 페이지',
+    },
+    empty: {
+      channelTitle: '아직 보관된 영상이 없습니다',
+      channelBody:
+        '이 채널은 아직 목록을 수집하지 않았습니다. 새 업로드가 캡처되면 여기에 표시됩니다.',
+      libraryTitle: '아직 보관된 영상이 없습니다',
+      libraryBody: '채널을 등록하면 보관이 시작됩니다. 새 업로드가 캡처되면 여기에 표시됩니다.',
+      filteredTitle: '조건에 맞는 영상이 없습니다',
+      filteredBody: '검색어를 넓히거나 필터를 지우면 전체 보관본을 볼 수 있습니다.',
+    },
+    error: {
+      title: '영상을 불러오지 못했습니다',
+      body: '보관함에 연결하는 중 문제가 생겼습니다. 보관본은 안전합니다 — 화면만 다시 불러오면 됩니다.',
+      retry: '다시 시도',
+    },
+  },
+};

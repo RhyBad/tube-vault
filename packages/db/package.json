@@ -1,0 +1,25 @@
+{
+  "name": "@tubevault/db",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Prisma 6 + PostgreSQL 17 data layer: schema, migrations, generated client re-export. Backend-only (BigInt/Bytes rows) — browser-safe types live in @tubevault/types.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.0"
+  }
+}

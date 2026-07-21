@@ -1,0 +1,12 @@
+{
+  "name": "@tubevault/storage",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Filesystem vault layout (v1 LocalFileStore port): <root>/<channelId>/<videoId> - <title>/ with videoId-prefixed sidecars. Strict id validation, UTF-8 byte-bounded title sanitization, root confinement, fsync+rename atomic publish, hardlink-deduped accounting. Zero runtime deps — Node fs only.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  }
+}

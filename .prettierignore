@@ -1,0 +1,26 @@
+# v1 (Python) leftovers on developer machines
+.venv/
+
+# Generated / vendored
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml
+.pnpm-store/
+data/
+data-v2/
+tmp/
+
+# Frontend handoff bundle — vendored design artifacts + specs (external SoT,
+# preserved as authored: DC-bundled .dc.html, minified _ds_bundle.js, specs).
+apps/web/docs/handoff/
+
+# Design re-audit package — vendored design-export zips + recovered .dc.html,
+# generated audit findings, and the author-written (Korean) handover prompt.
+docs/design-reaudit/
+
+# Author-formatted docs (Korean PRD/plan/instructions — preserve as written)
+TubeVault_PRD.md
+CLAUDE.md
+PLAN.md
+README.md

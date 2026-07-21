@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TubeVault</title>
+    <!-- Theme + language boot: applied BEFORE first paint so there is no flash
+         of the wrong theme. Mirrors src/theme/theme.ts (key 'tv-theme', values
+         light|dark|system with an explicit choice always winning over the OS
+         preference) and the i18n language key ('tv-lang'). Kept dependency-free
+         and defensive — any storage error falls through to the light default. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('tv-theme') || 'system';
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (t === 'dark' || (t === 'system' && prefersDark)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+          var lang = localStorage.getItem('tv-lang');
+          if (lang === 'en' || lang === 'ko') {
+            document.documentElement.setAttribute('lang', lang);
+          }
+        } catch (e) {
+          /* storage blocked — light theme is the safe default */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

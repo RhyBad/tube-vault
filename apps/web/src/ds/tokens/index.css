@@ -1,0 +1,9 @@
+/* TubeVault design tokens — barrel (@import manifest only, no rules here).
+   Ported verbatim from docs/handoff/design/_design-system/ — the --tv-* names
+   are kept EXACTLY so the design system stays the single source of truth.
+   Order: fonts → colors → type → spacing → elevation. */
+@import './fonts.css';
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+@import './elevation.css';

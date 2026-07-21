@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // BROWSER package: vite is the bundler, so module resolution is Bundler
+    // (NOT the base's NodeNext — that would demand .js extension specifiers
+    // vite never needs) and `tsc` runs as a pure typechecker (noEmit; vite
+    // emits). Still builds under the workspace `pnpm -r build` via the
+    // package's `tsc && vite build` script.
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "types": ["vite/client"]
+  },
+  // Tests are excluded from the build typecheck like every other package:
+  // vitest transforms + runs them, eslint lints them.
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

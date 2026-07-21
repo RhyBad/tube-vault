@@ -1,0 +1,114 @@
+/* ChannelCard — avatar + identity + counts, with a state chip. */
+.tv-channelcard {
+  display: flex;
+  gap: var(--tv-space-3);
+  padding: var(--tv-card-pad);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+}
+.tv-channelcard--clickable {
+  cursor: pointer;
+}
+.tv-channelcard--clickable:hover {
+  background: var(--tv-surface-hover);
+}
+.tv-channelcard[data-unregistered='true'] {
+  border-style: dashed;
+}
+
+/* Bare: drop the frame so a parent container owns it (S2 row = bare card + footer
+   in one .tv-chrow). Hover feedback moves to that container, so a bare card stays
+   transparent even when clickable; the keyboard focus ring is preserved. */
+.tv-channelcard--bare {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+}
+.tv-channelcard--bare.tv-channelcard--clickable:hover {
+  background: transparent;
+}
+.tv-channelcard--bare[data-unregistered='true'] {
+  border: none;
+}
+
+.tv-channelcard__avatar {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--tv-radius-full);
+  overflow: hidden;
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text-secondary);
+}
+.tv-channelcard__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tv-channelcard__body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-channelcard__titlerow {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  flex-wrap: wrap;
+}
+.tv-channelcard__title {
+  margin: 0;
+  font-size: var(--tv-text-md);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-channelcard__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  padding: var(--tv-space-0-5) var(--tv-space-2);
+  border-radius: var(--tv-radius-sm);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  white-space: nowrap;
+}
+.tv-channelcard__chip--live {
+  color: var(--tv-progress-fg);
+  background: var(--tv-progress-bg);
+  border: var(--tv-border-width) solid var(--tv-progress-border);
+}
+.tv-channelcard__chip--stopped {
+  color: var(--tv-neutral-fg);
+  background: var(--tv-neutral-bg);
+  border: var(--tv-border-width) solid var(--tv-neutral-border);
+}
+.tv-channelcard__handle {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}
+.tv-channelcard__counts {
+  display: flex;
+  gap: var(--tv-space-3);
+  margin-top: var(--tv-space-1);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-channelcard__counts b {
+  color: var(--tv-text);
+  font-weight: var(--tv-weight-semibold);
+}

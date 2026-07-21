@@ -1,0 +1,93 @@
+/* StatusBadge — squared (not pill) badges, the deliberate "instrument" detail.
+   Each intent maps to its --tv-<intent>-* ramp: soft bg + tint border + fg. */
+
+.tv-statusbadge {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  vertical-align: middle;
+}
+
+.tv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  border: var(--tv-border-width) solid transparent;
+  border-radius: var(--tv-radius-sm); /* squared/precise, not a pill */
+  font-family: var(--tv-font-sans);
+  font-weight: var(--tv-weight-semibold);
+  line-height: var(--tv-leading-none);
+  white-space: nowrap;
+}
+
+.tv-badge--sm {
+  padding: var(--tv-space-0-5) var(--tv-space-1-5);
+  font-size: var(--tv-text-3xs);
+}
+.tv-badge--md {
+  padding: var(--tv-space-1) var(--tv-space-2);
+  font-size: var(--tv-text-2xs);
+}
+
+.tv-badge__icon {
+  flex: none;
+}
+
+.tv-badge__eyebrow {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tv-tracking-caps);
+  opacity: 0.7;
+}
+
+.tv-badge__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Intent ramps ──────────────────────────────────────────────────────── */
+.tv-badge--success {
+  color: var(--tv-success-fg);
+  background: var(--tv-success-bg);
+  border-color: var(--tv-success-border);
+}
+.tv-badge--progress {
+  color: var(--tv-progress-fg);
+  background: var(--tv-progress-bg);
+  border-color: var(--tv-progress-border);
+}
+.tv-badge--warning {
+  color: var(--tv-warning-fg);
+  background: var(--tv-warning-bg);
+  border-color: var(--tv-warning-border);
+}
+.tv-badge--danger {
+  color: var(--tv-danger-fg);
+  background: var(--tv-danger-bg);
+  border-color: var(--tv-danger-border);
+}
+.tv-badge--neutral {
+  color: var(--tv-neutral-fg);
+  background: var(--tv-neutral-bg);
+  border-color: var(--tv-neutral-border);
+}
+.tv-badge--locked {
+  color: var(--tv-locked-fg);
+  background: var(--tv-locked-bg);
+  border-color: var(--tv-locked-border);
+}
+
+/* The Rescued jewel — reserved violet, with a one-time glow on first paint. */
+.tv-badge--signature {
+  color: var(--tv-signature-fg);
+  background: var(--tv-signature-bg);
+  border-color: var(--tv-signature-border);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tv-badge--rescued {
+    animation: tv-signature-glow var(--tv-duration-slow) var(--tv-ease-out) 1;
+  }
+}

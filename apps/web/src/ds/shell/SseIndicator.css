@@ -1,0 +1,24 @@
+/* SseIndicator — dot + label, colored per connection state. */
+.tv-sse {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-sse__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--tv-radius-full);
+  background: currentColor;
+  flex: none;
+}
+.tv-sse--connected {
+  color: var(--tv-sse-connected);
+}
+.tv-sse--reconnecting {
+  color: var(--tv-sse-reconnecting);
+}
+.tv-sse--disconnected {
+  color: var(--tv-sse-disconnected);
+}

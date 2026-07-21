@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "composite": false
+  },
+  // Co-located tests (and test/) are excluded from the tsc build like packages/engine:
+  // vitest transforms + runs them, eslint lints them; they never land in dist/.
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts"]
+}

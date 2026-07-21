@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  // Co-located tests are EXCLUDED from the build: they locate the committed
+  // executable fixtures via `import.meta.url` (ESM-only), while this package —
+  // like the rest of the monorepo — compiles to CommonJS. Vitest transforms and
+  // runs them (and eslint lints them); they just don't land in dist/.
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"],
+  "references": [{ "path": "../core" }]
+}

@@ -1,0 +1,23 @@
+/* Pager — a slim footer row: range on the left, Prev · page · Next on the right. */
+.tv-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  flex-wrap: wrap;
+  padding: var(--tv-space-3) var(--tv-space-1) var(--tv-space-1);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}
+.tv-pager__range {
+  color: var(--tv-text-secondary);
+}
+.tv-pager__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+}
+.tv-pager__page {
+  color: var(--tv-text);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@tubevault/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Pure domain layer (v1 port): copy/source state machine, integrity verdict, availability classification, bot-wall detection, policy resolution, live-capture decisions. Zero runtime deps beyond @tubevault/types — no I/O, no clock, no Prisma.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@tubevault/types": "workspace:*"
+  }
+}

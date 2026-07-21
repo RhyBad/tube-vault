@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  // Co-located tests are excluded from the build (vitest transforms + runs
+  // them, eslint lints them) — same convention as packages/engine.
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

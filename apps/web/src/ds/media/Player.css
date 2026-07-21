@@ -1,0 +1,42 @@
+/* Player — a sunken video frame + a quiet meta/download bar. */
+.tv-player {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-player__video {
+  display: block;
+  width: 100%;
+  max-height: 62vh;
+  background: #000;
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-player__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  flex-wrap: wrap;
+}
+.tv-player__meta {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-player__download {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-3-5);
+  border: var(--tv-border-width) solid var(--tv-border-strong);
+  border-radius: var(--tv-radius-md);
+  color: var(--tv-text);
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-player__download:hover {
+  border-color: var(--tv-brand);
+  color: var(--tv-brand);
+}

@@ -1,0 +1,93 @@
+/* Shared field chrome for TextField / Select / MaskedSecretInput — a stacked
+   label + control + hint, on tokens. Error state recolors the border + hint. */
+.tv-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+}
+
+.tv-field__label {
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-medium);
+  color: var(--tv-text-secondary);
+}
+
+.tv-field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tv-input {
+  width: 100%;
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-3);
+  color: var(--tv-text);
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-sm);
+  outline: none;
+  transition:
+    border-color var(--tv-duration-fast) var(--tv-ease-standard),
+    box-shadow var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-input::placeholder {
+  color: var(--tv-text-muted);
+}
+.tv-input:focus-visible {
+  border-color: var(--tv-brand);
+  box-shadow: var(--tv-shadow-focus);
+}
+.tv-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.tv-input--mono {
+  font-family: var(--tv-font-mono);
+}
+.tv-input--with-icon {
+  padding-left: var(--tv-space-8);
+}
+
+.tv-field[data-size='sm'] .tv-input {
+  height: var(--tv-control-h-sm);
+  font-size: var(--tv-text-xs);
+}
+.tv-field[data-size='lg'] .tv-input {
+  height: var(--tv-control-h-lg);
+}
+
+.tv-field__icon {
+  position: absolute;
+  left: var(--tv-space-3);
+  color: var(--tv-text-muted);
+  pointer-events: none;
+}
+
+.tv-field__hint {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-field__hint--error {
+  color: var(--tv-danger-fg);
+}
+.tv-field:has(.tv-input[aria-invalid='true']) .tv-input {
+  border-color: var(--tv-danger-border);
+}
+
+/* Select — native <select> under the DS skin + a custom chevron. */
+.tv-select .tv-select__native {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: var(--tv-space-8);
+  cursor: pointer;
+}
+.tv-select__chevron {
+  position: absolute;
+  right: var(--tv-space-3);
+  color: var(--tv-text-muted);
+  pointer-events: none;
+}

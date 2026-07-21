@@ -1,0 +1,157 @@
+.tv-stg {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── header ───────────────────────────────────────────────────────── */
+.tv-stg__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.tv-stg__header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.tv-stg__titlerow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tv-stg__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: 600;
+  font-size: var(--tv-text-2xl);
+  color: var(--tv-text);
+  letter-spacing: var(--tv-tracking-snug);
+}
+.tv-stg__readonly {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: var(--tv-radius-sm);
+  font-weight: 600;
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-neutral-fg);
+  background: var(--tv-neutral-bg);
+  border: 1px solid var(--tv-neutral-border);
+}
+.tv-stg__subtitle {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+}
+.tv-stg__subtitle--wide {
+  max-width: 66ch;
+}
+
+.tv-stg__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.tv-stg__freeup,
+.tv-stg__refresh,
+.tv-stg__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: var(--tv-control-h-md);
+  padding: 0 13px;
+  border-radius: var(--tv-radius-md);
+  border: 1px solid var(--tv-border-strong);
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  cursor: pointer;
+  font-family: var(--tv-font-sans);
+  font-weight: 600;
+  font-size: var(--tv-text-xs);
+  white-space: nowrap;
+}
+.tv-stg__freeup:hover,
+.tv-stg__refresh:hover {
+  border-color: var(--tv-brand);
+  color: var(--tv-brand);
+}
+.tv-stg__freeup:focus-visible,
+.tv-stg__refresh:focus-visible,
+.tv-stg__back:focus-visible {
+  outline: 2px solid var(--tv-brand);
+  outline-offset: 2px;
+}
+
+.tv-stg__back {
+  align-self: flex-start;
+  height: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--tv-brand);
+  font-size: var(--tv-text-2xs);
+  gap: 4px;
+}
+.tv-stg__back:hover {
+  color: var(--tv-brand-hover);
+}
+.tv-stg__header--cleanup .tv-stg__header-main {
+  gap: 6px;
+}
+
+/* Cleanup keeps the free-up-space target metric visible: a compact, right-aligned
+   readout of the already-fetched vault free space (SST-I2). */
+.tv-stg__freenow {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-items: flex-end;
+  text-align: right;
+}
+.tv-stg__freenow-value {
+  font-family: var(--tv-font-display);
+  font-weight: 600;
+  font-size: var(--tv-text-xl);
+  line-height: 1.1;
+  color: var(--tv-text);
+  font-variant-numeric: tabular-nums;
+}
+.tv-stg__freenow-label {
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+
+/* ── toasts ───────────────────────────────────────────────────────── */
+.tv-stg__toasts {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 40px));
+}
+
+@media (max-width: 640px) {
+  .tv-stg__header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .tv-stg__toasts {
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+}

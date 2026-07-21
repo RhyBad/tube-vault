@@ -1,0 +1,92 @@
+/* LiveSessionCard — state badge + heartbeat + (capturing) indeterminate bar. */
+.tv-livecard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  padding: var(--tv-card-pad);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+}
+/* an active capture gets a subtle progress-colored bottom rail */
+.tv-livecard[data-state='CAPTURING'],
+.tv-livecard[data-state='DETECTED'] {
+  box-shadow:
+    var(--tv-shadow-1),
+    inset 0 -2px 0 var(--tv-progress-solid);
+}
+
+/* click-to-open (→ the video page): hover lift + a real focus-visible ring. */
+.tv-livecard--clickable {
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--tv-duration-fast) var(--tv-ease-standard),
+    box-shadow var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-livecard--clickable:hover {
+  border-color: var(--tv-brand);
+}
+.tv-livecard--clickable:focus-visible {
+  border-color: var(--tv-brand);
+  box-shadow: var(--tv-shadow-focus);
+}
+
+.tv-livecard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-2);
+}
+.tv-livecard__hb {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-livecard__hb[data-heartbeat='live'] {
+  color: var(--tv-success-fg);
+}
+.tv-livecard__hb[data-heartbeat='stale'] {
+  color: var(--tv-warning-fg);
+}
+.tv-livecard__hbdot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--tv-radius-full);
+  background: currentColor;
+}
+
+.tv-livecard__title {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-semibold);
+  line-height: var(--tv-leading-snug);
+  color: var(--tv-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tv-livecard__channel {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-livecard__note {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-2xs);
+  line-height: var(--tv-leading-normal);
+  color: var(--tv-text-secondary);
+}
+.tv-livecard__note svg {
+  flex: none;
+  color: var(--tv-progress-fg);
+}

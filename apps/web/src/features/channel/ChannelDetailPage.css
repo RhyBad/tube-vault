@@ -1,0 +1,59 @@
+/* ChannelDetailPage — page column: breadcrumb, header, (manage), find browser. */
+.tv-channel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+  width: 100%;
+}
+
+.tv-channel__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-channel__crumb {
+  border: none;
+  background: transparent;
+  color: var(--tv-text-secondary);
+  cursor: pointer;
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-2xs);
+  padding: 0;
+}
+.tv-channel__crumb:hover {
+  color: var(--tv-brand);
+}
+.tv-channel__crumb-current {
+  color: var(--tv-text);
+}
+
+/* Header skeleton (while the channel meta loads). */
+.tv-channel__hdrskel {
+  display: flex;
+  gap: var(--tv-space-4);
+  padding: clamp(var(--tv-space-4), 2vw, var(--tv-space-5));
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-channel__hdrskel-lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding-top: var(--tv-space-1);
+  flex: 1;
+}
+
+/* Toast stack — bottom-right, above everything. */
+.tv-channel__toasts {
+  position: fixed;
+  right: var(--tv-space-4);
+  bottom: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  align-items: flex-end;
+}

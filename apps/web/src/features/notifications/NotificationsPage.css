@@ -1,0 +1,167 @@
+/**
+ * S8 Notifications — the activity log. A single centered column: page head,
+ * the view tabs + polling line + mark-all, the client filter row, the calm
+ * "new activity" banner, and the keyset list. Toasts pin top-right (bottom on
+ * mobile) so the deferred-commit Undo is always reachable. Theme-aware via
+ * --tv-* tokens; the layout dissolves to a single column ≤640px.
+ */
+.tv-notifs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---- head ---- */
+.tv-notifs__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+}
+.tv-notifs__eyebrow {
+  font-size: var(--tv-text-2xs);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-notifs__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  letter-spacing: var(--tv-tracking-snug);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+}
+.tv-notifs__subtitle {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+  max-width: 66ch;
+}
+
+/* ---- view bar: tabs · helper · poll · mark-all ---- */
+.tv-notifs__viewbar {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  flex-wrap: wrap;
+}
+.tv-notifs__helper {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-notifs__poll {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+  white-space: nowrap;
+}
+.tv-notifs__markall {
+  margin-left: auto;
+}
+
+/* ---- filter row ---- */
+.tv-notifs__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  flex-wrap: wrap;
+}
+/* Compact selects: keep the accessible label for SRs, hide it visually. */
+.tv-notifs__filter {
+  flex: 0 0 auto;
+}
+.tv-notifs__filter .tv-field__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.tv-notifs__loadednote {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--tv-text-3xs, var(--tv-text-2xs));
+  color: var(--tv-text-muted);
+}
+
+/* ---- new-activity banner ---- */
+.tv-notifs__newbanner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tv-space-2);
+  align-self: flex-start;
+  padding: var(--tv-space-2) var(--tv-space-3);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-full, 999px);
+  background: var(--tv-surface-raised, var(--tv-surface));
+  color: var(--tv-brand-text, var(--tv-text));
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-medium);
+  cursor: pointer;
+  transition: background var(--tv-dur-fast, 120ms) ease;
+}
+.tv-notifs__newbanner:hover {
+  background: var(--tv-surface-hover, var(--tv-surface-raised, var(--tv-surface)));
+}
+
+/* ---- body ---- */
+.tv-notifs__body {
+  min-height: 120px;
+}
+/* The activity log is ONE contained panel: a DS surface card holds every state
+   (loading / error / empty / populated). Rows render flush (LoadMoreList gap 0)
+   so the NotificationItem bottom-borders read as internal dividers; overflow
+   clips them to the rounded corners (mirrors the DS BellPopup surface pattern). */
+.tv-notifs__card {
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+  overflow: hidden;
+}
+.tv-notifs__loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-3);
+}
+
+/* ---- toasts ---- */
+.tv-notifs__toasts {
+  position: fixed;
+  top: 70px;
+  right: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  pointer-events: none;
+}
+.tv-notifs__toasts > * {
+  pointer-events: auto;
+}
+
+/* ---- responsive ≤640px ---- */
+@media (max-width: 640px) {
+  .tv-notifs__markall {
+    margin-left: 0;
+  }
+  .tv-notifs__toasts {
+    top: auto;
+    bottom: var(--tv-space-4);
+    left: var(--tv-space-3);
+    right: var(--tv-space-3);
+    align-items: center;
+  }
+}

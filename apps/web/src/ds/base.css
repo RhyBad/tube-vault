@@ -1,0 +1,146 @@
+/* TubeVault design system — base layer: reset, base element styling on tokens,
+   and the shared keyframes every animated component references. All motion is
+   gated behind (prefers-reduced-motion: no-preference) so print / PDF / reduced
+   motion always resolve to the resting frame (readme "Motion"). Component-
+   specific rules live colocated with each component; only cross-cutting
+   primitives live here. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 16px; /* the --tv-text-* scale is rem-relative to 16px */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--tv-canvas);
+  color: var(--tv-text);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-xs); /* 13px — the dense UI body default */
+  line-height: var(--tv-leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--tv-link);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--tv-link-hover);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Numbers that update live must not jitter — tabular figures everywhere they
+   are opted into via this class (progress, counts, bytes). */
+.tv-numeric {
+  font-variant-numeric: var(--tv-numeric);
+}
+
+/* Accessible label that is visually hidden but read by assistive tech — used
+   wherever state is carried by icon+color and needs a text equivalent. */
+.tv-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The one focus treatment — a teal halo, visible in both themes, never removed.
+   Applied on focus-visible only so mouse clicks stay quiet. */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--tv-shadow-focus);
+  border-radius: var(--tv-radius-sm);
+}
+
+/* ── Shared keyframes (reduced-motion-gated) ──────────────────────────────
+   Named tv-* and referenced by components via a resting-state class that only
+   animates when motion is allowed. */
+@keyframes tv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tv-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes tv-heartbeat {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes tv-prog-slide {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes tv-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes tv-signature-glow {
+  0% {
+    box-shadow: 0 0 0 0 var(--tv-signature-glow);
+  }
+  100% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tv-anim-spin {
+    animation: tv-spin 1.1s linear infinite;
+    transform-origin: center;
+  }
+  .tv-anim-pulse {
+    animation: tv-pulse var(--tv-duration-live) var(--tv-ease-in-out) infinite;
+  }
+  .tv-anim-heartbeat {
+    animation: tv-heartbeat var(--tv-duration-live) var(--tv-ease-in-out) infinite;
+  }
+}

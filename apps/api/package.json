@@ -1,0 +1,34 @@
+{
+  "name": "@tubevault/api",
+  "version": "0.0.0",
+  "private": true,
+  "description": "NestJS 11 HTTP API: argon2 shared-secret login + signed-cookie session guard (401 JSON, never redirect), SSE spine fed by Redis pub/sub, health, migrate-on-boot (Dockerfile CMD).",
+  "license": "Apache-2.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@node-rs/argon2": "^2.0.2",
+    "@tubevault/core": "workspace:*",
+    "@tubevault/db": "workspace:*",
+    "@tubevault/engine": "workspace:*",
+    "@tubevault/notify": "workspace:*",
+    "@tubevault/storage": "workspace:*",
+    "@tubevault/types": "workspace:*",
+    "bullmq": "^5.34.0",
+    "express": "^5.2.1",
+    "ioredis": "^5.4.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.0",
+    "@types/express": "^5.0.0"
+  }
+}

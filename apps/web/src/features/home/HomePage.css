@@ -1,0 +1,115 @@
+/* HomePage — S1 overview dashboard. Two columns on desktop (a wider main column
+   for the time-sensitive W1 + the recent feed, a rail for storage + channels);
+   a single priority-ordered stack (W1·W2·W3·W4) on narrow screens. Mirrors the
+   design's 900 / 640 px breakpoints. */
+.tv-home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-5);
+  max-width: var(--tv-content-max);
+}
+
+.tv-home__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-home__eyebrow {
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-home__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  letter-spacing: var(--tv-tracking-snug);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+}
+.tv-home__subtitle {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  max-width: 60ch;
+}
+
+.tv-home__dash {
+  display: grid;
+  gap: var(--tv-space-4);
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: start;
+}
+.tv-home__col-main,
+.tv-home__col-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+  min-width: 0;
+}
+
+/* Below the two-column breakpoint the wrappers dissolve so the four widgets
+   stack in priority order (W1 running · W2 storage · W3 recent · W4 channels). */
+@media (max-width: 900px) {
+  .tv-home__dash {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tv-home__col-main,
+  .tv-home__col-rail {
+    display: contents;
+  }
+  .tv-home__w1 {
+    order: 1;
+  }
+  .tv-home__w2 {
+    order: 2;
+  }
+  .tv-home__w3 {
+    order: 3;
+  }
+  .tv-home__w4 {
+    order: 4;
+  }
+}
+
+/* On a phone the widget cards dissolve into full-bleed sections split by a rule,
+   the header "→" shortcuts give way to the footer "more" links, and the download
+   mini-rows go borderless — the design's ≤640px treatment. Overrides are scoped
+   under .tv-home so they reliably win over the base .tv-hw card styling. */
+@media (max-width: 640px) {
+  .tv-home__dash {
+    gap: 0;
+  }
+  .tv-home .tv-hw {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: var(--tv-space-4) 0;
+    border-top: var(--tv-border-width) solid var(--tv-border);
+  }
+  .tv-home .tv-home__w1 {
+    border-top: none; /* first widget in the stack needs no divider above it */
+  }
+  .tv-home .tv-hw__link {
+    display: none; /* header shortcuts hide; the footer "more" links take over */
+  }
+  .tv-home .tv-hw__more {
+    display: inline-flex;
+  }
+  .tv-home .tv-home__dllist {
+    gap: 0;
+  }
+  .tv-home .tv-home__dlrow {
+    border: none;
+    padding: var(--tv-space-3) 0;
+  }
+  .tv-home .tv-home__dlrow + .tv-home__dlrow {
+    border-top: var(--tv-border-width) solid var(--tv-border-subtle);
+  }
+}

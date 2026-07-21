@@ -1,0 +1,34 @@
+/* EmptyState — centered, calm, with a soft icon tile. */
+.tv-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-12) var(--tv-space-6);
+}
+.tv-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--tv-radius-full);
+  color: var(--tv-text-muted);
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-empty__title {
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-lg);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-empty__desc {
+  max-width: 44ch;
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+}
+.tv-empty__action {
+  margin-top: var(--tv-space-2);
+}

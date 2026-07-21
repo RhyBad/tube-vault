@@ -1,0 +1,41 @@
+/* Tabs — underline active marker + count pills. */
+.tv-tabs {
+  display: flex;
+  gap: var(--tv-space-1);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+}
+.tv-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  padding: var(--tv-space-2) var(--tv-space-2-5);
+  margin-bottom: calc(-1 * var(--tv-border-width));
+  border: none;
+  border-bottom: var(--tv-border-width-accent) solid transparent;
+  background: transparent;
+  color: var(--tv-text-secondary);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-medium);
+  cursor: pointer;
+}
+.tv-tab:hover:not(.tv-tab--active) {
+  color: var(--tv-text);
+}
+.tv-tab--active {
+  color: var(--tv-brand);
+  border-bottom-color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-tab__count {
+  padding: 0 var(--tv-space-1-5);
+  border-radius: var(--tv-radius-full);
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  background: var(--tv-surface-sunken);
+  color: var(--tv-text-muted);
+}
+.tv-tab--active .tv-tab__count {
+  background: var(--tv-brand-subtle-bg);
+  color: var(--tv-brand);
+}

@@ -1,0 +1,522 @@
+/* VideoDetailPage — S5. One page column, top to bottom: header, then a full-width
+   status banner, then a two-column grid (the player in the main column, the
+   actions + facts in the 340px right rail), then the full-width description, and
+   finally the full-width status-trail timeline. The grid collapses to a single
+   column on narrow viewports. All colors are tokens, so light/dark come for free. */
+
+.tv-video {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-5);
+  width: 100%;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.tv-video__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+}
+.tv-video__header-lead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-2);
+  min-width: 0;
+}
+.tv-video__header-id {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-video__eyebrow {
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-video__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-2xl);
+  font-weight: var(--tv-weight-bold);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+  /* A title that is one long unbroken token must wrap, not scroll the page. */
+  overflow-wrap: anywhere;
+}
+.tv-video__header-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-muted);
+}
+.tv-video__channel-link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-link);
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.tv-video__channel-link:hover {
+  color: var(--tv-link-hover);
+  text-decoration: underline;
+}
+.tv-video__published {
+  color: var(--tv-text-muted);
+}
+
+/* Kebab overflow menu (a minimal local popover — no DS primitive). */
+.tv-video__kebab {
+  position: relative;
+  flex: none;
+}
+.tv-video__menu {
+  position: absolute;
+  top: calc(100% + var(--tv-space-1));
+  right: 0;
+  z-index: 40;
+  margin: 0;
+  padding: var(--tv-space-1);
+  list-style: none;
+  min-width: 200px;
+  background: var(--tv-surface-raised);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  box-shadow: var(--tv-shadow-3);
+}
+.tv-video__menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  width: 100%;
+  padding: var(--tv-space-2) var(--tv-space-2-5);
+  border: none;
+  border-radius: var(--tv-radius-sm);
+  background: transparent;
+  color: var(--tv-text);
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.tv-video__menu-item:hover {
+  background: var(--tv-surface-hover);
+}
+
+/* ── Two-column layout ──────────────────────────────────────────────────── */
+.tv-video__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--tv-space-5);
+  align-items: start;
+}
+.tv-video__main,
+.tv-video__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+  min-width: 0;
+}
+
+/* Shared card chrome for the composed regions. */
+.tv-video__status,
+.tv-video__facts,
+.tv-video__actions,
+.tv-video__trail,
+.tv-video__desc {
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  padding: var(--tv-card-pad);
+}
+.tv-video__section-title {
+  margin: 0 0 var(--tv-space-2);
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-video__hint {
+  margin: var(--tv-space-1) 0 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+}
+
+/* ── Player region ──────────────────────────────────────────────────────── */
+.tv-video__player-region {
+  border-radius: var(--tv-radius-lg);
+  overflow: hidden;
+}
+.tv-video__absent {
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) dashed var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-video__player-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-3);
+  padding: var(--tv-card-pad);
+  background: var(--tv-danger-bg);
+  border: var(--tv-border-width) solid var(--tv-danger-border);
+  border-radius: var(--tv-radius-lg);
+  color: var(--tv-danger-fg);
+}
+.tv-video__player-error-title {
+  margin: 0 0 var(--tv-space-1);
+  font-size: var(--tv-text-md);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-video__player-error-body {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+}
+
+/* ── Status banner (full-width, above the grid) ─────────────────────────── */
+.tv-video__status {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+  /* Extra left padding makes room for the tone accent bar. */
+  padding-left: calc(var(--tv-card-pad) + var(--tv-space-2));
+}
+/* The tone accent bar down the leading edge, colored by copy intent. */
+.tv-video__status-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--tv-neutral-fg);
+}
+.tv-video__status[data-tone='success'] .tv-video__status-accent {
+  background: var(--tv-success-fg);
+}
+.tv-video__status[data-tone='progress'] .tv-video__status-accent {
+  background: var(--tv-progress-fg);
+}
+.tv-video__status[data-tone='warning'] .tv-video__status-accent {
+  background: var(--tv-warning-fg);
+}
+.tv-video__status[data-tone='danger'] .tv-video__status-accent {
+  background: var(--tv-danger-fg);
+}
+.tv-video__status[data-tone='locked'] .tv-video__status-accent {
+  background: var(--tv-locked-fg);
+}
+.tv-video__status[data-tone='signature'] .tv-video__status-accent {
+  background: var(--tv-signature-fg);
+}
+/* Rescued: the whole banner takes the signature violet wash. */
+.tv-video__status[data-tone='signature'] {
+  background: var(--tv-signature-bg);
+  border-color: var(--tv-signature-border);
+  box-shadow: 0 2px 12px var(--tv-signature-glow);
+}
+.tv-video__status-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2-5);
+  flex-wrap: wrap;
+}
+.tv-video__headline {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-md);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+  line-height: var(--tv-leading-relaxed);
+}
+
+/* ── Actions ────────────────────────────────────────────────────────────── */
+.tv-video__control-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tv-space-2);
+  margin-top: var(--tv-space-3);
+}
+.tv-video__progress {
+  margin-top: var(--tv-space-2);
+}
+.tv-video__pending {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  margin-top: var(--tv-space-3);
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+}
+.tv-video__retry .tv-video__hint {
+  margin-bottom: var(--tv-space-3);
+}
+.tv-video__resting {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-3);
+  color: var(--tv-text-secondary);
+}
+.tv-video__resting[data-variant='rescued'] {
+  background: var(--tv-signature-bg);
+  border-color: var(--tv-signature-border);
+  color: var(--tv-signature-fg);
+}
+
+/* ── Facts ──────────────────────────────────────────────────────────────── */
+.tv-video__integrity {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  margin-bottom: var(--tv-space-3);
+  padding-bottom: var(--tv-space-3);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-video__integrity[data-marker='verified'] {
+  color: var(--tv-success-fg);
+}
+.tv-video__integrity[data-marker='partial'] {
+  color: var(--tv-warning-fg);
+}
+.tv-video__integrity[data-marker='failed'] {
+  color: var(--tv-danger-fg);
+}
+.tv-video__integrity[data-marker='pending'] {
+  color: var(--tv-text-muted);
+}
+.tv-video__factlist {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-video__fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+}
+.tv-video__fact-label {
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-muted);
+}
+.tv-video__fact-value {
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text);
+  text-align: right;
+  word-break: break-all;
+}
+/* S5 checksum: a full 64-char sha256 can't share a right-aligned row, so it
+   stacks — label above, hash wrapping full-width below in mono. */
+.tv-video__fact--checksum {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--tv-space-1);
+}
+.tv-video__checksum-value {
+  text-align: left;
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-xs);
+  line-height: var(--tv-leading-relaxed);
+  color: var(--tv-text-secondary);
+}
+
+/* ── Description ────────────────────────────────────────────────────────── */
+.tv-video__desc-body {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-relaxed);
+  white-space: pre-wrap;
+  /* pre-wrap won't break inside a long URL — force it so descriptions (full of
+     unbroken links) can't scroll the whole page sideways on mobile. */
+  overflow-wrap: anywhere;
+}
+
+/* ── Status trail (full-width connected-dot vertical timeline) ──────────── */
+.tv-video__trail-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+  margin-bottom: var(--tv-space-3);
+}
+.tv-video__trail-head .tv-video__section-title {
+  margin: 0;
+}
+.tv-video__trail-intro {
+  margin: 0;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-muted);
+  line-height: var(--tv-leading-normal);
+}
+.tv-video__trail-empty {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-muted);
+}
+.tv-video__trail-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Each event: a rail column (dot + connector) beside a content column. */
+.tv-video__trail-row {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: stretch;
+}
+.tv-video__trail-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: none;
+  width: 18px;
+}
+.tv-video__trail-dot {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  margin-top: 3px;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-surface);
+  border: 2px solid var(--tv-border-strong);
+}
+.tv-video__trail-dot[data-axis='SOURCE'] {
+  border-color: var(--tv-text-muted);
+}
+.tv-video__trail-dot[data-rescue='true'] {
+  background: var(--tv-signature-fg);
+  border-color: var(--tv-signature-fg);
+}
+.tv-video__trail-connector {
+  flex: 1;
+  width: 2px;
+  min-height: 16px;
+  margin-top: 3px;
+  background: var(--tv-border);
+}
+.tv-video__trail-content {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: var(--tv-space-4);
+}
+.tv-video__trail-row:last-child .tv-video__trail-content {
+  padding-bottom: 0;
+}
+.tv-video__trail-transition {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--tv-space-2);
+}
+.tv-video__trail-axis {
+  font-family: var(--tv-font-mono);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text-muted);
+  text-transform: uppercase;
+  font-size: var(--tv-text-3xs);
+  letter-spacing: 0.06em;
+}
+.tv-video__trail-chip {
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+}
+.tv-video__trail-chip--to {
+  color: var(--tv-text);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-video__trail-arrow {
+  color: var(--tv-text-muted);
+}
+.tv-video__trail-rescue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  padding: 2px var(--tv-space-2);
+  border-radius: var(--tv-radius-sm);
+  background: var(--tv-signature-bg);
+  border: var(--tv-border-width) solid var(--tv-signature-border);
+  color: var(--tv-signature-fg);
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-video__trail-note {
+  margin: var(--tv-space-1) 0 0;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text);
+  line-height: var(--tv-leading-normal);
+}
+.tv-video__trail-time {
+  display: block;
+  margin-top: var(--tv-space-1);
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}
+
+/* ── Loading skeleton ───────────────────────────────────────────────────── */
+.tv-video__skeleton-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+}
+.tv-video__skeleton-meta,
+.tv-video__skeleton-trail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-video__skeleton-meta {
+  margin-top: var(--tv-space-2);
+}
+.tv-video__skeleton-trail {
+  margin-top: var(--tv-space-4);
+}
+
+/* ── Toasts ─────────────────────────────────────────────────────────────── */
+.tv-video__toasts {
+  position: fixed;
+  right: var(--tv-space-4);
+  bottom: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  align-items: flex-end;
+}
+
+/* ── Responsive: collapse the rail under the main column ────────────────── */
+@media (max-width: 820px) {
+  .tv-video__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .tv-video {
+    gap: var(--tv-space-4);
+  }
+  .tv-video__title {
+    font-size: var(--tv-text-xl);
+  }
+  .tv-video__toasts {
+    left: var(--tv-space-3);
+    right: var(--tv-space-3);
+    align-items: stretch;
+  }
+}

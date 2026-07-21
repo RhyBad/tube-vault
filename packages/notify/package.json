@@ -1,0 +1,15 @@
+{
+  "name": "@tubevault/notify",
+  "version": "0.0.0",
+  "private": true,
+  "description": "External notification delivery (P8): pure per-target payload builders (telegram/discord/gotify/ntfy/webhook, v1 HTTP contracts pinned), a 10s-abort fetch sender with terminal-vs-transient classification, and the error-swallowing dispatcher. Depends only on @tubevault/types; fetch is injectable for tests.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@tubevault/types": "workspace:*"
+  }
+}

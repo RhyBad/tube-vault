@@ -1,0 +1,12 @@
+{
+  "name": "@tubevault/types",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Browser-safe shared transport types: DTOs, string-union enums, SSE frames. No runtime deps; the web app depends ONLY on this package.",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  }
+}

@@ -1,0 +1,17 @@
+/* Skeleton — a shimmer sweep across a sunken block; static under reduced motion. */
+.tv-skel {
+  display: block;
+  background: var(--tv-skeleton-base);
+  background-image: linear-gradient(
+    90deg,
+    var(--tv-skeleton-base) 25%,
+    var(--tv-skeleton-sheen) 50%,
+    var(--tv-skeleton-base) 75%
+  );
+  background-size: 200% 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tv-skel {
+    animation: tv-shimmer 1.6s linear infinite;
+  }
+}

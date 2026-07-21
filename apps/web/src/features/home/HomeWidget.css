@@ -1,0 +1,193 @@
+/* HomeWidget — the shared card chrome for the four overview widgets. Ports the
+   design's repeated section styling (surface card, header, "→" links) to tokens. */
+.tv-hw {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+  min-width: 0;
+  padding: var(--tv-space-5);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+}
+
+.tv-hw__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+}
+.tv-hw__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-0-5);
+  min-width: 0;
+}
+.tv-hw__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-lg);
+  letter-spacing: var(--tv-tracking-snug);
+  color: var(--tv-text);
+}
+.tv-hw__subtitle {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+
+.tv-hw__links {
+  display: flex;
+  gap: var(--tv-space-0-5);
+  flex: none;
+}
+.tv-hw__link,
+.tv-hw__more,
+.tv-home__queuelink {
+  align-items: center;
+  gap: var(--tv-space-1);
+  border: none;
+  background: transparent;
+  border-radius: var(--tv-radius-md);
+  font-family: var(--tv-font-sans);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-brand);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tv-hw__link {
+  display: inline-flex;
+  padding: var(--tv-space-1) var(--tv-space-2);
+}
+/* Footer "more" links duplicate the header "→" shortcut, so — matching the design
+   — they are hidden on desktop and only revealed at ≤640px (where the header links
+   are hidden instead). W1's queue link is informational (it carries the queued
+   count, not a pure duplicate), so it uses .tv-home__queuelink and stays visible. */
+.tv-hw__more {
+  display: none;
+  align-self: flex-start;
+  padding: var(--tv-space-2) 0;
+}
+.tv-home__queuelink {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: var(--tv-space-2) 0;
+}
+.tv-hw__link:hover,
+.tv-hw__more:hover,
+.tv-home__queuelink:hover {
+  background: var(--tv-brand-subtle-bg);
+}
+
+.tv-hw__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+  min-width: 0;
+}
+
+/* Centered empty state: EmptyState + a single CTA button beneath it. */
+.tv-hw__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+
+/* ── W1 download mini-rows ─────────────────────────────────────────────────── */
+.tv-home__dllist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+.tv-home__dlrow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+  padding: var(--tv-space-2-5) var(--tv-space-3);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  border-radius: var(--tv-radius-md);
+}
+.tv-home__dlrow-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-2-5);
+}
+.tv-home__dltitle {
+  min-width: 0;
+  flex: 1;
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-home__dlchannel {
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* "Live capture" divider (label + rule). */
+.tv-home__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  margin-top: var(--tv-space-1);
+}
+.tv-home__divider span {
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+  white-space: nowrap;
+}
+.tv-home__divider::after {
+  content: '';
+  height: var(--tv-border-width);
+  flex: 1;
+  background: var(--tv-border-subtle);
+}
+
+/* ── loading skeleton bodies ───────────────────────────────────────────────── */
+.tv-home__stgskel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3-5);
+}
+.tv-home__feedskel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3-5);
+}
+.tv-home__feedskel-row {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: flex-start;
+}
+.tv-home__feedskel-lines,
+.tv-home__chanskel-lines {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  padding-top: var(--tv-space-1);
+}
+.tv-home__chanskel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+}
+.tv-home__chanskel-row {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: flex-start;
+}

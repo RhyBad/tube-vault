@@ -1,0 +1,93 @@
+/* BellPopup — desktop dropdown / mobile full-screen; shares the overlay chrome. */
+.tv-bell {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tv-z-overlay);
+  display: flex;
+  justify-content: flex-end;
+  padding: calc(var(--tv-topbar-h) + var(--tv-space-1)) var(--tv-space-4) 0;
+}
+.tv-bell__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--tv-overlay);
+}
+.tv-bell__panel {
+  position: relative;
+  width: min(400px, 94vw);
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--tv-surface-raised);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-3);
+  overflow: hidden;
+}
+.tv-bell__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-3);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+}
+.tv-bell__title {
+  margin: 0;
+  margin-right: auto;
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-md);
+  font-weight: var(--tv-weight-semibold);
+}
+/* Desktop keeps Esc + a reachable scrim; the close button is mobile-only. */
+.tv-bell__close {
+  display: none;
+  place-items: center;
+  flex: none;
+  width: var(--tv-control-h-sm);
+  height: var(--tv-control-h-sm);
+  border: none;
+  border-radius: var(--tv-radius-md);
+  background: transparent;
+  color: var(--tv-text-secondary);
+  cursor: pointer;
+}
+.tv-bell__close:hover {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+.tv-bell__list {
+  flex: 1;
+  overflow-y: auto;
+}
+.tv-bell__seeall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tv-space-1-5);
+  padding: var(--tv-space-2-5);
+  border: none;
+  border-top: var(--tv-border-width) solid var(--tv-border);
+  background: transparent;
+  color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-xs);
+  cursor: pointer;
+}
+.tv-bell__seeall:hover {
+  background: var(--tv-surface-hover);
+}
+@media (max-width: 640px) {
+  .tv-bell {
+    padding: 0;
+  }
+  .tv-bell__panel {
+    width: 100vw;
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 0;
+  }
+  .tv-bell__close {
+    display: grid;
+  }
+}

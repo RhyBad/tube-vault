@@ -1,0 +1,123 @@
+/* StorageGauge — free space is the headline; the bar and the threshold chip
+   carry the color signal. Gauge fill uses the --tv-gauge-* aliases which resolve
+   to brand / warning / danger per the data-level. */
+
+.tv-gauge {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+
+.tv-gauge__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+}
+
+.tv-gauge__free {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tv-space-1-5);
+}
+
+.tv-gauge__free-value {
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  line-height: var(--tv-leading-none);
+  color: var(--tv-text);
+}
+.tv-gauge--sm .tv-gauge__free-value {
+  font-size: var(--tv-text-xl);
+}
+
+/* Free figure inherits the threshold color when space runs low. */
+.tv-gauge[data-level='near'] .tv-gauge__free-value {
+  color: var(--tv-warning-fg);
+}
+.tv-gauge[data-level='critical'] .tv-gauge__free-value {
+  color: var(--tv-danger-fg);
+}
+
+.tv-gauge__free-label {
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-muted);
+}
+
+.tv-gauge__chip {
+  padding: var(--tv-space-0-5) var(--tv-space-2);
+  border-radius: var(--tv-radius-sm);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  white-space: nowrap;
+}
+.tv-gauge[data-level='near'] .tv-gauge__chip {
+  color: var(--tv-warning-fg);
+  background: var(--tv-warning-bg);
+  border: var(--tv-border-width) solid var(--tv-warning-border);
+}
+.tv-gauge[data-level='critical'] .tv-gauge__chip {
+  color: var(--tv-danger-fg);
+  background: var(--tv-danger-bg);
+  border: var(--tv-border-width) solid var(--tv-danger-border);
+}
+
+.tv-gauge__bar {
+  height: 10px;
+  overflow: hidden;
+  background: var(--tv-surface-sunken);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  border-radius: var(--tv-radius-full);
+}
+.tv-gauge__used {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tv-gauge-normal);
+  transition: width var(--tv-duration-normal) var(--tv-ease-standard);
+}
+.tv-gauge[data-level='near'] .tv-gauge__used {
+  background: var(--tv-gauge-near);
+}
+.tv-gauge[data-level='critical'] .tv-gauge__used {
+  background: var(--tv-gauge-critical);
+}
+
+.tv-gauge__meta {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+
+.tv-gauge__channels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tv-gauge__channel {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  font-size: var(--tv-text-2xs);
+}
+.tv-gauge__swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--tv-radius-xs);
+  background: var(--tv-brand-solid);
+}
+.tv-gauge__channel-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--tv-text-secondary);
+}
+.tv-gauge__channel-meta {
+  flex: none;
+  color: var(--tv-text-muted);
+}

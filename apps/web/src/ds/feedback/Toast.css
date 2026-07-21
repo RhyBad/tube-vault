@@ -1,0 +1,74 @@
+/* Toast — a raised card, intent-tinted left edge, on a surface-raised base. */
+.tv-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-2);
+  width: min(380px, 92vw);
+  padding: var(--tv-space-3);
+  background: var(--tv-surface-raised);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-left-width: var(--tv-border-width-accent);
+  border-radius: var(--tv-radius-md);
+  box-shadow: var(--tv-shadow-3);
+}
+.tv-toast[data-intent='success'] {
+  border-left-color: var(--tv-success-solid);
+}
+.tv-toast[data-intent='danger'] {
+  border-left-color: var(--tv-danger-solid);
+}
+.tv-toast[data-intent='warning'] {
+  border-left-color: var(--tv-warning-solid);
+}
+.tv-toast[data-intent='info'] {
+  border-left-color: var(--tv-progress-solid);
+}
+
+.tv-toast__icon {
+  flex: none;
+  margin-top: var(--tv-space-0-5);
+}
+.tv-toast[data-intent='success'] .tv-toast__icon {
+  color: var(--tv-success-fg);
+}
+.tv-toast[data-intent='danger'] .tv-toast__icon {
+  color: var(--tv-danger-fg);
+}
+.tv-toast[data-intent='warning'] .tv-toast__icon {
+  color: var(--tv-warning-fg);
+}
+.tv-toast[data-intent='info'] .tv-toast__icon {
+  color: var(--tv-progress-fg);
+}
+
+.tv-toast__content {
+  flex: 1;
+  min-width: 0;
+}
+.tv-toast__title {
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-toast__message {
+  margin-top: var(--tv-space-0-5);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+}
+.tv-toast__action {
+  flex: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--tv-brand);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  cursor: pointer;
+}
+.tv-toast__action:hover {
+  color: var(--tv-brand-hover);
+}
+.tv-toast__dismiss {
+  flex: none;
+  margin: calc(-1 * var(--tv-space-1));
+}

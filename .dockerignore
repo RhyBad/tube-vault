@@ -1,0 +1,29 @@
+.git/
+.gitea/
+.githooks/
+.idea/
+.vscode/
+# v1 leftovers that may exist on a developer machine
+.venv/
+venv/
+__pycache__/
+# runtime data & secrets must never enter the image
+data/
+data-v2/
+secrets/
+*.sqlite3*
+*.key
+*.pem
+cookies.txt
+.env
+.env.*
+# node_modules must NEVER enter the context: the Dockerfile installs from the
+# lockfile, and a host-copied symlink tree would clobber it (gog-vault pattern).
+**/node_modules/
+**/dist/
+build/
+coverage/
+.pnpm-store/
+# A stale host tsbuildinfo (without its dist/) makes tsc -b skip emitting entirely.
+**/*.tsbuildinfo
+tmp/

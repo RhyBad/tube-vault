@@ -1,0 +1,193 @@
+/* VideosBrowser — the shared find view. The toolbar + results/selection band is
+   sticky so the "Download N" action stays reachable while scrolling a long page
+   (handoff §3b); the list is a column of VideoCard rows. */
+.tv-browser {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+}
+
+/* Sticky band: filters + count/select-all + the selection bar. Opaque canvas
+   background, edge-to-edge, so rows can't bleed through as they scroll under. */
+.tv-browser__sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+  padding: var(--tv-space-2) 0;
+  background: var(--tv-canvas);
+  border-bottom: var(--tv-border-width) solid var(--tv-border);
+}
+
+/* The Rescued signature toggle — the star filter. */
+.tv-browser__rescued {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-3);
+  border: var(--tv-border-width) solid var(--tv-border-strong);
+  border-radius: var(--tv-radius-md);
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  font-family: var(--tv-font-sans);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-xs);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tv-browser__rescued:hover {
+  border-color: var(--tv-signature-border);
+  color: var(--tv-signature-fg);
+}
+.tv-browser__rescued[data-active='true'] {
+  border-color: var(--tv-signature-solid);
+  background: var(--tv-signature-bg);
+  color: var(--tv-signature-fg);
+}
+
+.tv-browser__typefilter {
+  min-width: 130px;
+}
+
+/* Overflow filters (copy state, source state, channel, published range). Stacked
+   inside the mobile "More filters" drawer; a compact single-row group when the
+   toolbar renders them inline at desktop (F-S3-R1). */
+.tv-browser__morefilters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+}
+.tv-filterbar__inline-more .tv-browser__morefilters {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--tv-space-2);
+}
+.tv-browser__daterange {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+}
+/* Inline: the "Published" label sits before the date inputs (a compact pill),
+   not stacked above them. */
+.tv-filterbar__inline-more .tv-browser__daterange {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+.tv-browser__daterange-label {
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-medium);
+  color: var(--tv-text-secondary);
+}
+.tv-browser__daterange-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+.tv-browser__daterange-inputs .tv-input {
+  flex: 1;
+}
+
+/* Count + select-all row. */
+.tv-browser__resultsrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  flex-wrap: wrap;
+  padding: 0 var(--tv-space-1);
+}
+.tv-browser__resultsleft {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  min-width: 0;
+}
+.tv-browser__count {
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+  font-weight: var(--tv-weight-medium);
+}
+.tv-browser__clear {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  border: none;
+  background: transparent;
+  color: var(--tv-brand);
+  cursor: pointer;
+  font-family: var(--tv-font-sans);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+}
+.tv-browser__clear:hover {
+  color: var(--tv-brand-hover);
+}
+
+/* View toggle (S4 library) — a segmented pair of IconButtons, aria-pressed marks
+   the active one (mirrors AppShell's theme/lang segmented controls). */
+.tv-browser__viewtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  flex: none;
+}
+
+/* Row list. */
+.tv-browser__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2);
+}
+
+/* Grid view (S4 library) — uniform VideoCard tiles. */
+.tv-browser__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: var(--tv-space-3);
+}
+
+/* List view's thumbnail cell (a small fixed-size crop, unlike VideoCard's own). */
+.tv-browser__listthumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 27px;
+  overflow: hidden;
+  border-radius: var(--tv-radius-sm);
+  background: var(--tv-surface-sunken);
+  color: var(--tv-text-muted);
+}
+.tv-browser__listthumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tv-browser__skelrow {
+  display: flex;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-2);
+  background: var(--tv-surface);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-browser__skelbody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding-top: var(--tv-space-1);
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .tv-browser__sticky {
+    /* On mobile the app header is short; keep the sticky band flush below it. */
+    gap: var(--tv-space-2);
+  }
+}

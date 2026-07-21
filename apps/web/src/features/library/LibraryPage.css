@@ -1,0 +1,67 @@
+/* LibraryPage — S4. A thin shell around the shared VideosBrowser: a page header,
+   the browser, and a fixed toast stack. All token-driven so light/dark follow the
+   theme; the find chrome itself is styled by VideosBrowser.css. */
+
+.tv-lib {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-5);
+  padding-bottom: var(--tv-space-12);
+}
+
+/* ---- page header ---- */
+.tv-lib__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+}
+.tv-lib__eyebrow {
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-lib__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  letter-spacing: var(--tv-tracking-snug);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+}
+.tv-lib__subtitle {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+  max-width: 64ch;
+}
+
+/* ---- toasts (fixed, top-right; mirrors the sibling screens) ---- */
+.tv-lib__toasts {
+  position: fixed;
+  top: 70px;
+  right: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  align-items: flex-end;
+  pointer-events: none;
+}
+.tv-lib__toasts > * {
+  pointer-events: auto;
+}
+
+/* ---- responsive ≤640px ---- */
+@media (max-width: 640px) {
+  .tv-lib__toasts {
+    top: auto;
+    bottom: var(--tv-space-4);
+    left: var(--tv-space-3);
+    right: var(--tv-space-3);
+    align-items: center;
+  }
+}

@@ -1,7 +1,1277 @@
 {
-  "app": { "name": "TubeVault" },
-  "nav": { "home": "Home", "queue": "Queue", "live": "Live", "library": "Library", "channels": "Channels", "storage": "Storage", "notifications": "Notifications", "settings": "Settings" },
-  "status": { "healthy": "Healthy", "downloading": "Downloading", "queued": "Queued", "verifying": "Verifying", "awaitingVerify": "Verifying completeness", "partlySaved": "Partly saved", "failed": "Failed", "candidate": "Candidate", "rescued": "Rescued" },
-  "source": { "available": "Available", "deleted": "Deleted", "private": "Private", "membersOnly": "Members only", "ageGated": "Age-restricted" },
-  "common": { "search": "Search the vault…", "clear": "Clear", "retry": "Retry", "cancel": "Cancel", "loadMore": "Load more", "allClear": "All clear" }
+  "app": {
+    "name": "TubeVault",
+    "tagline": "Your archive, quietly preserved."
+  },
+  "nav": {
+    "home": "Home",
+    "queue": "Queue",
+    "live": "Live",
+    "library": "Library",
+    "channels": "Channels",
+    "storage": "Storage",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "more": "More"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "lang": {
+    "label": "Language",
+    "en": "English",
+    "ko": "한국어"
+  },
+  "sse": {
+    "connected": "Connected",
+    "reconnecting": "Reconnecting…",
+    "disconnected": "Disconnected",
+    "label": "Live updates"
+  },
+  "action": {
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "clearFilters": "Clear filters",
+    "loadMore": "Load more",
+    "seeAll": "See all"
+  },
+  "common": {
+    "comingSoon": "Coming soon",
+    "comingSoonBody": "This screen is being built. It will light up in a future update.",
+    "notFound": "Page not found",
+    "notFoundBody": "That page doesn't exist.",
+    "endOfList": "End of list",
+    "loading": "Loading…"
+  },
+  "status": {
+    "copy": {
+      "CANDIDATE": "Candidate",
+      "QUEUED": "Queued",
+      "DOWNLOADING": "Downloading",
+      "VERIFYING": "Verifying",
+      "AWAITING_VERIFY": "Verifying completeness",
+      "HEALTHY": "Healthy",
+      "FAILED": "Failed",
+      "PARTIAL_KEPT": "Partly saved"
+    },
+    "source": {
+      "AVAILABLE": "Available",
+      "GEO_BLOCKED": "Geo-blocked",
+      "PRIVATE": "Private",
+      "MEMBERS_ONLY": "Members only",
+      "AGE_GATED": "Age-gated",
+      "DELETED": "Deleted",
+      "TRANSIENT_ERROR": "Temporary error",
+      "RATE_LIMITED": "Rate-limited",
+      "UNKNOWN": "Unknown"
+    },
+    "job": {
+      "QUEUED": "Queued",
+      "RUNNING": "Downloading",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed",
+      "FAILED": "Failed",
+      "CANCELED": "Canceled"
+    },
+    "rescued": "Rescued",
+    "srcEyebrow": "src"
+  },
+  "progress": {
+    "of": "{{done}} of {{total}}",
+    "etaLeft": "~{{time}} left",
+    "received": "received {{bytes}}",
+    "elapsed": "{{time}} elapsed",
+    "live": "Capturing (live)"
+  },
+  "storage": {
+    "free": "free",
+    "usedOfTotal": "{{used}} of {{total}}",
+    "nearlyFull": "Nearly full",
+    "criticallyFull": "Critically full",
+    "videos_one": "{{count}} video",
+    "videos_other": "{{count}} videos",
+    "eyebrow": "Storage",
+    "title": "Storage",
+    "readOnly": "Read-only",
+    "subtitle": "Vault capacity and per-channel usage.",
+    "refresh": "Refresh",
+    "refreshHint": "Refetch on demand · auto-refreshes when a download completes",
+    "freeUpSpace": "Free up space",
+    "loading": "Loading storage…",
+    "hero": {
+      "eyebrow": "Vault capacity"
+    },
+    "kpi": {
+      "videos": "Videos archived",
+      "channels": "Channels",
+      "largest": "Largest channel"
+    },
+    "usage": {
+      "section": "Usage by channel",
+      "sortedBySize": "Sorted by size",
+      "count_one": "{{count}} channel",
+      "count_other": "{{count}} channels",
+      "videos_one": "{{count}} video",
+      "videos_other": "{{count}} videos",
+      "noDownloads": "No downloads",
+      "openChannel": "Open {{title}} — channel detail"
+    },
+    "notice": {
+      "nearTitle": "Free space is running low",
+      "critTitle": "Free space is critically low",
+      "body": "Downloads keep running — TubeVault won’t pause or delete anything on its own."
+    },
+    "empty": {
+      "title": "No usage yet",
+      "body": "Nothing has been archived to the vault. Downloaded videos will appear here, grouped by channel.",
+      "cta": "Go to channels"
+    },
+    "error": {
+      "title": "Couldn’t load storage",
+      "body": "We couldn’t reach the server. Check that it’s running and try again.",
+      "retry": "Retry"
+    },
+    "cleanup": {
+      "title": "Free up space",
+      "subtitle": "Select archived videos to delete and reclaim disk space. The capacity view stays read-only — this is where you act.",
+      "back": "Storage",
+      "freeNow": "Free now",
+      "searchPlaceholder": "Search title or channel…",
+      "reviewDelete_one": "Review & delete {{count}}",
+      "reviewDelete_other": "Review & delete {{count}}",
+      "reason": {
+        "noMedia": "Nothing to free — this holds no media yet",
+        "inProgress": "In progress — finish or cancel the job first"
+      },
+      "empty": {
+        "title": "Nothing to reclaim",
+        "body": "No downloaded videos are taking up space yet. Once you archive videos, they’ll appear here."
+      },
+      "confirm": {
+        "title_one": "Delete {{count}} video?",
+        "title_other": "Delete {{count}} videos?",
+        "subtitle": "TubeVault sorts each by whether it can be re-downloaded. Review before deleting.",
+        "reclaimTitle_one": "Reclaim: {{count}}",
+        "reclaimTitle_other": "Reclaim: {{count}}",
+        "reclaimDesc": "Media deleted — re-downloadable whenever the source is available.",
+        "irreplaceableTitle_one": "Irreplaceable: {{count}}",
+        "irreplaceableTitle_other": "Irreplaceable: {{count}}",
+        "irreplaceableDesc": "Rescued — the only surviving copy. Deleting is permanent.",
+        "frees": "frees {{size}}",
+        "showTitles_one": "Show {{count}} title",
+        "showTitles_other": "Show {{count}} titles",
+        "hideTitles": "Hide titles",
+        "totalFreed": "Total freed",
+        "typePromptPre": "Type ",
+        "typeWord": "DELETE",
+        "typePromptPost": " to permanently delete the irreplaceable copies.",
+        "cancel": "Cancel",
+        "deleteBtn_one": "Delete {{count}}",
+        "deleteBtn_other": "Delete {{count}}"
+      },
+      "result": {
+        "freedTitle": "Space reclaimed",
+        "freedBody": "Freed {{size}} — capacity updated.",
+        "deletedNoSpace": "{{count}} deleted.",
+        "partialTitle": "Partly done",
+        "failedTitle": "Couldn’t delete",
+        "failedBody_one": "{{count}} video couldn’t be deleted ({{reasons}}).",
+        "failedBody_other": "{{count}} videos couldn’t be deleted ({{reasons}})."
+      },
+      "reason_active_job": "cancel the job first",
+      "reason_fs_error": "file error",
+      "reason_not_found": "not found",
+      "reason_not_eligible": "not eligible"
+    }
+  },
+  "data": {
+    "range": "{{from}}–{{to}} of {{total}}",
+    "prevPage": "Previous page",
+    "nextPage": "Next page",
+    "selectAll": "Select all"
+  },
+  "toolbar": {
+    "search": "Search…",
+    "moreFilters": "More filters",
+    "filters": "Filters",
+    "clearAll": "Clear all",
+    "done": "Done",
+    "sortBy": "Sort by"
+  },
+  "player": {
+    "download": "Download original"
+  },
+  "forms": {
+    "stepper": {
+      "decrement": "Decrease",
+      "increment": "Increase"
+    },
+    "secret": {
+      "placeholderUnchanged": "•••••••••••• (unchanged)",
+      "placeholderEnter": "Enter secret",
+      "keepHint": "Leave blank to keep the current secret.",
+      "deleteHint": "Cleared — saving will delete the stored secret.",
+      "setHint": "Saving will replace the secret.",
+      "emptyHint": "No secret stored.",
+      "reveal": "Show secret",
+      "hide": "Hide secret",
+      "clear": "Clear stored secret"
+    }
+  },
+  "feedback": {
+    "error": {
+      "title": "Something went wrong",
+      "body": "This didn't load. You can try again."
+    },
+    "confirm": {
+      "typePrompt": "Type {{text}} to confirm"
+    },
+    "notification": {
+      "unread": "Unread"
+    }
+  },
+  "cards": {
+    "channel": {
+      "watchingLive": "Watching live",
+      "collectionStopped": "Collection stopped",
+      "total": "total",
+      "healthy": "healthy",
+      "candidates": "candidates"
+    },
+    "video": {
+      "live": "Live",
+      "members": "Members"
+    },
+    "live": {
+      "heartbeatLive": "live",
+      "heartbeatStale": "Checking signal",
+      "state": {
+        "DETECTED": "Detected",
+        "CAPTURING": "Recording",
+        "ENDED_NORMAL": "Ended",
+        "ENDED_INTERRUPTED": "Ended early",
+        "FAILED": "Failed",
+        "ENDED_PENDING": "Finishing"
+      }
+    }
+  },
+  "shell": {
+    "nav": {
+      "primary": "Primary navigation"
+    },
+    "search": {
+      "trigger": "Search the vault…",
+      "placeholder": "Search the vault…",
+      "hint": "Search titles or channels",
+      "channels": "Channels",
+      "videos": "Videos",
+      "searching": "Searching…",
+      "noMatchTitle": "No matches for “{{query}}”",
+      "noMatchBody": "Try a different title or channel name.",
+      "seeAll": "See all results in Library",
+      "keyHint": "↑↓ move · Enter open · Esc close",
+      "close": "Close search"
+    },
+    "bell": {
+      "open": "Notifications",
+      "title": "Notifications",
+      "unread": "{{count}} unread",
+      "markAllRead": "Mark all read",
+      "seeAll": "See all in Notifications",
+      "emptyTitle": "All clear",
+      "emptyBody": "Nothing needs you right now.",
+      "errorTitle": "Couldn't load notifications",
+      "errorBody": "Check your connection and try again.",
+      "retryLoad": "Try again",
+      "viewVideo": "View video",
+      "retry": "Retry now",
+      "refreshCredential": "Refresh credential",
+      "watchLive": "Watch live",
+      "manageStorage": "Manage storage",
+      "close": "Close notifications"
+    },
+    "bulk": {
+      "selected": "{{count}} selected",
+      "clear": "Clear selection"
+    }
+  },
+  "queue": {
+    "title": "Queue",
+    "subtitle": "Downloads in progress, waiting, or recently settled.",
+    "loading": "Loading the queue…",
+    "tabs": {
+      "active": "Active",
+      "failed": "Failed",
+      "completed": "Completed",
+      "canceled": "Canceled"
+    },
+    "filter": {
+      "channel": "Channel",
+      "allChannels": "All channels"
+    },
+    "col": {
+      "video": "Video",
+      "status": "Status",
+      "progress": "Progress",
+      "order": "Order",
+      "try": "Try",
+      "actions": "Actions"
+    },
+    "row": {
+      "order": "Order {{priority}}",
+      "orderUnknown": "Order —",
+      "position": "#{{position}}",
+      "orderTip": "Priority {{priority}}",
+      "orderTipUnknown": "No priority (legacy job)",
+      "orderRunning": "Downloading now",
+      "attempt_one": "Attempt {{count}}",
+      "attempt_other": "Attempt {{count}}",
+      "unknownTotal": "unknown size",
+      "waitingSlot": "Waiting for a slot",
+      "waitingRetry": "Waiting to retry",
+      "timeQueued": "Queued {{time}}",
+      "timeStarted": "Started {{time}}",
+      "timePaused": "Paused {{time}}",
+      "timeFinished": "Finished {{time}}",
+      "openLog": "Show event log",
+      "hideLog": "Hide event log",
+      "dragHandle": "Drag to reorder",
+      "more": "More actions"
+    },
+    "sheet": {
+      "label": "More actions for {{title}}",
+      "selectForBulk": "Select for bulk"
+    },
+    "pending": {
+      "canceling": "Canceling…",
+      "pausing": "Pausing…",
+      "resuming": "Resuming…",
+      "moving": "Moving…"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "pause": "Pause",
+      "resume": "Resume",
+      "moveTop": "Move to top",
+      "moveBottom": "Move to bottom",
+      "requeue": "Re-queue",
+      "select": "Select",
+      "selectDone": "Done",
+      "selectAll": "Select all"
+    },
+    "reorder": {
+      "runningLocked": "A downloading job can’t be reordered"
+    },
+    "newJobs_one": "{{count}} new job — refresh",
+    "newJobs_other": "{{count}} new jobs — refresh",
+    "bulk": {
+      "cancel": "Cancel",
+      "pause": "Pause",
+      "resume": "Resume"
+    },
+    "empty": {
+      "active": {
+        "title": "Nothing in the queue",
+        "body": "No downloads are waiting or in progress.",
+        "cta": "Queue from Library"
+      },
+      "failed": {
+        "title": "No failed jobs",
+        "body": "Downloads that failed will show up here."
+      },
+      "completed": {
+        "title": "No completed jobs yet",
+        "body": "Finished downloads will show up here."
+      },
+      "canceled": {
+        "title": "No canceled jobs",
+        "body": "Jobs you cancel will show up here."
+      },
+      "filtered": {
+        "title": "No jobs match this channel",
+        "body": "No queued or recent downloads for the selected channel.",
+        "clear": "Clear channel filter"
+      }
+    },
+    "error": {
+      "title": "Couldn’t load the queue",
+      "body": "Something went wrong fetching the queue.",
+      "retry": "Try again"
+    },
+    "confirm": {
+      "cancelTitle": "Cancel this download?",
+      "cancelBody": "The job stops and its partial download is discarded. You can re-queue it later.",
+      "cancelConfirm": "Cancel download",
+      "cancelDismiss": "Keep it",
+      "bulkCancelTitle": "Cancel {{count}} downloads?",
+      "bulkCancelBody": "Each job stops and its partial download is discarded.",
+      "bulkCancelDismiss": "Keep them"
+    },
+    "toast": {
+      "full": "The queue is full right now — try again shortly.",
+      "controlUnavailable": "Control channel unavailable — try again.",
+      "resumeFailed": "Couldn’t resume the download — it’s still paused. Try again.",
+      "resumeLegacy": "This job can’t be resumed — cancel it and re-queue instead.",
+      "bulkDone_one": "{{count}} job done.",
+      "bulkDone_other": "{{count}} jobs done.",
+      "bulkPartial": "{{ok}} done, {{failed}} failed.",
+      "requeued_one": "{{count}} video queued.",
+      "requeued_other": "{{count}} videos queued.",
+      "requeuePartial": "{{enqueued}} queued, {{skipped}} skipped.",
+      "requeueNone": "Nothing to queue — already queued or ineligible."
+    },
+    "log": {
+      "title": "Event log",
+      "job": "Job {{id}}",
+      "refresh": "Refresh",
+      "loading": "Loading events…",
+      "empty": "No events recorded for this job.",
+      "error": "Couldn’t load the event log.",
+      "close": "Close event log",
+      "snapshot_one": "Snapshot · {{count}} event",
+      "snapshot_other": "Snapshot · {{count}} events"
+    }
+  },
+  "home": {
+    "eyebrow": "Home",
+    "title": "Overview",
+    "subtitle": "Your vault at a glance — what’s running, what’s stored, and what was just preserved.",
+    "w1": {
+      "title": "Now running",
+      "loading": "Loading what’s running…",
+      "summary": {
+        "downloads_one": "{{count}} download",
+        "downloads_other": "{{count}} downloads",
+        "live_one": "{{count}} live capture",
+        "live_other": "{{count}} live captures",
+        "idle": "Nothing active right now"
+      },
+      "link": {
+        "queue": "Queue",
+        "live": "Live"
+      },
+      "liveDivider": "Live capture",
+      "viewQueue": "View the full queue",
+      "waiting_one": "View {{count}} more in the queue",
+      "waiting_other": "View {{count}} more in the queue",
+      "waitingCapped": "View the rest in the queue",
+      "empty": {
+        "title": "Nothing running",
+        "body": "New downloads and live captures will show up here.",
+        "cta": "Browse the library"
+      },
+      "error": "Couldn’t load what’s running."
+    },
+    "w2": {
+      "title": "Storage",
+      "subtitle": "Vault capacity & top channels",
+      "loading": "Loading storage…",
+      "link": "Storage",
+      "more": "Storage details",
+      "empty": {
+        "title": "No archives yet",
+        "body": "Once you archive videos, your vault use shows up here.",
+        "cta": "Add a channel"
+      },
+      "error": "Couldn’t load storage."
+    },
+    "w3": {
+      "title": "Recently preserved",
+      "subtitle": "Newest copies in the vault",
+      "loading": "Loading recent activity…",
+      "link": "Library",
+      "more": "Open the library",
+      "empty": {
+        "title": "Nothing preserved yet",
+        "body": "Add a channel to start archiving its videos.",
+        "cta": "Add a channel"
+      },
+      "error": "Couldn’t load recent activity."
+    },
+    "w4": {
+      "title": "Channels",
+      "subtitle": "Monitored for new videos & live",
+      "loading": "Loading channels…",
+      "link": "All channels",
+      "more": "See all channels",
+      "empty": {
+        "title": "No channels yet",
+        "body": "Add one to start archiving.",
+        "cta": "Add a channel"
+      },
+      "error": "Couldn’t load your channels."
+    }
+  },
+  "live": {
+    "error": {
+      "title": "Couldn't load this section",
+      "desc": "The connection dropped. Nothing was lost — try again."
+    },
+    "captures": {
+      "eyebrow": "Live · watching now",
+      "title": "In-progress captures",
+      "sub": "Broadcasts being recorded to the vault right now.",
+      "loading": "Loading in-progress captures…",
+      "detected": "Broadcast detected — recording starts shortly.",
+      "empty": {
+        "title": "No broadcasts in progress",
+        "desc": "When a watched channel goes live, you'll see it here in real time — you didn't miss anything.",
+        "cta": "Watch a channel's live"
+      }
+    },
+    "channels": {
+      "eyebrow": "Sources",
+      "title": "Watched channels",
+      "sub": "Channels TubeVault checks for live broadcasts.",
+      "loading": "Loading watched channels…",
+      "toggle": "Watch live",
+      "paused": "Watch paused",
+      "undo": "Undo",
+      "pausedToast": "Watch paused — the in-progress capture keeps running.",
+      "watchingToast": "Watching live.",
+      "toggleError": "Couldn't update live watching — please try again.",
+      "cred": {
+        "title": "Members-only lives need a valid YouTube sign-in — some may not be captured.",
+        "action": "Review in Settings"
+      },
+      "empty": {
+        "title": "No channels watched",
+        "desc": "Turn on live watching for a channel to catch its broadcasts automatically.",
+        "cta": "Add a channel"
+      }
+    },
+    "recent": {
+      "eyebrow": "Recordings",
+      "title": "Recently ended",
+      "sub": "Live streams that finished and were saved.",
+      "loading": "Loading recently-ended lives…",
+      "reassure": "Just-ended lives can take a while to verify — no action needed.",
+      "empty": {
+        "title": "No recent recordings",
+        "desc": "Finished live streams will be listed here once one wraps up."
+      }
+    }
+  },
+  "login": {
+    "lead": "Enter your access secret to continue.",
+    "secretLabel": "Access secret",
+    "placeholder": "Enter access secret",
+    "reveal": "Reveal secret",
+    "hide": "Hide secret",
+    "submit": "Log in",
+    "busy": "Signing in…",
+    "capsHint": "Caps Lock is on",
+    "error": {
+      "invalid": "Invalid credentials.",
+      "malformed": "Something was wrong with that request.",
+      "rate": "Too many attempts. Try again shortly.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "cooldown": "Try again in {{time}}",
+    "success": {
+      "title": "Unlocked",
+      "sub": "Taking you to your vault…"
+    },
+    "footer": "Single-user vault · sessions last 12 hours",
+    "theme": {
+      "toDark": "Switch to dark theme",
+      "toLight": "Switch to light theme"
+    },
+    "lang": {
+      "group": "Language",
+      "en": "EN",
+      "ko": "한국어"
+    }
+  },
+  "notifications": {
+    "eyebrow": "Activity log",
+    "title": "Notifications",
+    "subtitle": "Everything your archive has done — failures, expirations, and rescues — so you can trust it’s running.",
+    "view": {
+      "all": "All",
+      "unread": "Unread",
+      "helperUnread": "Triage inbox · items that may need you",
+      "helperAll": "Full history · newest first"
+    },
+    "poll": {
+      "line": "Updates every 30s",
+      "refresh": "Refresh"
+    },
+    "newActivity_one": "{{count}} new notification — refresh to show it",
+    "newActivity_other": "{{count}} new notifications — refresh to show them",
+    "filter": {
+      "typeAll": "All types",
+      "typeFailures": "Failures",
+      "typeRescues": "Rescues",
+      "typeLive": "Live",
+      "typeSourceGone": "Source gone",
+      "sevAll": "Any severity",
+      "sevWarning": "Warning & up",
+      "sevCritical": "Critical only",
+      "dateAny": "Any time",
+      "date1": "Last 24 hours",
+      "date7": "Last 7 days",
+      "date30": "Last 30 days",
+      "typeLabel": "Filter by type",
+      "sevLabel": "Filter by severity",
+      "dateLabel": "Filter by date",
+      "clear": "Clear filters",
+      "loadedNote": "Filters apply to loaded items — server-side is coming."
+    },
+    "markAllRead": "Mark all read",
+    "markAllConfirm": {
+      "title": "Mark everything read?",
+      "body": "This marks ALL notifications read, not just the ones matching your current filters. Your filters will be cleared.",
+      "confirm": "Clear filters & mark all read"
+    },
+    "empty": {
+      "allTitle": "No activity yet",
+      "allBody": "Your archive hasn’t logged anything yet. Downloads, source changes, and rescues will appear here.",
+      "clearTitle": "All clear",
+      "clearBody": "Nothing needs you right now. Everything your archive has done is under All.",
+      "viewAll": "View all activity",
+      "filterTitle": "No activity matches these filters",
+      "filterBody": "Try widening the filters. These only span the items loaded so far."
+    },
+    "error": {
+      "title": "Couldn’t load the activity log",
+      "body": "This didn’t load. Your archive keeps running in the background — try again."
+    },
+    "endOfLog": "End of log",
+    "toast": {
+      "dismissed": "Marked as read",
+      "undo": "Undo",
+      "badCursorTitle": "Reloaded from the top",
+      "badCursorBody": "The list cursor expired, so the latest activity was reloaded."
+    }
+  },
+  "videos": {
+    "searchChannel": "Search this channel…",
+    "searchLibrary": "Search titles or channels…",
+    "filter": {
+      "rescuedOnly": "Rescued only",
+      "type": "Type",
+      "copyState": "Copy state",
+      "sourceState": "Original",
+      "published": "Published",
+      "from": "From",
+      "to": "To",
+      "allTypes": "All types",
+      "allCopy": "All copy states",
+      "allSource": "All originals",
+      "allChannels": "All channels"
+    },
+    "view": {
+      "label": "View",
+      "grid": "Grid",
+      "list": "List"
+    },
+    "list": {
+      "colThumb": "Thumbnail",
+      "colTitle": "Title",
+      "colChannel": "Channel",
+      "colPublished": "Published",
+      "colSize": "Size",
+      "colStatus": "Status"
+    },
+    "sort": {
+      "publishedAt_desc": "Newest published",
+      "publishedAt_asc": "Oldest published",
+      "addedAt_desc": "Recently added",
+      "title_asc": "Title A–Z",
+      "sizeBytes_desc": "Largest first",
+      "sizeBytes_asc": "Smallest first"
+    },
+    "type": {
+      "REGULAR": "Video",
+      "SHORTS": "Shorts",
+      "PREMIERE": "Premiere",
+      "LIVE": "Live",
+      "MEMBERS_ONLY": "Members"
+    },
+    "results": {
+      "total_one": "{{count}} video",
+      "total_other": "{{count}} videos",
+      "selectAll": "Select all"
+    },
+    "clearFilters": "Clear filters",
+    "select": {
+      "selected_one": "{{count}} selected",
+      "selected_other": "{{count}} selected",
+      "download_one": "Download {{count}}",
+      "download_other": "Download {{count}}",
+      "clear": "Clear",
+      "reasonSaved": "Already saved",
+      "reasonInProgress": "In progress"
+    },
+    "pager": {
+      "range": "{{start}}–{{end}} of {{total}}",
+      "page": "Page {{page}} / {{pages}}",
+      "prev": "Previous page",
+      "next": "Next page"
+    },
+    "empty": {
+      "channelTitle": "No videos archived yet",
+      "channelBody": "Nothing has been enumerated for this channel yet. New uploads will appear here as they’re captured.",
+      "libraryTitle": "No videos archived yet",
+      "libraryBody": "Register a channel to start archiving. New uploads will appear here as they’re captured.",
+      "filteredTitle": "No videos match these filters",
+      "filteredBody": "Try broadening your search, or clear the filters to see the whole archive."
+    },
+    "error": {
+      "title": "Couldn’t load videos",
+      "body": "Something went wrong reaching the vault. Your archive is safe — this is just the view.",
+      "retry": "Retry"
+    }
+  },
+  "video": {
+    "back": "Back",
+    "contentType": {
+      "REGULAR": "Regular",
+      "SHORTS": "Short",
+      "PREMIERE": "Premiere",
+      "LIVE": "Live",
+      "MEMBERS_ONLY": "Members only"
+    },
+    "publishedLine": "Published {{date}} · {{rel}}",
+    "publishedUnknown": "Publish date unknown",
+    "statusTitle": "Status",
+    "headline": {
+      "rescued": "Rescued — we saved this copy before the original left YouTube.",
+      "HEALTHY": "Healthy — your copy is verified, and the original is still online.",
+      "VERIFYING": "Verifying — checking this copy against the source right now.",
+      "AWAITING_VERIFY": "Verifying completeness — a just-finished live can take a little while to verify. No action needed.",
+      "DOWNLOADING": "Downloading — building your preserved copy right now.",
+      "QUEUED": "Queued — waiting for a download slot.",
+      "FAILED": "Download failed — the last attempt didn’t finish. You can try again.",
+      "PARTIAL_KEPT": "Partly saved — the recording was cut short, but a partial copy is kept.",
+      "CANDIDATE": "Not preserved yet — this is a candidate in your vault."
+    },
+    "integrity": {
+      "verified": "Verified · sha256",
+      "partial": "Not verified · partial copy kept",
+      "failed": "No checksum · last download failed",
+      "pending": "Not verified yet"
+    },
+    "facts": {
+      "title": "Details",
+      "type": "Type",
+      "resolution": "Resolution",
+      "size": "Size",
+      "duration": "Duration",
+      "added": "Added",
+      "videoId": "Video id",
+      "checksum": "SHA-256 checksum"
+    },
+    "description": {
+      "title": "Description"
+    },
+    "download": "Download original",
+    "absent": {
+      "DOWNLOADING": {
+        "title": "Building your copy",
+        "body": "Downloading the original now. The preserved file — and its checksum — appear here the moment it verifies."
+      },
+      "QUEUED": {
+        "title": "Queued for download",
+        "body": "Waiting for a free slot. It starts automatically — you can watch its progress here."
+      },
+      "FAILED": {
+        "title": "Download didn’t finish",
+        "body": "The last attempt stopped before a copy was saved. Nothing is corrupted — try again to preserve it."
+      },
+      "CANDIDATE": {
+        "title": "Not preserved yet",
+        "body": "This video is a candidate — found on the channel but not yet saved. Download it to keep a verified copy before anything happens to the original."
+      }
+    },
+    "playerError": {
+      "e404": {
+        "title": "This copy’s file couldn’t be read",
+        "body": "The vault record says this copy is healthy, but the media file didn’t respond — it may have been moved off disk. The status, checksum, and history below are still accurate."
+      },
+      "reload": "Reload the player"
+    },
+    "actions": {
+      "title": "Actions",
+      "retry": {
+        "FAILED": {
+          "title": "Retry the download",
+          "hint": "YouTube’s bot wall can cut a download short. Retrying queues it again.",
+          "button": "Try the download again"
+        },
+        "PARTIAL_KEPT": {
+          "title": "This recording",
+          "hint": "Full re-downloads aren’t offered for past live streams — this partial is the copy we keep.",
+          "button": "Re-download"
+        },
+        "CANDIDATE": {
+          "title": "Preserve this video",
+          "hint": "Found on the channel but not yet saved. Download it to keep a verified copy.",
+          "button": "Download now"
+        }
+      },
+      "liveFailed": {
+        "title": "Capture didn’t finish",
+        "hint": "This live capture failed and can’t be re-downloaded — a past live stream can’t be fetched again."
+      },
+      "controlTitle": "Download in progress",
+      "hint": {
+        "RUNNING": "About {{eta}} left · {{speed}}.",
+        "QUEUED": "Waiting for a download slot — it’ll start on its own.",
+        "PAUSED": "Paused — the partial file is kept. Resume when you’re ready."
+      },
+      "preserved": {
+        "rescued": {
+          "title": "Rescued and safe",
+          "body": "The original is gone from YouTube — your verified copy is all that remains, and it’s healthy."
+        },
+        "ok": {
+          "title": "Preserved and verified",
+          "body": "A verified copy is safe in the vault. There’s nothing you need to do."
+        }
+      }
+    },
+    "control": {
+      "pause": "Pause",
+      "resume": "Resume",
+      "cancel": "Cancel",
+      "pending": {
+        "pausing": "Pausing…",
+        "resuming": "Resuming…",
+        "canceling": "Canceling…"
+      }
+    },
+    "trail": {
+      "title": "History",
+      "intro": "Every state change, oldest first — the record of how this copy got here.",
+      "empty": "No history yet.",
+      "copyAxis": "Copy",
+      "sourceAxis": "Source",
+      "rescued": "Caught it in time"
+    },
+    "menu": {
+      "label": "More actions",
+      "copyId": "Copy video id",
+      "viewQueue": "View in the Queue",
+      "copied": "Video id copied",
+      "copyFailed": "Couldn’t copy the id"
+    },
+    "loading": "Loading video…",
+    "notFound": {
+      "title": "Video not found",
+      "body": "This video isn’t in your vault. It may have been removed.",
+      "cta": "Back to the library"
+    },
+    "error": {
+      "title": "Couldn’t load this video",
+      "body": "Something went wrong fetching the details. Try again.",
+      "retry": "Retry"
+    },
+    "toast": {
+      "queued": "Queued for download",
+      "queuedBody": "Watch its progress here or in the Queue.",
+      "nothing": "Nothing to queue",
+      "nothingBody": "This video isn’t in a state that can be downloaded right now.",
+      "liveRefused": "Can’t re-download a live stream",
+      "liveRefusedBody": "A past live recording is final — the partial is the copy we keep. Full control lives in the Queue.",
+      "full": "The download queue is full",
+      "fullBody": "Priority space is exhausted right now. Try again in a moment.",
+      "failed": "Something went wrong",
+      "controlUnavailable": "Controls are briefly unavailable — try again.",
+      "retry": "Retry"
+    }
+  },
+  "channel": {
+    "breadcrumb": "Channels",
+    "breadcrumbNav": "Breadcrumb",
+    "counts": {
+      "total": "total",
+      "healthy": "healthy",
+      "candidates": "candidates"
+    },
+    "watchLive": "Watch live",
+    "collectionStopped": "Collection stopped",
+    "reRegister": "Re-register",
+    "notFoundTitle": "Channel not found",
+    "notFoundBody": "This channel isn’t registered. It may have been deleted.",
+    "acquire": {
+      "candReady_one": "{{count}} candidate ready to back up",
+      "candReady_other": "{{count}} candidates ready to back up",
+      "candWhy": "Candidates aren’t saved until you back them up.",
+      "backupAll": "Back up all",
+      "failedLead_one": "{{count}} download failed",
+      "failedLead_other": "{{count}} downloads failed",
+      "failedWhy": "Retry to queue them again.",
+      "retryFailed": "Retry all failed ({{count}})"
+    },
+    "manage": {
+      "open": "Manage channel",
+      "title": "Manage channel",
+      "note": "Per-channel overrides — leave on “Inherit global” to follow Settings.",
+      "qualityCap": "Quality cap",
+      "subtitles": "Subtitles"
+    },
+    "quality": {
+      "inherit": "Inherit global",
+      "UNLIMITED": "Unlimited (best available)",
+      "P2160": "2160p (4K)",
+      "P1440": "1440p",
+      "P1080": "1080p",
+      "P720": "720p"
+    },
+    "subtitle": {
+      "inherit": "Inherit global",
+      "NONE": "Off",
+      "MANUAL": "Manual only",
+      "AUTO": "Auto-generated",
+      "BOTH": "Manual + auto"
+    },
+    "soon": {
+      "heading": "Coming soon",
+      "tag": "Soon",
+      "curation": "Curation mode",
+      "quota": "Storage quota",
+      "contentPolicy": "Content-type include & exclude"
+    },
+    "danger": {
+      "zone": "Danger zone",
+      "unregister": "Unregister channel",
+      "unregisterDesc": "Stops collecting new videos and live streams. Your archive is kept and stays searchable — reversible any time.",
+      "purge": "Delete & purge media",
+      "purgeDesc": "Permanently removes this channel and every preserved file from disk. This cannot be undone.",
+      "confirmUnregTitle": "Unregister this channel?",
+      "confirmUnregBody": "Collection stops immediately. Your archive stays on disk and searchable — re-register any time to resume.",
+      "confirmUnregBtn": "Unregister",
+      "confirmPurgeTitle": "Delete channel & purge media?",
+      "confirmPurgeBody": "This permanently deletes the channel and every preserved file from disk. This cannot be undone. Type DELETE to confirm.",
+      "confirmPurgeBtn": "Delete & purge",
+      "purgePhrase": "DELETE"
+    },
+    "toast": {
+      "watchLiveFailed": "Couldn’t change live watching",
+      "policySaved": "Channel settings saved",
+      "policyFailed": "Couldn’t save channel settings",
+      "queuedTitle_one": "{{count}} queued",
+      "queuedTitle_other": "{{count}} queued",
+      "queuedBody": "Track progress in Queue or Home.",
+      "skippedTitle_one": "{{count}} skipped",
+      "skippedTitle_other": "{{count}} skipped",
+      "skippedBody": "Already saved or in progress — those copies are safe.",
+      "nothingTitle": "Nothing to back up",
+      "nothingBody": "Every eligible video is already saved or queued.",
+      "full": "Couldn’t queue right now",
+      "fullBody": "The download queue is busy. Try again in a moment.",
+      "badRequest": "Couldn’t queue",
+      "badRequestBody": "Something was off with that request.",
+      "unregistered": "Channel unregistered",
+      "unregisteredBody": "Collection stopped. Your archive is kept and searchable.",
+      "reRegistered": "Channel re-registered",
+      "reRegisteredBody": "Collection resumed. New uploads and live streams will be captured again.",
+      "purged": "Media purged",
+      "purgedBody": "The channel and its preserved files were permanently removed.",
+      "actionFailed": "That didn’t work — please try again."
+    },
+    "retry": "Retry"
+  },
+  "channels": {
+    "page": {
+      "title": "Channels",
+      "subtitle": "The channels you’re archiving. Register a new one by its URL — TubeVault keeps a copy even if YouTube loses the original.",
+      "count_one": "{{count}} channel · {{active}} collecting",
+      "count_other": "{{count}} channels · {{active}} collecting"
+    },
+    "register": {
+      "title": "Register a channel",
+      "hint": "Paste a channel URL. TubeVault resolves it, then enumerates its videos in the background — you don’t wait here.",
+      "placeholder": "https://www.youtube.com/@handle",
+      "fieldLabel": "Channel URL",
+      "submit": "Register",
+      "submitBusy": "Registering…",
+      "dismiss": "Dismiss",
+      "viewQueue": "View in queue",
+      "viewHome": "Go to home",
+      "retry": "Retry"
+    },
+    "notice": {
+      "successTitle": "“{{name}}” added",
+      "successMsg": "Enumerating its videos in the background — this can take a few minutes. Track progress in the queue.",
+      "alreadyTitle": "“{{name}}” is already registered",
+      "alreadyMsg": "Re-checking now for new videos. Track progress in the queue.",
+      "notFoundTitle": "Couldn’t find a channel there",
+      "notFoundMsg": "That URL didn’t resolve to a YouTube channel. Check the link — a channel page or @handle URL works best.",
+      "notFoundField": "Not a channel URL",
+      "timeoutTitle": "This is taking a while",
+      "timeoutMsg": "The lookup timed out before the channel could be resolved. It’s likely temporary — retry.",
+      "engineTitle": "The archive engine had a problem",
+      "engineMsg": "TubeVault couldn’t reach YouTube to resolve the channel. Try again in a moment.",
+      "genericTitle": "Couldn’t register that channel",
+      "genericMsg": "Something went wrong resolving the URL. Try again in a moment."
+    },
+    "row": {
+      "lastChecked": "Last checked",
+      "neverChecked": "Not checked yet",
+      "enumerating": "Enumerating…",
+      "stoppedNote": "Collection stopped · archive kept",
+      "watchLiveLabel": "Watch live",
+      "watchOn": "Watch live: on — {{name}}",
+      "watchOff": "Watch live: off — {{name}}",
+      "moreActions": "More actions — {{name}}",
+      "resume": "Resume collecting"
+    },
+    "menu": {
+      "stop": "Stop collecting",
+      "stopHint": "Keep the archive · reversible",
+      "reactivate": "Resume collecting",
+      "reactivateHint": "Re-enumerate & watch again",
+      "delete": "Delete channel & files…",
+      "deleteHint": "Permanent · removes media"
+    },
+    "confirm": {
+      "unregTitle": "Stop collecting from “{{name}}”?",
+      "unregDesc": "TubeVault stops downloading new videos and watching for live streams. Everything already archived stays saved and browsable — you can re-register anytime to resume.",
+      "unregConfirm": "Stop collecting",
+      "purgeTitle": "Delete “{{name}}” and its files?",
+      "purgeDesc": "This permanently deletes the channel and all {{n}} archived video files from disk. This cannot be undone. To keep your copies, use “Stop collecting” instead.",
+      "purgeConfirm": "Delete permanently"
+    },
+    "toast": {
+      "liveOnTitle": "Watching live",
+      "liveOnMsg": "Now watching “{{name}}” for live streams.",
+      "liveOffTitle": "Live watching off",
+      "liveOffMsg": "Stopped watching “{{name}}” for live streams.",
+      "unregTitle": "Collection stopped",
+      "unregMsg": "“{{name}}” archive kept — collection stopped.",
+      "purgeTitle": "Channel deleted",
+      "purgeMsg": "“{{name}}” and its files were permanently deleted.",
+      "reactTitle": "Collecting resumed",
+      "reactMsg": "Re-enumerating “{{name}}” now.",
+      "enumDoneTitle": "Enumeration complete",
+      "enumDoneMsg": "Updated video counts for “{{name}}”.",
+      "actionError": "Something went wrong — please try again."
+    },
+    "empty": {
+      "title": "No channels yet",
+      "desc": "Add your first channel by its URL above to start archiving. TubeVault keeps a copy even if the original is later removed."
+    },
+    "error": {
+      "title": "Couldn’t load your channels",
+      "desc": "The channel list didn’t load. This won’t affect anything already archived."
+    },
+    "loading": "Loading channels…",
+    "registered": "Registered"
+  },
+  "settings": {
+    "page": {
+      "kicker": "Settings",
+      "title": "Settings",
+      "subtitle": "Global download defaults, notification channels, and your YouTube credential — each saved on its own.",
+      "indepNote": "Three independent services. A failure in one never blocks the others."
+    },
+    "common": {
+      "secErrTitle": "Couldn’t load this section",
+      "secErrDesc": "The rest of the page still works — this one can retry on its own.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "unsaved": "Unsaved changes"
+    },
+    "defaults": {
+      "eyebrow": "Global defaults",
+      "title": "Download defaults",
+      "desc": "Applied to every new download. Changes save to the settings singleton.",
+      "ep": "GET · PATCH /api/settings",
+      "concurrency": {
+        "label": "Download concurrency",
+        "hint": "1 is serial — the polite default that stays gentle on YouTube. Up to 4 at once."
+      },
+      "quality": {
+        "label": "Quality cap"
+      },
+      "subtitles": {
+        "label": "Subtitles"
+      },
+      "clamp": "Concurrency is capped at 1–4 — saved as {{to}}.",
+      "quality_opts": {
+        "UNLIMITED": "Unlimited",
+        "P2160": "2160p (4K)",
+        "P1440": "1440p",
+        "P1080": "1080p",
+        "P720": "720p"
+      },
+      "subtitle_opts": {
+        "NONE": "None",
+        "MANUAL": "Manual",
+        "AUTO": "Auto",
+        "BOTH": "Both"
+      }
+    },
+    "channels": {
+      "eyebrow": "Notifications",
+      "title": "Notification channels",
+      "desc": "Where TubeVault sends alerts. Secrets are write-only — stored masked, never read back.",
+      "ep": "/api/notification-channels",
+      "add": "Add channel",
+      "addPick": "Add a channel",
+      "typeImmutable": "Pick a type — it can’t change after the channel is created.",
+      "addAllEventsNote": "New channels subscribe to all events at Info by default — fine-tune after adding.",
+      "create": "Add channel",
+      "empty": {
+        "title": "No channels yet",
+        "desc": "Add one to get download, live, and rescue alerts where you already look."
+      },
+      "row": {
+        "enabled": "Enabled",
+        "active": "Active",
+        "inactive": "Disabled",
+        "test": "Test",
+        "sending": "Sending…",
+        "edit": "Edit",
+        "editing": "Editing…",
+        "delete": "Delete"
+      },
+      "form": {
+        "name": "Name",
+        "namePlaceholder": "e.g. Home NAS alerts",
+        "save": "Save",
+        "cancel": "Cancel",
+        "mergeHint": "Leave a secret blank to keep it · clear it to delete · type to replace.",
+        "events": "Events",
+        "allEvents": "All events",
+        "eventsCount": "{{count}} of {{total}} events",
+        "eventLabels": {
+          "downloadFailed": "Download failed",
+          "storageNearFull": "Storage nearly full",
+          "storagePaused": "Downloads paused (storage)",
+          "sourceGone": "Source removed",
+          "videoRescued": "Video rescued",
+          "liveStart": "Live started",
+          "liveStop": "Live ended",
+          "sessionExpired": "Session expired",
+          "systemTest": "Test notification",
+          "workerStalled": "Worker stalled",
+          "youtubeBotWall": "YouTube bot wall"
+        },
+        "minSeverity": "Min severity",
+        "optionalTag": "optional",
+        "checkFields": "Check the highlighted fields.",
+        "required": "Required."
+      },
+      "fields": {
+        "botToken": "Bot token",
+        "chatId": "Chat ID",
+        "webhookUrl": "Webhook URL",
+        "serverUrl": "Server URL",
+        "appToken": "App token",
+        "topic": "Topic",
+        "accessToken": "Access token",
+        "url": "URL"
+      },
+      "sev": {
+        "INFO": "Info",
+        "WARNING": "Warning",
+        "CRITICAL": "Critical"
+      },
+      "test": {
+        "delivered": "Delivered",
+        "notDelivered": "Not delivered",
+        "realNote": "A real message was sent, and a Test row was added to your notifications."
+      },
+      "del": {
+        "title": "Delete this channel?",
+        "desc": "TubeVault will stop sending alerts to “{{name}}”. This can’t be undone.",
+        "confirm": "Delete channel"
+      },
+      "toast": {
+        "created": "Channel added",
+        "createdMsg": "TubeVault will start sending alerts here.",
+        "updated": "Channel updated",
+        "deleted": "Channel deleted",
+        "notFoundTitle": "Channel not found",
+        "notFoundDesc": "It may have been deleted from another tab. The list has been refreshed.",
+        "actionError": "Couldn’t update the channel — please try again."
+      }
+    },
+    "cred": {
+      "eyebrow": "YouTube credential",
+      "title": "Owner YouTube cookie",
+      "desc": "Lets TubeVault archive members-only and age-restricted videos as you.",
+      "ep": "GET · PUT · DELETE /api/session",
+      "status": {
+        "VERIFIED": "Verified",
+        "UNVERIFIED": "Unverified",
+        "EXPIRED": "Expired",
+        "disabled": "Disabled"
+      },
+      "health": {
+        "lastVerified": "Last verified",
+        "failureStreak": "Failure streak",
+        "lastError": "Last error",
+        "none": "—"
+      },
+      "willVerify": "Imported — a background worker will verify it shortly.",
+      "import": {
+        "label": "Paste your Netscape cookie jar",
+        "hint": "Never re-read after saving. Max 1 MiB. Importing resets status to Unverified.",
+        "placeholder": "# Paste your exported Netscape-format cookies here…",
+        "chooseFile": "Choose a file",
+        "button": "Import cookies",
+        "importing": "Importing…",
+        "reveal": "Reveal",
+        "hide": "Hide",
+        "budget": "{{kb}} KB of 1 MiB"
+      },
+      "delete": "Delete credential",
+      "disabled": {
+        "title": "Credential storage is disabled",
+        "desc": "An operator must configure the credential key on the server (TUBEVAULT_CREDENTIAL_KEY_FILE) before cookies can be imported. Import and delete return 503 until then."
+      },
+      "expired": {
+        "warn": "This credential has expired. Members-only live streams won’t be captured until you import a fresh cookie.",
+        "goLive": "Go to Live"
+      },
+      "del": {
+        "title": "Delete the stored cookie?",
+        "desc": "TubeVault will lose access to members-only and age-restricted videos until you import a new cookie.",
+        "confirm": "Delete credential"
+      },
+      "toast": {
+        "imported": "Cookie imported",
+        "deleted": "Credential deleted"
+      }
+    },
+    "session": {
+      "title": "Session",
+      "desc": "Your access secret unlocks a signed session cookie for this browser.",
+      "expiresAt": "Signed in · expires around {{time}}",
+      "ttlNote": "Sessions last about 12 hours before you’ll need to sign in again.",
+      "signOut": "Sign out",
+      "version": "Version {{version}}"
+    }
+  },
+  "library": {
+    "eyebrow": "All channels",
+    "title": "Library",
+    "subtitle": "Every archived video, across all channels.",
+    "channelFilter": "Channel",
+    "toast": {
+      "queuedTitle_one": "{{count}} queued",
+      "queuedTitle_other": "{{count}} queued",
+      "queuedBody": "Track progress in Queue or Home.",
+      "nothingTitle": "Nothing to download",
+      "skippedBody": "Already saved or in progress — those copies are safe.",
+      "nothingBody": "Every selected video is already saved or queued.",
+      "full": "Couldn’t queue right now",
+      "fullBody": "The download queue is busy. Try again in a moment.",
+      "retry": "Retry",
+      "badRequest": "Couldn’t queue",
+      "badRequestBody": "Something was off with that request."
+    }
+  }
 }

@@ -1,0 +1,47 @@
+/* IconButton — square, quiet by default. */
+.tv-iconbtn {
+  display: inline-grid;
+  place-items: center;
+  border: var(--tv-border-width) solid transparent;
+  border-radius: var(--tv-radius-md);
+  color: var(--tv-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background var(--tv-duration-fast) var(--tv-ease-standard),
+    color var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-iconbtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.tv-iconbtn[data-size='sm'] {
+  width: var(--tv-control-h-sm);
+  height: var(--tv-control-h-sm);
+}
+.tv-iconbtn[data-size='md'] {
+  width: var(--tv-control-h-md);
+  height: var(--tv-control-h-md);
+}
+.tv-iconbtn[data-size='lg'] {
+  width: var(--tv-control-h-lg);
+  height: var(--tv-control-h-lg);
+}
+
+.tv-iconbtn[data-variant='ghost']:hover:not(:disabled) {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+.tv-iconbtn[data-variant='solid'] {
+  background: var(--tv-brand-solid);
+  color: var(--tv-text-on-brand);
+}
+.tv-iconbtn[data-variant='solid']:hover:not(:disabled) {
+  background: var(--tv-brand-solid-hover);
+}
+.tv-iconbtn[data-variant='danger'] {
+  color: var(--tv-danger-fg);
+}
+.tv-iconbtn[data-variant='danger']:hover:not(:disabled) {
+  background: var(--tv-danger-bg);
+}

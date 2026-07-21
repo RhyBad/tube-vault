@@ -1,0 +1,54 @@
+/* ConfirmDialog — a raised card over a scrim. The scrim is the only blur. */
+.tv-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tv-z-dialog);
+  display: grid;
+  place-items: center;
+  padding: var(--tv-space-4);
+}
+.tv-modal__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--tv-overlay);
+}
+.tv-dialog {
+  position: relative;
+  width: min(440px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-5);
+  background: var(--tv-surface-raised);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-3);
+}
+.tv-dialog__head {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+}
+.tv-dialog__icon {
+  flex: none;
+  color: var(--tv-danger-fg);
+}
+.tv-dialog__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-size: var(--tv-text-lg);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-dialog__body {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+}
+.tv-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--tv-space-2);
+  margin-top: var(--tv-space-1);
+}

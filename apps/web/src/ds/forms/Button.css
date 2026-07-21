@@ -1,0 +1,84 @@
+/* Button — squared corners, calm interaction (darken on press, no scale). */
+.tv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tv-space-1-5);
+  border: var(--tv-border-width) solid transparent;
+  border-radius: var(--tv-radius-md);
+  font-family: var(--tv-font-sans);
+  font-weight: var(--tv-weight-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--tv-duration-fast) var(--tv-ease-standard),
+    border-color var(--tv-duration-fast) var(--tv-ease-standard),
+    color var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-btn--full {
+  width: 100%;
+}
+.tv-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.tv-btn__icon {
+  flex: none;
+}
+
+/* Sizes */
+.tv-btn[data-size='sm'] {
+  height: var(--tv-control-h-sm);
+  padding: 0 var(--tv-space-2-5);
+  font-size: var(--tv-text-2xs);
+}
+.tv-btn[data-size='md'] {
+  height: var(--tv-control-h-md);
+  padding: 0 var(--tv-space-3);
+  font-size: var(--tv-text-xs);
+}
+.tv-btn[data-size='lg'] {
+  height: var(--tv-control-h-lg);
+  padding: 0 var(--tv-space-4);
+  font-size: var(--tv-text-sm);
+}
+
+/* Variants */
+.tv-btn[data-variant='primary'] {
+  background: var(--tv-brand-solid);
+  color: var(--tv-text-on-brand);
+}
+.tv-btn[data-variant='primary']:hover:not(:disabled) {
+  background: var(--tv-brand-solid-hover);
+}
+.tv-btn[data-variant='secondary'] {
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  border-color: var(--tv-border-strong);
+}
+.tv-btn[data-variant='secondary']:hover:not(:disabled) {
+  background: var(--tv-surface-hover);
+}
+.tv-btn[data-variant='ghost'] {
+  background: transparent;
+  color: var(--tv-text-secondary);
+}
+.tv-btn[data-variant='ghost']:hover:not(:disabled) {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+.tv-btn[data-variant='danger'] {
+  background: var(--tv-danger-solid);
+  color: var(--tv-text-on-brand);
+}
+.tv-btn[data-variant='danger']:hover:not(:disabled) {
+  background: var(--tv-danger-fg);
+}
+.tv-btn[data-variant='danger-outline'] {
+  background: transparent;
+  color: var(--tv-danger-fg);
+  border-color: var(--tv-danger-border);
+}
+.tv-btn[data-variant='danger-outline']:hover:not(:disabled) {
+  background: var(--tv-danger-bg);
+}

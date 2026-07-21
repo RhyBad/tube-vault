@@ -1,0 +1,58 @@
+/* TubeVault — Radius, border, elevation, motion & z-index tokens
+   Restrained by design. Badges use a small, squared radius (precise
+   "instrument" feel — NOT marketing pills). Shadows are soft/warm in light
+   and near-absent in dark (dark leans on borders for separation). Motion is
+   calm and quick with NO bounce — this is a trustworthy preservation tool. */
+
+:root {
+  /* ---- Radii ---- */
+  --tv-radius-xs: 4px;
+  --tv-radius-sm: 5px; /* badges, chips — squared/precise */
+  --tv-radius-md: 8px; /* buttons, inputs, small cards */
+  --tv-radius-lg: 12px; /* cards, panels, dialogs */
+  --tv-radius-xl: 16px; /* large surfaces */
+  --tv-radius-full: 999px; /* dots, avatars, live pulse */
+
+  /* ---- Border widths ---- */
+  --tv-border-width: 1px;
+  --tv-border-width-strong: 1.5px;
+  --tv-border-width-accent: 2px; /* left rails / active markers */
+
+  /* ---- Elevation (light: soft warm shadows) ---- */
+  --tv-shadow-1: 0 1px 2px rgba(45, 40, 30, 0.06), 0 1px 1px rgba(45, 40, 30, 0.04);
+  --tv-shadow-2: 0 2px 4px rgba(45, 40, 30, 0.07), 0 4px 12px rgba(45, 40, 30, 0.06);
+  --tv-shadow-3: 0 8px 24px rgba(45, 40, 30, 0.12), 0 2px 6px rgba(45, 40, 30, 0.08);
+  --tv-shadow-focus: 0 0 0 3px var(--tv-focus-halo);
+  --tv-shadow-inset: inset 0 1px 2px rgba(45, 40, 30, 0.06);
+
+  /* ---- Motion — calm, quick, no bounce ---- */
+  --tv-ease-standard: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --tv-ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --tv-ease-in: cubic-bezier(0.5, 0, 0.75, 0); /* @kind other */
+  --tv-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --tv-duration-instant: 80ms; /* @kind other */
+  --tv-duration-fast: 130ms; /* @kind other */
+  --tv-duration-normal: 200ms; /* @kind other */
+  --tv-duration-slow: 320ms; /* @kind other */
+  --tv-duration-live: 1600ms; /* @kind other */
+
+  /* ---- Z-index scale ---- */
+  --tv-z-base: 0; /* @kind other */
+  --tv-z-sticky: 100; /* @kind other */
+  --tv-z-drawer: 200; /* @kind other */
+  --tv-z-overlay: 300; /* @kind other */
+  --tv-z-dialog: 400; /* @kind other */
+  --tv-z-toast: 500; /* @kind other */
+  --tv-z-tooltip: 600; /* @kind other */
+}
+
+/* Dark: shadows recede; a faint hairline highlight reads better than a drop shadow. */
+:root[data-theme='dark'] {
+  --tv-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --tv-shadow-2: 0 2px 6px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --tv-shadow-3: 0 12px 32px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.45);
+  --tv-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+/* Reduced motion is honored per-component: animated components gate keyframes
+   behind @media (prefers-reduced-motion: no-preference). Kept out of the token
+   layer so duration tokens have a single, classifiable declaration. */

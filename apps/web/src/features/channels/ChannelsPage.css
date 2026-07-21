@@ -1,0 +1,527 @@
+/* ChannelsPage — S2. The onboarding + overview screen: a page header, the
+   register card, then the registered list of channel rows. All token-driven so
+   light/dark follow the theme; visuals mirror the LOCKED S2 .dc reference. The
+   channel row (owner D1) is a bare DS ChannelCard + a sibling footer inside one
+   framed .tv-chrow container (dashed when unregistered). */
+
+.tv-ch {
+  --tv-ch-max: 980px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-5);
+  max-width: var(--tv-ch-max);
+  padding-bottom: var(--tv-space-12);
+}
+
+/* ---- page header ---- */
+.tv-ch__page-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1-5);
+}
+.tv-ch__page-title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xl);
+  letter-spacing: var(--tv-tracking-snug);
+  line-height: var(--tv-leading-tight);
+  color: var(--tv-text);
+}
+.tv-ch__subtitle {
+  margin: 0;
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+  max-width: 64ch;
+}
+.tv-ch__count {
+  margin-top: var(--tv-space-0-5);
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+
+/* ---- register card ---- */
+.tv-chreg {
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+  padding: var(--tv-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-4);
+}
+.tv-chreg__head {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: flex-start;
+}
+.tv-chreg__badge {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--tv-radius-md);
+  display: grid;
+  place-items: center;
+  color: var(--tv-brand);
+  background: var(--tv-brand-subtle-bg);
+  border: 1px solid var(--tv-brand-subtle-border);
+}
+.tv-chreg__headtext {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-1);
+  min-width: 0;
+}
+.tv-chreg__title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-lg);
+  color: var(--tv-text);
+}
+.tv-chreg__hint {
+  margin: 0;
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+  max-width: 60ch;
+}
+.tv-chreg__form {
+  display: flex;
+  gap: var(--tv-space-2-5);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.tv-chreg__field {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+/* ---- register notice ---- */
+.tv-chreg__notice {
+  display: flex;
+  gap: var(--tv-space-2-5);
+  align-items: flex-start;
+  padding: var(--tv-space-3);
+  border-radius: var(--tv-radius-md);
+  border: 1px solid var(--tv-border);
+  background: var(--tv-surface-sunken);
+}
+.tv-chreg__notice[data-intent='success'] {
+  background: var(--tv-success-bg);
+  border-color: var(--tv-success-border);
+}
+.tv-chreg__notice[data-intent='info'] {
+  background: var(--tv-brand-subtle-bg);
+  border-color: var(--tv-brand-subtle-border);
+}
+.tv-chreg__notice[data-intent='warning'] {
+  background: var(--tv-warning-bg);
+  border-color: var(--tv-warning-border);
+}
+.tv-chreg__notice[data-intent='danger'] {
+  background: var(--tv-danger-bg);
+  border-color: var(--tv-danger-border);
+}
+.tv-chreg__notice-icon {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--tv-radius-sm);
+  display: grid;
+  place-items: center;
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border-subtle);
+}
+/* §S2-Channels-M1: the icon tile border tracks the notice intent too (was a
+   fixed neutral border for every outcome), mirroring the notice box tokens. */
+.tv-chreg__notice[data-intent='success'] .tv-chreg__notice-icon {
+  color: var(--tv-success-fg);
+  border-color: var(--tv-success-border);
+}
+.tv-chreg__notice[data-intent='info'] .tv-chreg__notice-icon {
+  color: var(--tv-brand);
+  border-color: var(--tv-brand-subtle-border);
+}
+.tv-chreg__notice[data-intent='warning'] .tv-chreg__notice-icon {
+  color: var(--tv-warning-fg);
+  border-color: var(--tv-warning-border);
+}
+.tv-chreg__notice[data-intent='danger'] .tv-chreg__notice-icon {
+  color: var(--tv-danger-fg);
+  border-color: var(--tv-danger-border);
+}
+.tv-chreg__notice-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-0-5);
+}
+.tv-chreg__notice-title {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text);
+}
+.tv-chreg__notice-msg {
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-secondary);
+  line-height: var(--tv-leading-normal);
+}
+.tv-chreg__notice-links {
+  display: flex;
+  gap: var(--tv-space-3-5);
+  margin-top: var(--tv-space-1);
+  flex-wrap: wrap;
+}
+.tv-chreg__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-brand);
+}
+.tv-chreg__link:hover {
+  color: var(--tv-brand-hover);
+  text-decoration: underline;
+}
+.tv-chreg__notice-x {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: var(--tv-text-muted);
+  cursor: pointer;
+  border-radius: var(--tv-radius-sm);
+}
+.tv-chreg__notice-x:hover {
+  background: var(--tv-surface-hover);
+  color: var(--tv-text);
+}
+
+/* ---- list ---- */
+.tv-chlist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+}
+.tv-chlist__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  padding: 0 var(--tv-space-0-5);
+}
+.tv-chlist__divider-label {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-3xs);
+  font-weight: var(--tv-weight-semibold);
+  letter-spacing: var(--tv-tracking-caps);
+  text-transform: uppercase;
+  color: var(--tv-text-muted);
+}
+.tv-chlist__divider-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--tv-border-subtle);
+}
+.tv-chlist__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+}
+.tv-chlist__state {
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  background: var(--tv-surface);
+}
+.tv-chlist__state--empty {
+  border-style: dashed;
+  border-color: var(--tv-border-strong);
+}
+
+/* ---- channel row (bare card + footer in one frame) ---- */
+.tv-chrow {
+  display: flex;
+  flex-direction: column;
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: var(--tv-shadow-1);
+  transition:
+    border-color 130ms var(--tv-ease-standard),
+    box-shadow 130ms var(--tv-ease-standard);
+}
+.tv-chrow:hover {
+  border-color: var(--tv-brand);
+  box-shadow: var(--tv-shadow-2);
+}
+.tv-chrow[data-unregistered='true'] {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--tv-neutral-border);
+  box-shadow: none;
+}
+.tv-chrow[data-unregistered='true']:hover {
+  border-color: var(--tv-border-strong);
+  box-shadow: none;
+}
+
+.tv-chrow__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-2-5);
+  flex-wrap: wrap;
+  padding: var(--tv-space-2) var(--tv-space-3) var(--tv-space-2) var(--tv-space-4);
+  border-top: 1px solid var(--tv-border-subtle);
+  background: var(--tv-surface-sunken);
+  border-radius: 0 0 var(--tv-radius-lg) var(--tv-radius-lg);
+}
+.tv-chrow[data-unregistered='true'] .tv-chrow__foot {
+  background: transparent;
+}
+.tv-chrow__meta {
+  min-width: 0;
+  font-size: var(--tv-text-2xs);
+  color: var(--tv-text-muted);
+}
+.tv-chrow__enum {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  color: var(--tv-progress-fg);
+  font-weight: var(--tv-weight-semibold);
+}
+.tv-chrow__last {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  min-width: 0;
+}
+.tv-chrow__last-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-chrow__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  flex: none;
+  position: relative;
+}
+
+/* watch-live switch */
+.tv-chrow__watch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+}
+.tv-chrow__watch-label {
+  font-size: var(--tv-text-2xs);
+  font-weight: var(--tv-weight-medium);
+  color: var(--tv-text-secondary);
+  white-space: nowrap;
+}
+.tv-chrow__switch {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+}
+.tv-chrow__switch:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.tv-chrow__track {
+  display: inline-block;
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-surface);
+  border: 1px solid var(--tv-border-strong);
+  transition:
+    background 130ms var(--tv-ease-standard),
+    border-color 130ms var(--tv-ease-standard);
+  box-sizing: border-box;
+}
+.tv-chrow__track[data-on='true'] {
+  background: var(--tv-brand-solid);
+  border-color: var(--tv-brand-solid);
+}
+.tv-chrow__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--tv-radius-full);
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  transition: left 130ms var(--tv-ease-standard);
+}
+.tv-chrow__track[data-on='true'] .tv-chrow__knob {
+  left: 18px;
+}
+.tv-chrow__switch:focus-visible .tv-chrow__track {
+  outline: 2px solid var(--tv-brand);
+  outline-offset: 2px;
+}
+
+/* resume button (unregistered) */
+.tv-chrow__resume {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  height: 28px;
+  padding: 0 var(--tv-space-2-5);
+  border-radius: var(--tv-radius-md);
+  border: 1px solid var(--tv-border-strong);
+  background: var(--tv-surface);
+  color: var(--tv-text);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  cursor: pointer;
+}
+.tv-chrow__resume:hover {
+  background: var(--tv-surface-hover);
+}
+
+/* skeleton rows */
+.tv-chrow--skeleton {
+  box-shadow: var(--tv-shadow-1);
+}
+.tv-chrow__skel {
+  display: flex;
+  gap: var(--tv-space-3);
+  align-items: flex-start;
+  padding: var(--tv-card-pad);
+}
+.tv-chrow__skel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding-top: var(--tv-space-0-5);
+}
+
+/* ---- kebab menu ---- */
+.tv-chmenu {
+  position: relative;
+  display: inline-flex;
+}
+.tv-chmenu__list {
+  position: absolute;
+  top: calc(100% + var(--tv-space-1));
+  right: 0;
+  z-index: 40;
+  min-width: 210px;
+  margin: 0;
+  padding: var(--tv-space-1);
+  list-style: none;
+  background: var(--tv-surface-raised);
+  border: 1px solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  box-shadow: var(--tv-shadow-3);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.tv-chmenu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2-5);
+  width: 100%;
+  padding: var(--tv-space-2) var(--tv-space-2);
+  border: none;
+  background: transparent;
+  border-radius: var(--tv-radius-sm);
+  cursor: pointer;
+  color: var(--tv-text-secondary);
+  text-align: left;
+}
+.tv-chmenu__item:hover {
+  background: var(--tv-surface-hover);
+}
+.tv-chmenu__item--danger {
+  color: var(--tv-danger-fg);
+  margin-top: var(--tv-space-1);
+  border-top: 1px solid var(--tv-border-subtle);
+  border-radius: 0 0 var(--tv-radius-sm) var(--tv-radius-sm);
+  padding-top: var(--tv-space-2-5);
+}
+.tv-chmenu__item--danger:hover {
+  background: var(--tv-danger-bg);
+}
+.tv-chmenu__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.tv-chmenu__label {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-2xs);
+  color: inherit;
+}
+.tv-chmenu__hint {
+  font-size: var(--tv-text-3xs);
+  color: var(--tv-text-muted);
+}
+.tv-chmenu__item--danger .tv-chmenu__hint {
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* ---- toasts ---- */
+.tv-ch__toasts {
+  position: fixed;
+  top: 70px;
+  right: var(--tv-space-4);
+  z-index: 550;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  align-items: flex-end;
+  pointer-events: none;
+}
+.tv-ch__toasts > * {
+  pointer-events: auto;
+}
+
+/* ---- responsive ≤640px ---- */
+@media (max-width: 640px) {
+  .tv-chreg__form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tv-chreg__field {
+    flex: 1 1 auto;
+  }
+  .tv-chrow__foot {
+    align-items: flex-start;
+  }
+  /* Bottom-anchored on mobile per the design (snackbar position, not under the
+     top header). The DS Toast has a fixed width, so center it rather than a
+     no-op stretch. */
+  .tv-ch__toasts {
+    top: auto;
+    bottom: var(--tv-space-4);
+    left: var(--tv-space-3);
+    right: var(--tv-space-3);
+    align-items: center;
+  }
+}

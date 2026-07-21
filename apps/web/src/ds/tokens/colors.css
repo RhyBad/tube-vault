@@ -1,0 +1,198 @@
+/* TubeVault — Color tokens (light + dark)
+   ───────────────────────────────────────────────────────────────────────────
+   STANCE: "The Archivist's Instrument." Light = warm paper (archival stock);
+   Dark = deep cool ink (cold storage / vault). Brand = teal/spruce (patina,
+   calm, trustworthy — deliberately NOT default SaaS blue).
+
+   SEMANTIC-STATE MODEL (the core of TubeVault). Seven intents, each mapped to
+   a coherent color. RULE: state is ALWAYS color + icon + label, never color
+   alone (see readme + StatusBadge). Every intent exposes four ramps:
+       -fg      accessible text/icon color ON a surface
+       -bg      soft tint fill (badge / row background)
+       -border  tint border for the fill
+       -solid   strong fill (progress bars, dots, gauge segments)
+
+   Intent → enum mapping (from DESIGN_SYSTEM_INPUT §2.1):
+       success    HEALTHY · VERIFIED · ENDED_NORMAL · COMPLETED
+       progress   DOWNLOADING · VERIFYING · RUNNING · DETECTED · CAPTURING · QUEUED
+       warning    PARTIAL_KEPT · ENDED_INTERRUPTED · PRIVATE · AGE_GATED ·
+                  GEO_BLOCKED · RATE_LIMITED · PAUSED · WARNING(sev)
+       danger     FAILED · DELETED · EXPIRED · CANCELED · SOURCE_GONE · CRITICAL
+       neutral    CANDIDATE · AVAILABLE · UNKNOWN · UNVERIFIED · INFO
+       signature  Rescued  ← the violet "jewel", reserved for this alone
+       locked     MEMBERS_ONLY
+
+   THEME: light is the default (:root); dark is the [data-theme='dark'] scope.
+   System preference is applied by setting data-theme at runtime (matchMedia +
+   localStorage) so an explicit light/dark choice always wins — see readme.
+
+   NOTE: contrast values are hand-tuned toward WCAG AA on their intended
+   surface; a formal AA audit across both themes is a pending verification pass.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ===================== LIGHT (default) — warm paper ===================== */
+:root {
+  color-scheme: light;
+
+  /* ---- Surfaces ---- */
+  --tv-canvas: #f4f1ea; /* app background — warm paper */
+  --tv-surface: #fbf9f4; /* cards, panels */
+  --tv-surface-raised: #ffffff; /* popovers, menus, dialogs */
+  --tv-surface-sunken: #ece7dd; /* wells, progress tracks, inputs */
+  --tv-surface-hover: #efebe2; /* row / control hover */
+  --tv-overlay: rgba(32, 29, 22, 0.44); /* modal scrim */
+
+  /* ---- Borders ---- */
+  --tv-border-subtle: #e7e1d5;
+  --tv-border: #dbd4c6;
+  --tv-border-strong: #c6bfad;
+
+  /* ---- Text ---- */
+  --tv-text: #211f1a; /* primary ink (warm near-black) */
+  --tv-text-secondary: #565248;
+  --tv-text-muted: #857f72;
+  --tv-text-inverse: #fbf9f4;
+  --tv-text-on-brand: #ffffff;
+
+  /* ---- Brand (teal / spruce) ---- */
+  --tv-brand: #0f7a6e; /* links, interactive text/icons */
+  --tv-brand-hover: #0c675d;
+  --tv-brand-active: #0a544c;
+  --tv-brand-solid: #0f7a6e; /* solid button fill */
+  --tv-brand-solid-hover: #0c675d;
+  --tv-brand-subtle-bg: #e2f1ee;
+  --tv-brand-subtle-border: #b6dcd5;
+
+  /* ---- Focus ring ---- */
+  --tv-focus: #12a08f;
+  --tv-focus-halo: rgba(18, 160, 143, 0.32);
+
+  /* ---- Intent: success ---- */
+  --tv-success-fg: #1a7a45;
+  --tv-success-bg: #e5f4ea;
+  --tv-success-border: #b7dfc4;
+  --tv-success-solid: #1f9d57;
+
+  /* ---- Intent: in-progress / live ---- */
+  --tv-progress-fg: #1f5fd0;
+  --tv-progress-bg: #e8f0fe;
+  --tv-progress-border: #c1d6fb;
+  --tv-progress-solid: #2f6ee0;
+
+  /* ---- Intent: warning ---- */
+  --tv-warning-fg: #8a5a00;
+  --tv-warning-bg: #fbf0d5;
+  --tv-warning-border: #ecd299;
+  --tv-warning-solid: #d69412;
+
+  /* ---- Intent: danger ---- */
+  --tv-danger-fg: #bb2d33;
+  --tv-danger-bg: #fce9e9;
+  --tv-danger-border: #f2c3c3;
+  --tv-danger-solid: #d63b41;
+
+  /* ---- Intent: neutral ---- */
+  --tv-neutral-fg: #565248;
+  --tv-neutral-bg: #ece7dd;
+  --tv-neutral-border: #d8d1c4;
+  --tv-neutral-solid: #8a8478;
+
+  /* ---- Intent: signature (Rescued — the violet jewel) ---- */
+  --tv-signature-fg: #7e3bc4;
+  --tv-signature-bg: #f2e8fc;
+  --tv-signature-border: #dcc3f3;
+  --tv-signature-solid: #9333d6;
+  --tv-signature-glow: rgba(147, 51, 214, 0.26);
+  --tv-signature-gradient: linear-gradient(135deg, #9333d6 0%, #6d43d6 100%); /* @kind color */
+
+  /* ---- Intent: locked (MEMBERS_ONLY — inert / restricted) ---- */
+  --tv-locked-fg: #56597a;
+  --tv-locked-bg: #ececf4;
+  --tv-locked-border: #d2d4e3;
+  --tv-locked-solid: #6f7396;
+
+  /* ---- Derived aliases (var-based → auto-resolve per theme) ---- */
+  --tv-gauge-normal: var(--tv-brand-solid);
+  --tv-gauge-near: var(--tv-warning-solid);
+  --tv-gauge-critical: var(--tv-danger-solid);
+  --tv-sse-connected: var(--tv-success-solid);
+  --tv-sse-reconnecting: var(--tv-warning-solid);
+  --tv-sse-disconnected: var(--tv-danger-solid);
+  --tv-link: var(--tv-brand);
+  --tv-link-hover: var(--tv-brand-hover);
+  --tv-skeleton-base: var(--tv-surface-sunken);
+  --tv-skeleton-sheen: rgba(255, 255, 255, 0.55);
+}
+
+/* ===================== DARK — deep cool ink vault ===================== */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --tv-canvas: #0d1015;
+  --tv-surface: #151a21;
+  --tv-surface-raised: #1c222c;
+  --tv-surface-sunken: #0f1319;
+  --tv-surface-hover: #1b212a;
+  --tv-overlay: rgba(3, 5, 8, 0.62);
+
+  --tv-border-subtle: #222a34;
+  --tv-border: #2c343f;
+  --tv-border-strong: #3a434f;
+
+  --tv-text: #e7eaee;
+  --tv-text-secondary: #a6adb8;
+  --tv-text-muted: #6f7883;
+  --tv-text-inverse: #0d1015;
+  --tv-text-on-brand: #04211c;
+
+  --tv-brand: #45c4b0;
+  --tv-brand-hover: #5ad0bd;
+  --tv-brand-active: #38b3a0;
+  --tv-brand-solid: #2bb3a0;
+  --tv-brand-solid-hover: #35c1ad;
+  --tv-brand-subtle-bg: #10231f;
+  --tv-brand-subtle-border: #1d463e;
+
+  --tv-focus: #45c4b0;
+  --tv-focus-halo: rgba(69, 196, 176, 0.36);
+
+  --tv-success-fg: #52c97e;
+  --tv-success-bg: #10241a;
+  --tv-success-border: #1f4a30;
+  --tv-success-solid: #2ea862;
+
+  --tv-progress-fg: #6fa5fd;
+  --tv-progress-bg: #101d33;
+  --tv-progress-border: #22406e;
+  --tv-progress-solid: #3f7fe6;
+
+  --tv-warning-fg: #e3b04f;
+  --tv-warning-bg: #271e0e;
+  --tv-warning-border: #574524;
+  --tv-warning-solid: #cf9622;
+
+  --tv-danger-fg: #ef7378;
+  --tv-danger-bg: #2a1315;
+  --tv-danger-border: #5a2529;
+  --tv-danger-solid: #d94a50;
+
+  --tv-neutral-fg: #a6adb8;
+  --tv-neutral-bg: #1c222c;
+  --tv-neutral-border: #333b46;
+  --tv-neutral-solid: #6f7883;
+
+  --tv-signature-fg: #c390ea;
+  --tv-signature-bg: #1e1330;
+  --tv-signature-border: #422c5f;
+  --tv-signature-solid: #a855e0;
+  --tv-signature-glow: rgba(168, 85, 224, 0.4);
+  --tv-signature-gradient: linear-gradient(135deg, #a855e0 0%, #7b5cf0 100%); /* @kind color */
+
+  --tv-locked-fg: #9a9ec2;
+  --tv-locked-bg: #171926;
+  --tv-locked-border: #313552;
+  --tv-locked-solid: #6a6f96;
+
+  --tv-skeleton-base: #1b212a;
+  --tv-skeleton-sheen: rgba(255, 255, 255, 0.05);
+}

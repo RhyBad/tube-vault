@@ -1,0 +1,52 @@
+/* TubeVault — Spacing, layout & grid tokens
+   4px base rhythm, tuned dense for an operational tool. Layout tokens pin the
+   app shell (sidebar width, content max, page padding) so every UI kit screen
+   lines up. Breakpoint values are documented here for reference (CSS can't
+   consume custom properties inside @media — see readme responsive rules). */
+
+:root {
+  /* ---- Spacing scale (4px base) ---- */
+  --tv-space-0: 0;
+  --tv-space-px: 1px;
+  --tv-space-0-5: 2px;
+  --tv-space-1: 4px;
+  --tv-space-1-5: 6px;
+  --tv-space-2: 8px;
+  /* app-added sub-steps (same 2px sub-rhythm as -0-5/-1-5); DS components
+     referenced these before they were defined — now they resolve to a token
+     instead of silently falling through to a raw-px fallback. */
+  --tv-space-2-5: 10px;
+  --tv-space-3: 12px;
+  --tv-space-3-5: 14px;
+  --tv-space-4: 16px;
+  --tv-space-5: 20px;
+  --tv-space-6: 24px;
+  --tv-space-8: 32px;
+  --tv-space-10: 40px;
+  --tv-space-12: 48px;
+  --tv-space-16: 64px;
+  --tv-space-20: 80px;
+  --tv-space-24: 96px;
+
+  /* ---- App-shell layout ---- */
+  --tv-sidebar-w: 244px;
+  --tv-sidebar-w-collapsed: 64px;
+  --tv-topbar-h: 56px;
+  --tv-content-max: 1200px;
+  --tv-reading-max: 68ch;
+  --tv-page-pad-x: 24px;
+  --tv-page-pad-y: 24px;
+  --tv-gutter: 16px;
+  --tv-card-pad: 16px;
+
+  /* ---- Touch / hit targets ---- */
+  --tv-touch-min: 44px;
+  --tv-control-h-sm: 28px;
+  --tv-control-h-md: 34px;
+  --tv-control-h-lg: 40px;
+
+  /* ---- Breakpoints (reference only; use literals in @media) ---- */
+  --tv-bp-sm: 640px; /* below → mobile: bottom tabs, card-ized tables */
+  --tv-bp-md: 900px; /* below → tablet: sidebar collapses, filters drawer */
+  --tv-bp-lg: 1200px; /* below → dense desktop */
+}

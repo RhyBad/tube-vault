@@ -1,0 +1,22 @@
+/* BulkActionBar — a raised bar; sits sticky under the toolbar in use. */
+.tv-bulkbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tv-space-3);
+  padding: var(--tv-space-2) var(--tv-space-3);
+  background: var(--tv-surface-raised);
+  border: var(--tv-border-width) solid var(--tv-border);
+  border-radius: var(--tv-radius-md);
+  box-shadow: var(--tv-shadow-2);
+}
+.tv-bulkbar__count {
+  font-size: var(--tv-text-xs);
+  font-weight: var(--tv-weight-semibold);
+  color: var(--tv-text);
+}
+.tv-bulkbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+}

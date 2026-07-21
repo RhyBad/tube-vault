@@ -1,0 +1,27 @@
+{
+  "name": "@tubevault/worker",
+  "version": "0.0.0",
+  "private": true,
+  "description": "NestJS standalone worker: WORKER_ROLE=archive|live switch, Job-row CAS recorder, Redis job:control subscriber, boot reconciler, BullMQ enumerate/download/verify consumers (archive role). Live consumers arrive in P10.",
+  "license": "Apache-2.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@tubevault/core": "workspace:*",
+    "@tubevault/db": "workspace:*",
+    "@tubevault/engine": "workspace:*",
+    "@tubevault/notify": "workspace:*",
+    "@tubevault/storage": "workspace:*",
+    "@tubevault/types": "workspace:*",
+    "bullmq": "^5.34.0",
+    "ioredis": "^5.4.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^3.24.1"
+  }
+}

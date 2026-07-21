@@ -1,0 +1,18 @@
+/* TubeVault — Webfonts
+   ───────────────────────────────────────────────────────────────────────────
+   PROVISIONAL TYPE (flagged): No brand fonts were provided. These three
+   families are chosen substitutes, loaded from Google Fonts. They may be
+   locked or swapped at the branding step. When real/self-hosted fonts arrive,
+   replace this @import with local @font-face rules pointing at binaries in
+   assets/fonts/ — the family names in typography.css stay the same so nothing
+   downstream changes.
+
+   Roles:
+     Space Grotesk  → display, headings, wordmark, big KPI numbers (technical,
+                      characterful, excellent tabular numerals)
+     Hanken Grotesk → body, UI, labels, dense tables (warm humanist grotesque,
+                      legible at 12–13px)
+     JetBrains Mono → checksums, video/job ids, byte counts, code readouts
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');

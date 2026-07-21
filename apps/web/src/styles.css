@@ -1,0 +1,7 @@
+/* TubeVault — app global stylesheet entry (imported once by main.tsx).
+   It wires the design system: token custom properties (light + dark, driven by
+   [data-theme] on <html>) and the base/reset layer. Component styling lives
+   colocated with each component under src/ds/**. There is intentionally NO
+   bespoke app CSS here — every surface is composed from DS components. */
+@import './ds/tokens/index.css';
+@import './ds/base.css';

@@ -1,0 +1,319 @@
+/* QueueRow — a DESKTOP dense grid TABLE row (aligned to the page header) and a
+   MOBILE stacked CARD with an overflow sheet (§S6). The layout branch is chosen
+   in JS (useIsDesktop); these are the two skins. */
+.tv-qrow {
+  background: var(--tv-surface);
+  transition:
+    background var(--tv-duration-fast) var(--tv-ease-standard),
+    border-color var(--tv-duration-fast) var(--tv-ease-standard);
+}
+
+/* ── DESKTOP: table row ──────────────────────────────────────────────────── */
+.tv-qrow--table {
+  display: grid;
+  grid-template-columns: var(--tv-qrow-cols);
+  gap: var(--tv-space-3);
+  align-items: center;
+  padding: var(--tv-space-2-5) var(--tv-space-4);
+  border-bottom: var(--tv-border-width) solid var(--tv-border-subtle);
+}
+.tv-qrow--table:hover {
+  background: var(--tv-surface-hover);
+}
+.tv-qrow--table[data-status='RUNNING'] {
+  box-shadow: inset var(--tv-space-0-5) 0 0 0 var(--tv-progress-border);
+}
+.tv-qrow--table[data-dragging] {
+  opacity: 0.5;
+}
+.tv-qrow--table[data-droptarget] {
+  box-shadow: inset 0 2px 0 0 var(--tv-brand);
+}
+
+.tv-qrow__c {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+.tv-qrow__c--grip,
+.tv-qrow__c--order,
+.tv-qrow__c--try {
+  justify-content: center;
+}
+.tv-qrow__c--actions {
+  justify-content: flex-end;
+}
+.tv-qrow__c--video {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--tv-space-0-5);
+}
+
+/* Full-width sub-rows (error strip, drill-down log) span every column. */
+.tv-qrow__span {
+  grid-column: 1 / -1;
+}
+.tv-qrow__errorrow {
+  /* Indent under the video column, past the checkbox + grip tracks. */
+  padding-left: calc(1.75rem + 1.25rem + var(--tv-space-3) * 2);
+}
+
+/* ── shared title / meta ─────────────────────────────────────────────────── */
+.tv-qrow__head {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  min-width: 0;
+  max-width: 100%;
+}
+.tv-qrow__title {
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.tv-qrow__title:hover {
+  color: var(--tv-link-hover);
+  text-decoration: underline;
+}
+.tv-qrow__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  min-width: 0;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+}
+.tv-qrow__channel {
+  color: var(--tv-text-secondary);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-qrow__channel:hover {
+  color: var(--tv-link);
+  text-decoration: underline;
+}
+.tv-qrow__dot {
+  position: relative;
+  padding-left: var(--tv-space-2);
+  color: var(--tv-text-muted);
+  white-space: nowrap;
+}
+.tv-qrow__dot::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+}
+
+/* ── grip / order / try ──────────────────────────────────────────────────── */
+.tv-qrow__grip {
+  display: inline-flex;
+  color: var(--tv-text-muted);
+  cursor: grab;
+}
+.tv-qrow__grip--locked {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.tv-qrow__order,
+.tv-qrow__try {
+  font-family: var(--tv-font-mono);
+  font-size: var(--tv-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+.tv-qrow__order {
+  color: var(--tv-text-secondary);
+}
+.tv-qrow__order[data-running] {
+  color: var(--tv-progress-fg);
+}
+.tv-qrow__try {
+  color: var(--tv-text-muted);
+}
+.tv-qrow__try[data-multi] {
+  color: var(--tv-warning-fg);
+}
+
+.tv-qrow__progress {
+  width: 100%;
+}
+
+/* §S6-6: idle-reason line filling a QUEUED row's empty progress slot. */
+.tv-qrow__waiting {
+  margin: 0;
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-muted);
+}
+
+/* ── error strip — tone-aware (§S6-3) ────────────────────────────────────── */
+.tv-qrow__error {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  margin: 0;
+  padding: var(--tv-space-1-5) var(--tv-space-2-5);
+  border: var(--tv-border-width) solid transparent;
+  border-radius: var(--tv-radius-sm);
+  font-size: var(--tv-text-xs);
+}
+.tv-qrow__error svg {
+  flex: none;
+}
+.tv-qrow__error span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-qrow__error--warning {
+  background: var(--tv-warning-bg);
+  border-color: var(--tv-warning-border);
+  color: var(--tv-warning-fg);
+}
+.tv-qrow__error--danger {
+  background: var(--tv-danger-bg);
+  border-color: var(--tv-danger-border);
+  color: var(--tv-danger-fg);
+}
+
+/* ── actions cluster ─────────────────────────────────────────────────────── */
+.tv-qrow__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-1);
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+.tv-qrow__reorder {
+  display: inline-flex;
+  gap: var(--tv-space-0-5);
+}
+.tv-qrow__pending {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tv-space-1-5);
+  font-size: var(--tv-text-xs);
+  color: var(--tv-text-secondary);
+  white-space: nowrap;
+}
+.tv-qrow__chev--open {
+  transform: rotate(180deg);
+  transition: transform var(--tv-duration-fast) var(--tv-ease-standard);
+}
+.tv-qrow__log {
+  margin-top: var(--tv-space-2);
+}
+
+/* ── MOBILE: stacked card ────────────────────────────────────────────────── */
+.tv-qrow--card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-2-5);
+  padding: var(--tv-space-3);
+  border: var(--tv-border-width) solid var(--tv-border-subtle);
+  border-radius: var(--tv-radius-lg);
+}
+.tv-qrow--card[data-status='RUNNING'] {
+  border-color: var(--tv-progress-border);
+}
+.tv-qrow__cardtop {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tv-space-2);
+}
+.tv-qrow__cardtitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tv-space-0-5);
+}
+.tv-qrow--card .tv-qrow__title {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tv-qrow__cardstatus {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-2);
+  flex-wrap: wrap;
+}
+.tv-qrow__cardstatus .tv-qrow__order {
+  margin-left: auto;
+}
+.tv-qrow__cardactions {
+  display: flex;
+  gap: var(--tv-space-2);
+}
+.tv-qrow__cardactions > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── mobile overflow sheet (§S6-R1) ──────────────────────────────────────── */
+.tv-qrow__sheet-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tv-z-dialog);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--tv-overlay);
+}
+.tv-qrow__sheet {
+  background: var(--tv-surface-raised);
+  border-top-left-radius: var(--tv-radius-xl);
+  border-top-right-radius: var(--tv-radius-xl);
+  box-shadow: var(--tv-shadow-3);
+  padding: var(--tv-space-2) var(--tv-space-3) var(--tv-space-6);
+}
+.tv-qrow__sheet-grip {
+  width: 2.25rem;
+  height: 0.25rem;
+  border-radius: var(--tv-radius-full);
+  background: var(--tv-border-strong);
+  margin: var(--tv-space-1-5) auto var(--tv-space-3);
+}
+.tv-qrow__sheet-title {
+  margin: 0 0 var(--tv-space-1);
+  padding: 0 var(--tv-space-2);
+  font-weight: var(--tv-weight-semibold);
+  font-size: var(--tv-text-sm);
+  color: var(--tv-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tv-qrow__sheet-item {
+  display: flex;
+  align-items: center;
+  gap: var(--tv-space-3);
+  width: 100%;
+  padding: var(--tv-space-3) var(--tv-space-2);
+  border: none;
+  background: none;
+  border-radius: var(--tv-radius-md);
+  cursor: pointer;
+  font-family: var(--tv-font-sans);
+  font-size: var(--tv-text-sm);
+  font-weight: var(--tv-weight-medium);
+  color: var(--tv-text);
+  text-align: left;
+}
+.tv-qrow__sheet-item:hover {
+  background: var(--tv-surface-hover);
+}
+.tv-qrow__sheet-item svg {
+  flex: none;
+  color: var(--tv-text-secondary);
+}
